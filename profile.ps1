@@ -1,24 +1,32 @@
-Set-StrictMode -Off
-
-# Fix font
-. $PSScriptRoot\Helpers\SetConsoleFont.ps1 | Out-Null
-
 # Global variables
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 
+# Fix font
+. $PSScriptRoot\Helpers\SetConsoleFont.ps1 | Out-Null
+
+# Add short funcions
+. $PSScriptRoot\Helpers\ShortFunctions.ps1
+
+# CoreXTAutomation with codeflow pointing to dogfood version
+Import-Module CoreXtAutomation -DisableNameChecking
+${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
+
 # Show all matching commands by default
 $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
+$PSDefaultParameterValues["edit:NewEditor"] = $true
 
 # Use custom formatting for gcm command
-Update-FormatData -PrependPath "c:\Users\alexko\Documents\WindowsPowerShell\Format.Custom.ps1xml"
+Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 
 # Includes
+$env:Path += ";c:\tools\BeyondCompare4\"
+$env:Path += ";c:\tools\SysinternalsSuite\"
 #. Add-RelativePathCapture.ps1
 #. Playground.ps1
 Import-Module PsReadLine
-Set-StrictMode -Off
+#Set-StrictMode -Off
 
 # Setting up PSReadLine
 $colors = @{
