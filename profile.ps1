@@ -29,17 +29,18 @@ Import-Module PsReadLine
 #Set-StrictMode -Off
 
 # Setting up PSReadLine
-$colors = @{
-     Command = "DarkCyan"
-     Comment = "DarkGreen"
-     Keyword = "Gray"
-     Number = "DarkGray"
-     Member = "DarkCyan"
-     Operator = "DarkRed"
-     Parameter = "DarkMagenta"
-     String = "DarkYellow"
-     Type = "DarkCyan"
-     Variable = "DarkGray"
+$colors =
+@{
+    Command = "DarkCyan"
+    Comment = "DarkGreen"
+    Keyword = "Gray"
+    Number = "DarkGray"
+    Member = "DarkCyan"
+    Operator = "DarkRed"
+    Parameter = "DarkMagenta"
+    String = "DarkYellow"
+    Type = "DarkCyan"
+    Variable = "DarkGray"
 }
 foreach( $token in $colors.Keys ) { Set-PSReadlineOption -ForegroundColor ($colors.$token) -TokenKind $token }
 Set-PSReadlineKeyHandler -Chord "Ctrl+D,Ctrl+C" -Function CaptureScreen
@@ -48,7 +49,7 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+D,Ctrl+C" -Function CaptureScreen
 $env:sdeditor = 'C:\tools\Vim\vim73\gvim.exe'
 
 # Aliases
-New-Alias new new-Object
+New-Alias new New-Object
 New-Alias rename Rename-Item
 New-Alias delete Remove-Item
 New-Alias o Out-GridView
