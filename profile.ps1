@@ -21,28 +21,7 @@ $addToPath =
     "c:\tools\LinqPad\"
 
 $env:Path += ";" + ($addToPath -join ";")
-$env:SdEditor = 'C:\tools\Vim\vim73\gvim.exe'
-
-#Set-StrictMode -Off
-
-Import-Module PsReadLine
-
-# Setting up PSReadLine
-$colors =
-@{
-    Command = "DarkCyan"
-    Comment = "DarkGreen"
-    Keyword = "Gray"
-    Number = "DarkGray"
-    Member = "DarkCyan"
-    Operator = "DarkRed"
-    Parameter = "DarkMagenta"
-    String = "DarkYellow"
-    Type = "DarkCyan"
-    Variable = "DarkGray"
-}
-foreach( $token in $colors.Keys ) { Set-PSReadlineOption -ForegroundColor ($colors.$token) -TokenKind $token }
-Set-PSReadlineKeyHandler -Chord "Ctrl+D,Ctrl+C" -Function CaptureScreen
+$env:SdEditor = "gvim.exe"
 
 # CoreXTAutomation setup
 ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
@@ -50,4 +29,5 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 # Additional setup
 . $PSScriptRoot\Helpers\Playground.ps1
 . $PSScriptRoot\Helpers\Set-ConsoleFont.ps1 | Out-Null
+. $PSScriptRoot\Helpers\Initialize-PsReadLine.ps1
 . $PSScriptRoot\Helpers\Initialize-Prompt.ps1
