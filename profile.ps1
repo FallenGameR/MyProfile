@@ -3,7 +3,6 @@ $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 
 # Include dependencies
-. $PSScriptRoot\Helpers\Add-RelativePathCapture.ps1
 . $PSScriptRoot\Helpers\Set-ConsoleFont.ps1 | Out-Null
 . $PSScriptRoot\Helpers\Playground.ps1
 
