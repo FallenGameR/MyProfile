@@ -48,8 +48,6 @@ $env:sdeditor = 'C:\tools\Vim\vim73\gvim.exe'
 # Aliases
 New-Alias new New-Object
 New-Alias rename Rename-Item
-New-Alias delete Remove-Item
-New-Alias o Out-GridView
 New-Alias m measure
 
 # History folder and file
