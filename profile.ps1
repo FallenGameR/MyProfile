@@ -2,11 +2,10 @@
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 
-# Fix font
-. $PSScriptRoot\Helpers\SetConsoleFont.ps1 | Out-Null
-
-# Add short funcions
-. $PSScriptRoot\Helpers\ShortFunctions.ps1
+# Include dependencies
+. $PSScriptRoot\Helpers\Add-RelativePathCapture.ps1
+. $PSScriptRoot\Helpers\Set-ConsoleFont.ps1 | Out-Null
+. $PSScriptRoot\Helpers\Playground.ps1
 
 # CoreXTAutomation with codeflow pointing to dogfood version
 Import-Module CoreXtAutomation -DisableNameChecking
@@ -23,8 +22,6 @@ Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 # Includes
 $env:Path += ";c:\tools\BeyondCompare4\"
 $env:Path += ";c:\tools\SysinternalsSuite\"
-#. Add-RelativePathCapture.ps1
-#. Playground.ps1
 Import-Module PsReadLine
 #Set-StrictMode -Off
 
