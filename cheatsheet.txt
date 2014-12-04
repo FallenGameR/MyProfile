@@ -52,3 +52,52 @@ Description : Copy the text from the current kill ring position to the input
 EditMode                          : Windows
 ContinuationPrompt                : >>>
 HistorySearchCursorMovesToEnd     : True
+
+Key         : Ctrl+c
+Function    : CopyOrCancelLine
+Description : Either copy selected text to the clipboard, or if no text is selected, cancel editing the line with CancelLine.
+
+Key         : Ctrl+d
+Function    : DeleteCharOrExit
+Description : Delete the character under the cusor, or if the line is empty, exit the process.
+
+Key         : Ctrl+e
+Function    : EndOfLine
+Description : Move the cursor to the end of the line
+
+Key         : Ctrl+m
+Function    : ValidateAndAcceptLine
+Description : Accept the input or move to the next line if input is missing a closing token.
+              If there are other parse errors, unresolved commands, or incorrect parameters, show the error and continue editing.
+
+Key         : Ctrl+w
+Function    : UnixWordRubout
+Description : Move the text from the cursor to the start of the current or previous whitespace delimited word to the kill ring
+
+Key         : Ctrl+@
+Function    : SetMark
+Description : Mark the location of the cursor
+
+Key         : Ctrl+]
+Function    : CharacterSearch
+Description : Read a character and move the cursor to the next occurence of that character
+
+Key         : Ctrl+Alt+]
+Function    : CharacterSearchBackward
+Description : Read a character and move the cursor to the previous occurence of that character
+
+Key         : Alt+Spacebar
+Function    : SetMark
+Description : Mark the location of the cursor
+
+Key         : Ctrl+End
+Function    : ScrollDisplayToCursor
+Description : Scroll the display to the cursor
+
+Key         : Escape,d
+Function    : KillWord
+Description : Move the text from the cursor to the end of the current or next word to the kill ring
+
+Key         : Ctrl+x,Ctrl+x
+Function    : ExchangePointAndMark
+Description : Mark the location of the cursor and move the cursor to the position of the previous mark
