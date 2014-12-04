@@ -22,6 +22,9 @@ Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 # Includes
 $env:Path += ";c:\tools\BeyondCompare4\"
 $env:Path += ";c:\tools\SysinternalsSuite\"
+$env:Path += ";c:\tools\Vim\vim74\"
+$env:Path += ";c:\tools\ILSpy\"
+$env:Path += ";c:\tools\LinqPad\"
 Import-Module PsReadLine
 #Set-StrictMode -Off
 
