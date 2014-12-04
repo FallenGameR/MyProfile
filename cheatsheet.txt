@@ -1,10 +1,19 @@
-#remap to f
-Ctrl+r/Ctrl+s - interactive search
+To script:
+Alt+UpArrow/DownArrow - move directory stack
 
-F8(Shift) - line start search
+
+To remember:
 Ctrl+Space - menu complete
 Ctrl+a - select whole line
+F2(Shift) - command search
 Ctrl+l - clear screen
+Ctrl+d,Ctrl+c - capture screen
+
+
+Todo:
+line delete
+word delete
+
 
 # remap to arrow
 Ctrl+Backspace/Delete - delete word

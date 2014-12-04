@@ -13,4 +13,18 @@ Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
 
 # Other options
+Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 Set-PSReadlineKeyHandler -Chord "Ctrl+D, Ctrl+C" -Function CaptureScreen
+
+# Remap search
+Remove-PSReadlineKeyHandler -Chord "Ctrl+r"
+Remove-PSReadlineKeyHandler -Chord "Ctrl+s"
+Set-PSReadlineKeyHandler -Chord "F2" -Function ReverseSearchHistory
+Set-PSReadlineKeyHandler -Chord "Shift+F2" -Function ForwardSearchHistory
+
+Remove-PSReadlineKeyHandler -Chord "F8"
+Remove-PSReadlineKeyHandler -Chord "Shift+F8"
+
+#Shift+Up/Down should be for line select on multiline edit
+#Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function HistorySearchBackward
+#Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function HistorySearchForward
