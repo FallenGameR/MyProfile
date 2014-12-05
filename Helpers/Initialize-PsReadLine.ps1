@@ -97,11 +97,23 @@ Set-PSReadlineKeyHandler -Chord 'Alt+b' -Function YankPop
 # Macro that invokes git commit
 #
 Set-PSReadlineKeyHandler -Key Ctrl+Alt+C `
-                         -BriefDescription GitCommit `
+                         -BriefDescription GitExtensionsCommit `
                          -LongDescription "GitExtensions commit dialog invocation" `
                          -ScriptBlock {
     [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
     [PSConsoleUtilities.PSConsoleReadLine]::Insert("gite commit")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
+#
+# Macro that invokes gite
+#
+Set-PSReadlineKeyHandler -Key Ctrl+Alt+B `
+                         -BriefDescription GitExtensions `
+                         -LongDescription "GitExtensions main dialog invocation" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("gite")
     [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
 }
 
