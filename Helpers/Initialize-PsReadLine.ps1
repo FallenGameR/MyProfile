@@ -75,8 +75,12 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
 # Bug: Alt+Left/Right is better suited for this, but right now they wouldn't work
-Set-PSReadlineKeyHandler -Chord "Alt+z" -Function ShellBackwardKillWord
-Set-PSReadlineKeyHandler -Chord "Alt+c" -Function ShellKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 # Bug: Ctrl+End/Home should work like Shift+End/Home, but right now that's no possible to achieve
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
