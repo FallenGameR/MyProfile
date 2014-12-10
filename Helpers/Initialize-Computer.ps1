@@ -35,6 +35,12 @@ switch ($env:ComputerName)
         $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "c:\Users\alexko\SkyDrive @ Microsoft\"
     }
+    "ALEXKO-DEV"
+    {
+        $dropbox = "c:\Users\alexko\Dropbox\"
+        $oneDrive = "e:\OneDrive\"
+        $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
+    }
 }
 
 # TODO: test that we have admin rights?

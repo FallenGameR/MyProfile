@@ -35,8 +35,8 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Helpers\Initialize-Prompt.ps1
 
 # That's hacky...
-if( -not (Test-Path "e:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
+if( -not (Test-Path "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 {
     return
 }
-. "e:\OneDriveMicrosoft\Projects\ProtectedPlayground1.ps1"
+. "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
