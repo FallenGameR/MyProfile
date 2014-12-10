@@ -18,7 +18,8 @@ $addToPath =
     "c:\tools\SysinternalsSuite\",
     "c:\tools\Vim\vim74\",
     "c:\tools\ILSpy\",
-    "c:\tools\LinqPad\"
+    "c:\tools\LinqPad\",
+    "c:\tools\xts\"
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
@@ -31,3 +32,10 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Helpers\Set-ConsoleFont.ps1 | Out-Null
 . $PSScriptRoot\Helpers\Initialize-PsReadLine.ps1
 . $PSScriptRoot\Helpers\Initialize-Prompt.ps1
+
+# That's hacky...
+if( -not (Test-Path "e:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
+{
+    return
+}
+. "e:\OneDriveMicrosoft\Projects\ProtectedPlayground1.ps1"

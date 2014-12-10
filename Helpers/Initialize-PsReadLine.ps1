@@ -39,13 +39,14 @@ Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
 #
 # Other options
 #
+Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+e' -Function EnableDemoMode
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+d' -Function DisableDemoMode
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
 Set-PSReadlineKeyHandler -Chord "Ctrl+x" -Function DeleteCharOrExit
-#Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
+Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 
 #
 # Search
@@ -63,10 +64,10 @@ Set-PSReadlineKeyHandler -Chord "Shift+F2" -Function ForwardSearchHistory
 #
 Set-PSReadlineKeyHandler -Chord "Ctrl+UpArrow" -Function ScrollDisplayUpLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+DownArrow" -Function ScrollDisplayDownLine
-Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function ShellBackwardWord
-Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ShellForwardWord
-Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+LeftArrow" -Function SelectShellBackwardWord
-Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectShellForwardWord
+Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function BackwardWord
+Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+LeftArrow" -Function SelectBackwardWord
+Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardWord
 
 #
 # Deletion
@@ -74,8 +75,12 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectShellFor
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
 # Bug: Alt+Left/Right is better suited for this, but right now they wouldn't work
-Set-PSReadlineKeyHandler -Chord "Alt+z" -Function ShellBackwardKillWord
-Set-PSReadlineKeyHandler -Chord "Alt+c" -Function ShellKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 # Bug: Ctrl+End/Home should work like Shift+End/Home, but right now that's no possible to achieve
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
@@ -116,110 +121,6 @@ Set-PSReadlineKeyHandler -Key Ctrl+Alt+B `
     [PSConsoleUtilities.PSConsoleReadLine]::Insert("gite")
     [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
 }
-
-#region Smart Insert/Delete
-
-# The next four key handlers are designed to make entering matched quotes
-# parens, and braces a nicer experience.  I'd like to include functions
-# in the module that do this, but this implementation still isn't as smart
-# as ReSharper, so I'm just providing it as a sample.
-
-Set-PSReadlineKeyHandler -Key '"',"'" `
-                         -BriefDescription SmartInsertQuote `
-                         -LongDescription "Insert paired quotes if not already on a quote" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $line = $null
-    $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-
-    if ($line[$cursor] -eq $key.KeyChar) {
-        # Just move the cursor
-        [PSConsoleUtilities.PSConsoleReadLine]::SetCursorPosition($cursor + 1)
-    }
-    else {
-        # Insert matching quotes, move cursor to be in between the quotes
-        [PSConsoleUtilities.PSConsoleReadLine]::Insert("$($key.KeyChar)" * 2)
-        [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-        [PSConsoleUtilities.PSConsoleReadLine]::SetCursorPosition($cursor - 1)
-    }
-}
-
-Set-PSReadlineKeyHandler -Key '(','{','[' `
-                         -BriefDescription InsertPairedBraces `
-                         -LongDescription "Insert matching braces" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $closeChar = switch ($key.KeyChar)
-    {
-        <#case#> '(' { [char]')'; break }
-        <#case#> '{' { [char]'}'; break }
-        <#case#> '[' { [char]']'; break }
-    }
-
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("$($key.KeyChar)$closeChar")
-    $line = $null
-    $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-    [PSConsoleUtilities.PSConsoleReadLine]::SetCursorPosition($cursor - 1)
-}
-
-Set-PSReadlineKeyHandler -Key ')',']','}' `
-                         -BriefDescription SmartCloseBraces `
-                         -LongDescription "Insert closing brace or skip" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $line = $null
-    $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-
-    if ($line[$cursor] -eq $key.KeyChar)
-    {
-        [PSConsoleUtilities.PSConsoleReadLine]::SetCursorPosition($cursor + 1)
-    }
-    else
-    {
-        [PSConsoleUtilities.PSConsoleReadLine]::Insert("$($key.KeyChar)")
-    }
-}
-
-Set-PSReadlineKeyHandler -Key Backspace `
-                         -BriefDescription SmartBackspace `
-                         -LongDescription "Delete previous character or matching quotes/parens/braces" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $line = $null
-    $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-
-    if ($cursor -gt 0)
-    {
-        $toMatch = $null
-        switch ($line[$cursor])
-        {
-            <#case#> '"' { $toMatch = '"'; break }
-            <#case#> "'" { $toMatch = "'"; break }
-            <#case#> ')' { $toMatch = '('; break }
-            <#case#> ']' { $toMatch = '['; break }
-            <#case#> '}' { $toMatch = '{'; break }
-        }
-
-        if ($toMatch -ne $null -and $line[$cursor-1] -eq $toMatch)
-        {
-            [PSConsoleUtilities.PSConsoleReadLine]::Delete($cursor - 1, 2)
-        }
-        else
-        {
-            [PSConsoleUtilities.PSConsoleReadLine]::BackwardDeleteChar($key, $arg)
-        }
-    }
-}
-
-#endregion Smart Insert/Delete
 
 # Sometimes you enter a command but realize you forgot to do something else first.
 # This binding will let you save that command in the history so you can recall it,

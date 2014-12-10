@@ -3,26 +3,6 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
-function ilspy
-{
-    & "c:\tools\ILSpy\ILSpy.exe"
-}
-
-function qbuddy
-{
-    del d:\autopilot\outgoing.dpk
-    git sdp pack d:\autopilot\outgoing.dpk master...HEAD
-    & d:\clientGoldEnlistment\Q\client\quickbuild.exe -buddy -dpk d:\autopilot\outgoing.dpk
-}
-
-filter nman( $template )
-{
-    if( $psitem -match $template )
-    {
-        $psitem | hl $template
-    }
-}
-
 function devenv
 {
     if( -not $args )
@@ -70,22 +50,12 @@ function scd
     }
 }
 
-function xts
-{
-    & "c:\tools\xts\xts.exe"
-}
-
 filter Set-ReadOnlyFlag( [bool] $flag = $true )
 {
     if( -not $psitem.PsIsContainer )
     {
         Set-ItemProperty $psitem.FullName -Name "IsReadOnly" -Value $flag
     }
-}
-
-function msdump( $path )
-{
-    & $PSScriptRoot\msdump\MSBuildDumpConsoleApplication.exe $path
 }
 
 # XML
@@ -122,20 +92,6 @@ Extract-Xml $switch
 }
 
 # Playground
-
-filter Parse-AutopilotLog
-{
-    $parsed = $psitem | parse '^([^,]+),([^,]+),([^,]+),([^,]+),SrcFile="([^"]+)" SrcFunc="([^"]+)" SrcLine="(\d+)" Pid="(\d+)" Tid="(\d+)" TS="([^"]+)" String1="([^"]+)"' Type Time LocationA LocationB File Function Line Pid Tid TS Info
-
-    if( $parsed )
-    {
-        $parsed
-    }
-    else
-    {
-        $psitem
-    }
-}
 
 function Cluster-Check( [string] $name )
 {
@@ -174,8 +130,6 @@ function Cluster-PreattyPrint( [string] $name )
     Cluster-Tool PrettyPrint $path
 }
 
-function clean( [switch] $force ) { if( $force ) { git clean -fdx -e sd.ini } else { git clean -ndx -e sd.ini } }
-
 function change( $from, $to, $encoding = "ascii" )
 {
     $files = git grep -iFl "$from"
@@ -185,13 +139,6 @@ function change( $from, $to, $encoding = "ascii" )
 function srch( $text ) {git grep -iF $text}
 
 # Invocations
-function ref( $text )
-{
-    Push-Location "S:\data-git\autopilotService"
-    git grep -iF $text `-- *.csv, *.ini, *.xml, *.txt
-    Pop-Location
-}
-
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" (pwd) }
 
 function edit( [string] $File, [switch] $NewEditor )
@@ -223,20 +170,6 @@ function edit( [string] $File, [switch] $NewEditor )
     & gvim.exe $params
 }
 
-function Get-RecentBuild
-{
-<#
-finished.txt doesn't garantee that the build was actually successfull.
-Build tracker API: https://microsoft.sharepoint.com/teams/buildtrackerv2/bt40apidocs/Pages/Home.aspx?noredirect=1
-WTT API (less preferred):
-    //depot/dev/autopilot/private/tools/ReleaseStatusTool/queries/...
-    //depot/dev/autopilot/private/tools/ReleaseStatusTool/WttApi.ps1
-#>
-    $location = ls "\\BINGLAB\builds\search\autopilot\rolling\*\finished.txt" | select -last 1
-    $location = Split-Path $location
-    $location = Join-Path $location "retail\amd64"
-    start $location
-}
 
 function cf
 {
@@ -244,18 +177,6 @@ function cf
 }
 
 # Helpers
-function Get-PrivateReviewInfo
-{
-@"
-Developer folder: <description>`r`n
-Author: alexko
-Tested by: alexko
-Buddy build by: No buddy build. This change modifies script files excluded from the build. | Change happened in privite developer folder.
-Reviewed by: No code review. Change happened in privite developer folder.
-Description:
-"@
-}
-
 function Get-FileNameArgument( [string] $file )
 {
     if( -not $file ) { return }
