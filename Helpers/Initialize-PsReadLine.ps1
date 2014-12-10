@@ -1,3 +1,5 @@
+# TODO: Current char casing change
+# TODO: Integrate shell chords to vim
 #
 # Combinations that wouldn't work:
 #
