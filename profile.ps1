@@ -8,9 +8,9 @@ $PSDefaultParameterValues["edit:NewEditor"] = $true
 
 Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 
-New-Alias new New-Object
-New-Alias rename Rename-Item
-New-Alias m measure
+Set-Alias new New-Object
+Set-Alias rename Rename-Item
+Set-Alias m measure
 
 # Environment setup
 $addToPath =
