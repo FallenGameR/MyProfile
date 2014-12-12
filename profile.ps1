@@ -19,6 +19,7 @@ $addToPath =
     "c:\tools\Vim\vim74\",
     "c:\tools\ILSpy\",
     "c:\tools\LinqPad\",
+    "c:\tools\WinDirStat\",
     "c:\tools\xts\"
 
 $env:Path += ";" + ($addToPath -join ";")
@@ -33,6 +34,9 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Helpers\Initialize-Computer.ps1
 . $PSScriptRoot\Helpers\Initialize-PsReadLine.ps1
 . $PSScriptRoot\Helpers\Initialize-Prompt.ps1
+
+# Cleaning up variables
+Remove-Variable proc    # Don't know who populates this constant, but it hides pro<tab> = profile
 
 # That's hacky...
 if( -not (Test-Path "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )

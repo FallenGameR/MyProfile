@@ -90,9 +90,9 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
 #
 # Regions
 #
-Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
-Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
-Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
+#Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
+#Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
+#Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
 
 #
 # Yank
