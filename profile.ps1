@@ -19,6 +19,7 @@ $addToPath =
     "c:\tools\Vim\vim74\",
     "c:\tools\ILSpy\",
     "c:\tools\LinqPad\",
+    "c:\tools\Tagger\",
     "c:\tools\xts\"
 
 $env:Path += ";" + ($addToPath -join ";")
