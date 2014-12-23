@@ -241,8 +241,7 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
     }
 }
 
-# This example will replace any aliases on the command line with the resolved commands.
-# Alt+%
+# Will normalize command with the resolved commands.
 Set-PSReadlineKeyHandler -Key "Alt+n" `
                          -BriefDescription ExpandAliases `
                          -LongDescription "Replace all aliases with the full command" `
@@ -260,23 +259,43 @@ Set-PSReadlineKeyHandler -Key "Alt+n" `
     {
         if ($token.TokenFlags -band [System.Management.Automation.Language.TokenFlags]::CommandName)
         {
-            $alias = $ExecutionContext.InvokeCommand.GetCommand($token.Extent.Text, 'Alias')
-            if ($alias -ne $null)
-            {
-                $resolvedCommand = $alias.ResolvedCommandName
-                if ($resolvedCommand -ne $null)
-                {
-                    $extent = $token.Extent
-                    $length = $extent.EndOffset - $extent.StartOffset
-                    [PSConsoleUtilities.PSConsoleReadLine]::Replace(
-                        $extent.StartOffset + $startAdjustment,
-                        $length,
-                        $resolvedCommand)
+            $command = $ExecutionContext.InvokeCommand.GetCommand($token.Extent.Text, 'All')
 
-                    # Our copy of the tokens won't have been updated, so we need to
-                    # adjust by the difference in length
-                    $startAdjustment += ($resolvedCommand.Length - $length)
-                }
+            $resolvedCommand = if ($command -is [System.Management.Automation.AliasInfo])
+            {
+                $command.ResolvedCommandName.ToString()
+            }
+            elseif ($command -is [System.Management.Automation.FunctionInfo])
+            {
+                $command.ToString()
+            }
+            elseif ($command -is [System.Management.Automation.CmdletInfo])
+            {
+                $command.ToString()
+            }
+
+            $resolvedCommand = switch ($resolvedCommand)
+            {
+                "ForEach-Object"    {"foreach"}
+                "Where-Object"      {"where"}
+                "Measure-Object"    {"measure"}
+                "Select-Object"     {"select"}
+                "Sort-Object"       {"sort"}
+                default             {$psitem}
+            }
+
+            if ($resolvedCommand)
+            {
+                $extent = $token.Extent
+                $length = $extent.EndOffset - $extent.StartOffset
+                [PSConsoleUtilities.PSConsoleReadLine]::Replace(
+                    $extent.StartOffset + $startAdjustment,
+                    $length,
+                    $resolvedCommand)
+
+                # Our copy of the tokens won't have been updated, so we need to
+                # adjust by the difference in length
+                $startAdjustment += ($resolvedCommand.Length - $length)
             }
         }
     }
