@@ -58,9 +58,6 @@ Remove-PSReadlineKeyHandler -Chord "Ctrl+r"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+s"
 Set-PSReadlineKeyHandler -Chord "F2" -Function ReverseSearchHistory
 Set-PSReadlineKeyHandler -Chord "Shift+F2" -Function ForwardSearchHistory
-# Bug: Shift+Up/Down doesn't work, HistorySearch currently bound to default F8(Shift)
-#Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function HistorySearchBackward
-#Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function HistorySearchForward
 
 #
 # Navigation
@@ -77,29 +74,14 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 #
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
-# Bug: Alt+Left/Right is better suited for this, but right now they wouldn't work
 Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
-# Bug: Ctrl+End/Home should work like Shift+End/Home, but right now that's no possible to achieve
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
-
-#
-# Regions
-#
-#Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
-#Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
-#Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
-
-#
-# Yank
-#
-Set-PSReadlineKeyHandler -Chord 'Alt+v' -Function Yank
-Set-PSReadlineKeyHandler -Chord 'Alt+b' -Function YankPop
 
 #
 # Macro that invokes git commit
@@ -331,51 +313,4 @@ Set-PSReadlineKeyHandler -Key F1 `
             }
         }
     }
-}
-
-
-#
-# Ctrl+Shift+j then type a key to mark the current directory.
-# Ctrj+j then the same key will change back to that directory without
-# needing to type cd and won't change the command line.
-
-#
-$global:PSReadlineMarks = @{}
-
-Set-PSReadlineKeyHandler -Key Ctrl+Shift+j `
-                         -BriefDescription MarkDirectory `
-                         -LongDescription "Mark the current directory" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $key = [Console]::ReadKey($true)
-    $global:PSReadlineMarks[$key.KeyChar] = $pwd
-}
-
-Set-PSReadlineKeyHandler -Key Ctrl+j `
-                         -BriefDescription JumpDirectory `
-                         -LongDescription "Goto the marked directory" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $key = [Console]::ReadKey()
-    $dir = $global:PSReadlineMarks[$key.KeyChar]
-    if ($dir)
-    {
-        cd $dir
-        [PSConsoleUtilities.PSConsoleReadLine]::InvokePrompt()
-    }
-}
-
-Set-PSReadlineKeyHandler -Key Alt+j `
-                         -BriefDescription ShowDirectoryMarks `
-                         -LongDescription "Show the currently marked directories" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $global:PSReadlineMarks.GetEnumerator() | % {
-        [PSCustomObject]@{Key = $_.Key; Dir = $_.Value} } |
-        Format-Table -AutoSize | Out-Host
-
-    [PSConsoleUtilities.PSConsoleReadLine]::InvokePrompt()
 }
