@@ -111,7 +111,7 @@ function Invoke-CheckCluster( [string] $name )
 function Invoke-ClusterTool
 {
     $searchGold = (Get-Enlistment data).Root
-    $path = "$searchGold\AutopilotService\global\SelfServe_EnvMngmt\~AutomationSettings\Tools\ClusterTool.exe"
+    $path = "$searchGold\data\Ironman\InternalTools\ClusterTool.exe"
     #$path = "c:\Users\alexko\Downloads\ClusterTool.exe"
     & $path $args | ConvertFrom-ApLogs
 }
