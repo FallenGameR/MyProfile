@@ -315,6 +315,14 @@ Set-PSReadlineKeyHandler -Key F1 `
     $cursor = $null
     [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
+    if( ($tokens.Count -eq 1) -and ($tokens.Kind -eq "EndOfInput") )
+    {
+        [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+        [PSConsoleUtilities.PSConsoleReadLine]::Insert("Measure-LastCommand")
+        [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+        return
+    }
+
     $commandAst = $ast.FindAll( {
         $node = $args[0]
         $node -is [System.Management.Automation.Language.CommandAst] -and
