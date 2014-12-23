@@ -1,5 +1,9 @@
+# TODO: ctrl+x selection/line cut/quit
+# TODO: ctrl+p variable name auto suggection
 # TODO: Current char casing change
 # TODO: Integrate shell chords to vim
+# TODO: help opens msdn on .NET methods
+# TODO: normalization normalizes .NET method names
 #
 # Combinations that wouldn't work:
 #
