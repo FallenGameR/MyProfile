@@ -20,6 +20,10 @@
 # Alt+?(Ctrl) - get binding
 # Ctrl+x - close on new line
 # Alt+z/c - delete shell word on left/right
+# Alt+w - stash line
+# Alt+n - normalize command (expand alias, fix casing)
+# Alt+' - change surrounding quotation
+# Alt+( - add surrounding braces
 #
 
 Import-Module PsReadLine
@@ -147,7 +151,8 @@ Set-PSReadlineKeyHandler -Key Ctrl+Shift+v `
 # Sometimes you want to get a property of invoke a member on what you've entered so far
 # but you need parens to do that.  This binding will help by putting parens around the current selection,
 # or if nothing is selected, the whole line.
-Set-PSReadlineKeyHandler -Key 'Alt+(' `
+# Alt+(
+Set-PSReadlineKeyHandler -Key 'Alt+9' `
                          -BriefDescription ParenthesizeSelection `
                          -LongDescription "Put parenthesis around the selection or entire line and move the cursor to after the closing parenthesis" `
                          -ScriptBlock {
@@ -237,7 +242,8 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
 }
 
 # This example will replace any aliases on the command line with the resolved commands.
-Set-PSReadlineKeyHandler -Key "Alt+%" `
+# Alt+%
+Set-PSReadlineKeyHandler -Key "Alt+n" `
                          -BriefDescription ExpandAliases `
                          -LongDescription "Replace all aliases with the full command" `
                          -ScriptBlock {
