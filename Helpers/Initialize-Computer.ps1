@@ -29,6 +29,12 @@ filter Set-Visible( [bool] $makeVisible )
 # Cloud folders setup
 switch ($env:ComputerName)
 {
+    "ALEXKO-DEV"
+    {
+        $dropbox = "c:\Users\alexko\Dropbox\"
+        $oneDrive = "e:\OneDrive\"
+        $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
+    }
     "ALEXKO-X1"
     {
         $dropbox = "c:\Users\alexko\Dropbox\"

@@ -47,6 +47,7 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+e' -Function EnableDemoMode
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+d' -Function DisableDemoMode
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
+# TODO: cut current line or do exit
 Set-PSReadlineKeyHandler -Chord "Ctrl+x" -Function DeleteCharOrExit
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 
@@ -90,9 +91,9 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
 #
 # Regions
 #
-Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
-Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
-Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
+#Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
+#Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
+#Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
 
 #
 # Yank

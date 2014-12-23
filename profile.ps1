@@ -8,9 +8,9 @@ $PSDefaultParameterValues["edit:NewEditor"] = $true
 
 Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 
-New-Alias new New-Object
-New-Alias rename Rename-Item
-New-Alias m measure
+Set-Alias new New-Object
+Set-Alias rename Rename-Item
+Set-Alias m measure
 
 # Environment setup
 $addToPath =
@@ -20,6 +20,7 @@ $addToPath =
     "c:\tools\ILSpy\",
     "c:\tools\LinqPad\",
     "c:\tools\Tagger\",
+    "c:\tools\WinDirStat\",
     "c:\tools\xts\"
 
 $env:Path += ";" + ($addToPath -join ";")
@@ -35,9 +36,12 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Helpers\Initialize-PsReadLine.ps1
 . $PSScriptRoot\Helpers\Initialize-Prompt.ps1
 
+# Cleaning up variables
+Remove-Variable proc    # Don't know who populates this constant, but it hides pro<tab> = profile
+
 # That's hacky...
-if( -not (Test-Path "e:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
+if( -not (Test-Path "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 {
     return
 }
-. "e:\OneDriveMicrosoft\Projects\ProtectedPlayground1.ps1"
+. "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
