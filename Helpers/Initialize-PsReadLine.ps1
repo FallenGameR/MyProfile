@@ -281,6 +281,7 @@ Set-PSReadlineKeyHandler -Key "Alt+n" `
                 "Measure-Object"    {"measure"}
                 "Select-Object"     {"select"}
                 "Sort-Object"       {"sort"}
+                "Get-ChildItem"     {"ls"}
                 default             {$psitem}
             }
 
