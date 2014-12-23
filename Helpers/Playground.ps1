@@ -93,7 +93,7 @@ Extract-Xml $switch
 
 # Playground
 
-function Cluster-Check( [string] $name )
+function Invoke-CheckCluster( [string] $name )
 {
     if( -not $name )
     {
@@ -104,19 +104,19 @@ function Cluster-Check( [string] $name )
 
     $searchGold = (Get-Enlistment data).Root
     Push-Location "$searchGold\AutopilotService"
-    & "$searchGold\tools\vlad\CheckCluster2\CheckCluster.exe" -c $name | Parse-AutopilotLog
+    & "$searchGold\tools\vlad\CheckCluster2\CheckCluster.exe" -c $name | ConvertFrom-ApLogs
     Pop-Location
 }
 
-function Cluster-Tool
+function Invoke-ClusterTool
 {
     $searchGold = (Get-Enlistment data).Root
     $path = "$searchGold\AutopilotService\global\SelfServe_EnvMngmt\~AutomationSettings\Tools\ClusterTool.exe"
     #$path = "c:\Users\alexko\Downloads\ClusterTool.exe"
-    & $path $args | Parse-AutopilotLog
+    & $path $args | ConvertFrom-ApLogs
 }
 
-function Cluster-PreattyPrint( [string] $name )
+function Invoke-ClusterPreattyPrint( [string] $name )
 {
     if( -not $name )
     {
@@ -127,7 +127,7 @@ function Cluster-PreattyPrint( [string] $name )
 
     $searchGold = (Get-Enlistment data).Root
     $path = "$searchGold\autopilotService\$name"
-    Cluster-Tool PrettyPrint $path
+    Invoke-ClusterTool PrettyPrint $path
 }
 
 function change( $from, $to, $encoding = "ascii" )
