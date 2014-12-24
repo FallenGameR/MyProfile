@@ -1,9 +1,16 @@
-                            Windows | TotalCommander | gvim | Powershell | Studio
-Ctrl+Alt+C (commit)                 |                |      |            |
-Ctrl+Alt+B (gite)                   |                |      |            |  
-Ctrl+Alt+G (gvim)                   |                |      |            |
-Ctrl+Alt+J (CodeFlow)               |                |      |            |
-Ctrl+Alt+P (LinqPad)                |                |      |            |
-Ctrl+Acl+L (solution explorer)      |                |      |            |
-Ctrl+Alt+X (PowerShell)             |                |      |            |
-Alt+Q/E/A/D (shell movements)       |                |      |            |
+                               | TotalCommander | gvim | Powershell | Studio
+Alt+C (commit)                 |                |      |            |
+Alt+B (gite)                   |                |      |            |  
+Alt+G (gvim)                   |                |      |            |
+Alt+J (CodeFlow)               |                |      |            |
+Alt+P (LinqPad)                |                |      |            |
+Alt+X (PowerShell)             |                |      |            |
+Ctrl+X exit                    |                |      |            |
+Alt+Q/E/A/D (shell movements)  |                |      |            |
+
+Windows invocations are global and use Ctrl+Alt
+Winamp invocations are global and use Ctrl+Alt
+
+Reservations
+Ctrl+Acl+L (solution explorer) 
+
