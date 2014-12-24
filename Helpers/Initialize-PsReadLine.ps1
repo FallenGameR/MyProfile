@@ -1,5 +1,9 @@
+# TODO: ctrl+x selection/line cut/quit
+# TODO: ctrl+p variable name auto suggection
 # TODO: Current char casing change
 # TODO: Integrate shell chords to vim
+# TODO: help opens msdn on .NET methods
+# TODO: normalization normalizes .NET method names
 #
 # Combinations that wouldn't work:
 #
@@ -20,6 +24,10 @@
 # Alt+?(Ctrl) - get binding
 # Ctrl+x - close on new line
 # Alt+z/c - delete shell word on left/right
+# Alt+w - stash line
+# Alt+n - normalize command (expand alias, fix casing)
+# Alt+' - change surrounding quotation
+# Alt+( - add surrounding braces
 #
 
 Import-Module PsReadLine
@@ -58,9 +66,6 @@ Remove-PSReadlineKeyHandler -Chord "Ctrl+r"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+s"
 Set-PSReadlineKeyHandler -Chord "F2" -Function ReverseSearchHistory
 Set-PSReadlineKeyHandler -Chord "Shift+F2" -Function ForwardSearchHistory
-# Bug: Shift+Up/Down doesn't work, HistorySearch currently bound to default F8(Shift)
-#Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function HistorySearchBackward
-#Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function HistorySearchForward
 
 #
 # Navigation
@@ -77,29 +82,14 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 #
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
-# Bug: Alt+Left/Right is better suited for this, but right now they wouldn't work
 Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
-# Bug: Ctrl+End/Home should work like Shift+End/Home, but right now that's no possible to achieve
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
-
-#
-# Regions
-#
-#Set-PSReadlineKeyHandler -Chord 'Alt+`' -Function SetMark
-#Set-PSReadlineKeyHandler -Chord 'Alt+x' -Function KillRegion
-#Set-PSReadlineKeyHandler -Chord 'Ctrl+`' -Function ExchangePointAndMark
-
-#
-# Yank
-#
-Set-PSReadlineKeyHandler -Chord 'Alt+v' -Function Yank
-Set-PSReadlineKeyHandler -Chord 'Alt+b' -Function YankPop
 
 #
 # Macro that invokes git commit
@@ -165,7 +155,8 @@ Set-PSReadlineKeyHandler -Key Ctrl+Shift+v `
 # Sometimes you want to get a property of invoke a member on what you've entered so far
 # but you need parens to do that.  This binding will help by putting parens around the current selection,
 # or if nothing is selected, the whole line.
-Set-PSReadlineKeyHandler -Key 'Alt+(' `
+# Alt+(
+Set-PSReadlineKeyHandler -Key 'Alt+9' `
                          -BriefDescription ParenthesizeSelection `
                          -LongDescription "Put parenthesis around the selection or entire line and move the cursor to after the closing parenthesis" `
                          -ScriptBlock {
@@ -254,8 +245,8 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
     }
 }
 
-# This example will replace any aliases on the command line with the resolved commands.
-Set-PSReadlineKeyHandler -Key "Alt+%" `
+# Will normalize command with the resolved commands.
+Set-PSReadlineKeyHandler -Key "Alt+n" `
                          -BriefDescription ExpandAliases `
                          -LongDescription "Replace all aliases with the full command" `
                          -ScriptBlock {
@@ -272,23 +263,44 @@ Set-PSReadlineKeyHandler -Key "Alt+%" `
     {
         if ($token.TokenFlags -band [System.Management.Automation.Language.TokenFlags]::CommandName)
         {
-            $alias = $ExecutionContext.InvokeCommand.GetCommand($token.Extent.Text, 'Alias')
-            if ($alias -ne $null)
-            {
-                $resolvedCommand = $alias.ResolvedCommandName
-                if ($resolvedCommand -ne $null)
-                {
-                    $extent = $token.Extent
-                    $length = $extent.EndOffset - $extent.StartOffset
-                    [PSConsoleUtilities.PSConsoleReadLine]::Replace(
-                        $extent.StartOffset + $startAdjustment,
-                        $length,
-                        $resolvedCommand)
+            $command = $ExecutionContext.InvokeCommand.GetCommand($token.Extent.Text, 'All')
 
-                    # Our copy of the tokens won't have been updated, so we need to
-                    # adjust by the difference in length
-                    $startAdjustment += ($resolvedCommand.Length - $length)
-                }
+            $resolvedCommand = if ($command -is [System.Management.Automation.AliasInfo])
+            {
+                $command.ResolvedCommandName.ToString()
+            }
+            elseif ($command -is [System.Management.Automation.FunctionInfo])
+            {
+                $command.ToString()
+            }
+            elseif ($command -is [System.Management.Automation.CmdletInfo])
+            {
+                $command.ToString()
+            }
+
+            $resolvedCommand = switch ($resolvedCommand)
+            {
+                "ForEach-Object"    {"foreach"}
+                "Where-Object"      {"where"}
+                "Measure-Object"    {"measure"}
+                "Select-Object"     {"select"}
+                "Sort-Object"       {"sort"}
+                "Get-ChildItem"     {"ls"}
+                default             {$psitem}
+            }
+
+            if ($resolvedCommand)
+            {
+                $extent = $token.Extent
+                $length = $extent.EndOffset - $extent.StartOffset
+                [PSConsoleUtilities.PSConsoleReadLine]::Replace(
+                    $extent.StartOffset + $startAdjustment,
+                    $length,
+                    $resolvedCommand)
+
+                # Our copy of the tokens won't have been updated, so we need to
+                # adjust by the difference in length
+                $startAdjustment += ($resolvedCommand.Length - $length)
             }
         }
     }
@@ -306,6 +318,14 @@ Set-PSReadlineKeyHandler -Key F1 `
     $errors = $null
     $cursor = $null
     [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
+
+    if( ($tokens.Count -eq 1) -and ($tokens.Kind -eq "EndOfInput") )
+    {
+        [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+        [PSConsoleUtilities.PSConsoleReadLine]::Insert("Measure-LastCommand")
+        [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+        return
+    }
 
     $commandAst = $ast.FindAll( {
         $node = $args[0]
@@ -331,51 +351,4 @@ Set-PSReadlineKeyHandler -Key F1 `
             }
         }
     }
-}
-
-
-#
-# Ctrl+Shift+j then type a key to mark the current directory.
-# Ctrj+j then the same key will change back to that directory without
-# needing to type cd and won't change the command line.
-
-#
-$global:PSReadlineMarks = @{}
-
-Set-PSReadlineKeyHandler -Key Ctrl+Shift+j `
-                         -BriefDescription MarkDirectory `
-                         -LongDescription "Mark the current directory" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $key = [Console]::ReadKey($true)
-    $global:PSReadlineMarks[$key.KeyChar] = $pwd
-}
-
-Set-PSReadlineKeyHandler -Key Ctrl+j `
-                         -BriefDescription JumpDirectory `
-                         -LongDescription "Goto the marked directory" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $key = [Console]::ReadKey()
-    $dir = $global:PSReadlineMarks[$key.KeyChar]
-    if ($dir)
-    {
-        cd $dir
-        [PSConsoleUtilities.PSConsoleReadLine]::InvokePrompt()
-    }
-}
-
-Set-PSReadlineKeyHandler -Key Alt+j `
-                         -BriefDescription ShowDirectoryMarks `
-                         -LongDescription "Show the currently marked directories" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $global:PSReadlineMarks.GetEnumerator() | % {
-        [PSCustomObject]@{Key = $_.Key; Dir = $_.Value} } |
-        Format-Table -AutoSize | Out-Host
-
-    [PSConsoleUtilities.PSConsoleReadLine]::InvokePrompt()
 }
