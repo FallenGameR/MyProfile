@@ -1,12 +1,9 @@
-Ctrl+Alt+C - commit
-Ctrl+Alt+B - gite
-Ctrl+Alt+G - gvim
-Ctrl+Alt+J - CodeFlow
-Ctrl+Alt+P - LinqPad
-Ctrl+Acl+L - solution explorer
-Ctrl+Alt+X - PowerShell
-
-Alt+Q/E/A/D - shell movements
-
-Windows/TotalCommander/gvim/Powershell/Studio
-
+                            Windows | TotalCommander | gvim | Powershell | Studio
+Ctrl+Alt+C (commit)                 |                |      |            |
+Ctrl+Alt+B (gite)                   |                |      |            |  
+Ctrl+Alt+G (gvim)                   |                |      |            |
+Ctrl+Alt+J (CodeFlow)               |                |      |            |
+Ctrl+Alt+P (LinqPad)                |                |      |            |
+Ctrl+Acl+L (solution explorer)      |                |      |            |
+Ctrl+Alt+X (PowerShell)             |                |      |            |
+Alt+Q/E/A/D (shell movements)       |                |      |            |
