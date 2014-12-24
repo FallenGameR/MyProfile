@@ -2,15 +2,15 @@
 Alt+C (commit)                 |                |      |            |
 Alt+B (gite)                   |                |      |            |  
 Alt+G (gvim)                   |                |      |            |
-Alt+J (CodeFlow)               |                |      |            |
-Alt+P (LinqPad)                |                |      |            |
 Alt+X (PowerShell)             |                |      |            |
-Ctrl+X exit                    |                |      |            |
 Alt+Q/E/A/D (shell movements)  |                |      |            |
+Ctrl+X exit                    |                |      |            |
 
 Windows invocations are global and use Ctrl+Alt
 Winamp invocations are global and use Ctrl+Alt
 
 Reservations
 Ctrl+Acl+L (solution explorer) 
+Ctrl+Alt+J (CodeFlow)
+Ctrl+Alt+P (LinqPad)
 
