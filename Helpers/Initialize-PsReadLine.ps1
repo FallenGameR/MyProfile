@@ -129,7 +129,7 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
 #
 # Macro that invokes git commit
 #
-Set-PSReadlineKeyHandler -Key Ctrl+Alt+C `
+Set-PSReadlineKeyHandler -Key Alt+c `
                          -BriefDescription GitExtensionsCommit `
                          -LongDescription "GitExtensions commit dialog invocation" `
                          -ScriptBlock {
@@ -141,7 +141,7 @@ Set-PSReadlineKeyHandler -Key Ctrl+Alt+C `
 #
 # Macro that invokes gite
 #
-Set-PSReadlineKeyHandler -Key Ctrl+Alt+B `
+Set-PSReadlineKeyHandler -Key Alt+b `
                          -BriefDescription GitExtensions `
                          -LongDescription "GitExtensions main dialog invocation" `
                          -ScriptBlock {
