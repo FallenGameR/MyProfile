@@ -115,6 +115,7 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
     [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
     if( $string )
     {
+        Add-Type -AssemblyName PresentationCore
         [System.Windows.Clipboard]::SetText($string)
         [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
         return
