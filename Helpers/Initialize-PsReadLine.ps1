@@ -92,14 +92,13 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
 #
 # Ctrl+X that either:
 # - cuts selected text
-# - cuts current line
+# - cuts whole unselected text
 # - exits console
 #
 Set-PSReadlineKeyHandler -Key Ctrl+x `
-                         -BriefDescription Test `
-                         -LongDescription "Test" `
-                         -ScriptBlock `
-{
+                         -BriefDescription CutOrExit `
+                         -LongDescription "Cuts selection, whole input or exits console" `
+                         -ScriptBlock {
     # Work as cut if text is selected
     $start = $null
     $length = $null
