@@ -31,7 +31,7 @@ switch ($env:ComputerName)
 {
     "ALEXKO-DEV"
     {
-        $dropbox = "c:\Users\alexko\Dropbox\"
+        $dropbox = "e:\Dropbox\"
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
     }
