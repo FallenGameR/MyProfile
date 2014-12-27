@@ -55,8 +55,6 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+e' -Function EnableDemoMode
 Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+d' -Function DisableDemoMode
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
-# TODO: cut current line or do exit
-Set-PSReadlineKeyHandler -Chord "Ctrl+x" -Function DeleteCharOrExit
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 
 #
@@ -90,6 +88,44 @@ Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
+
+#
+# Ctrl+X that either:
+# - cuts selected text
+# - cuts current line
+# - exits console
+#
+Set-PSReadlineKeyHandler -Key Ctrl+x `
+                         -BriefDescription Test `
+                         -LongDescription "Test" `
+                         -ScriptBlock `
+{
+    # Work as cut if text is selected
+    $start = $null
+    $length = $null
+    [PSConsoleUtilities.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
+    if( $length -gt 0 )
+    {
+        [PSConsoleUtilities.PSConsoleReadLine]::Cut()
+        return
+    }
+
+    # Work as line cut if no text is selected, but there is input
+    $string = $null
+    $cursor = $null
+    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+    if( $string )
+    {
+        [System.Windows.Clipboard]::SetText($string)
+        [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+        return
+    }
+
+    # Otherwise quicly close the console
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("exit")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
 
 #
 # Macro that invokes git commit
