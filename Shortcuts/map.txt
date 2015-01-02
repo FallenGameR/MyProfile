@@ -6,12 +6,17 @@ Alt+X (PowerShell)             |       +        |       |            |
 Alt+Q/E/A/D (shell movements)  |      n/a       |       |      +     |
 Ctrl+X line cut/exit           |       +        |   +   |      +     |
 
-Windows invocations are global and use Ctrl+Alt
-Winamp invocations are global and use Ctrl+Alt
+Windows and Winamp invocations are global and use Ctrl+Alt:
+Ctrl+Alt+G - GVim
+Ctrl+Acl+J - Winamp Jump
+Ctrl+Acl+L - (reserved) VS Solution Explorer
+Ctrl+Alt+O - OneNote
+Ctrl+Alt+P - LinqPad
+Ctrl+Alt+W - CodeFlow
 
-Reservations
-Ctrl+Acl+L (solution explorer) 
-Ctrl+Alt+J (CodeFlow) - Winamp jump to
-Ctrl+Alt+P (LinqPad)
-
+Shortcuts copy to:
+C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools
 
