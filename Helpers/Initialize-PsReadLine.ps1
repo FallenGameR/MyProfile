@@ -128,7 +128,31 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
 }
 
 #
-# Macro that invokes git commit
+# Alt+g invokes gvim
+#
+Set-PSReadlineKeyHandler -Key Alt+g `
+                         -BriefDescription GVim `
+                         -LongDescription "GVim invocation" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("gvim")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
+#
+# Alt+x invokes powershell in new window
+#
+Set-PSReadlineKeyHandler -Key Alt+x `
+                         -BriefDescription PowershellNewWindow `
+                         -LongDescription "Opens powershell in new window" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("start powershell")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
+#
+# Alt+c invokes git commit
 #
 Set-PSReadlineKeyHandler -Key Alt+c `
                          -BriefDescription GitExtensionsCommit `
@@ -140,7 +164,7 @@ Set-PSReadlineKeyHandler -Key Alt+c `
 }
 
 #
-# Macro that invokes gite
+# Alt+b invokes gite
 #
 Set-PSReadlineKeyHandler -Key Alt+b `
                          -BriefDescription GitExtensions `
