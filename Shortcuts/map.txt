@@ -26,3 +26,6 @@ Startup:
 - Tagger
 
 Environment anchors for Total Commander.
+
+Gite presence
+Git aliases
