@@ -24,3 +24,5 @@ Startup:
 - Winamp
 - WinPad
 - Tagger
+
+Environment anchors for Total Commander.
