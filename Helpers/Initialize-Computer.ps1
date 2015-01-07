@@ -34,18 +34,30 @@ switch ($env:ComputerName)
         $dropbox = "e:\Dropbox\"
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
+        $opensource = $null
+        $azcompute = $null
+        $apgold = $null
+        $root = $null
     }
     "ALEXKO-X1"
     {
         $dropbox = "c:\Users\alexko\Dropbox\"
         $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "c:\Users\alexko\SkyDrive @ Microsoft\"
+        $opensource = "c:\src\opensource\"
+        $azcompute = "c:\src\autopilot\az_compute\"
+        $apgold = "c:\src\autopilot\apgold_sd\"
+        $root = "c:\src\root\"
     }
     "TACHIKOMA"
     {
         $dropbox = "d:\Dropbox\"
         $oneDrive = "d:\OneDrive\"
         $oneDriveMicrosoft = $null
+        $opensource = $null
+        $azcompute = $null
+        $apgold = $null
+        $root = $null
     }
 }
 
