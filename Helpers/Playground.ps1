@@ -38,7 +38,7 @@ function scd
 
     if( $command -eq "Diff" )
     {
-        $override = ls | sort LastWriteTime -Descending | select -f 1
+        $override = ls | where name -match Replacement | sort LastWriteTime -Descending | select -f 1
         APConfigTool Diff -f $override.FullName
     }
 
