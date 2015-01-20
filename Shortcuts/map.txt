@@ -2,8 +2,9 @@
 Alt+C (commit)                 |       +        |   +   |      +     |
 Alt+B (gite)                   |       +        |   +   |      +     |  
 Alt+G (gvim)                   |       +        |   +   |      +     |
-Alt+X (PowerShell)             |       +        |   -   |      +     |
-Alt+Q/E/A/D (shell movements)  |      n/a       |   -   |      +     |
+Alt+X (PowerShell)             |       +        |   +   |      +     |
+Alt+T (translation)            |       +        |   +   |      +     |
+Alt+Q/E/A/D (shell movements)  |      n/a       |  +/-  |      +     |
 Ctrl+X line cut/exit           |       +        |  +/-  |      +     |
 
 Windows and Winamp invocations are global and use Ctrl+Alt:
@@ -24,8 +25,6 @@ Startup:
 - Winamp
 - WinPad
 - Tagger
-
-Environment anchors for Total Commander.
 
 Gite presence
 Git aliases

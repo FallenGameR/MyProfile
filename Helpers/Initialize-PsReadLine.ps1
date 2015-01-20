@@ -140,6 +140,18 @@ Set-PSReadlineKeyHandler -Key Alt+g `
 }
 
 #
+# Alt+t invokes translator
+#
+Set-PSReadlineKeyHandler -Key Alt+t `
+                         -BriefDescription Translator `
+                         -LongDescription "Translator invocation" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("c:\tools\Multitran\network\multitran.exe")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
+#
 # Alt+x invokes powershell in new window
 #
 Set-PSReadlineKeyHandler -Key Alt+x `

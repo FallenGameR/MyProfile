@@ -10,7 +10,8 @@ Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 
 Set-Alias new New-Object
 Set-Alias rename Rename-Item
-Set-Alias m measure
+Set-Alias m Measure-Object
+Set-Alias gite "c:\programs\GitExtensions\GitExtensions.exe"
 
 # Environment setup
 $addToPath =
