@@ -65,9 +65,9 @@ switch ($env:ComputerName)
 # Set up environment variables
 function Set-EnvironmentVariable( $name, $value )
 {
-    [Environment]::SetEnvironmentVariable( $name, $value, "User" )
     if( (Get-Item env:$name -ea Ignore).Value -ne $value )
     {
+        [Environment]::SetEnvironmentVariable( $name, $value, "User" )
         Set-Item env:$name $value
     }
 }
