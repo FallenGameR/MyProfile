@@ -9,6 +9,7 @@ if( $initialized )
 # Helper functions
 function New-Junction( $from, $to )
 {
+    # Set-junction is needed instead
     cmd /c "mklink /J ""$To"" ""$From"""
 }
 
@@ -62,13 +63,22 @@ switch ($env:ComputerName)
 }
 
 # Set up environment variables
-[Environment]::SetEnvironmentVariable( "Dropbox", $dropbox, "User" )
-[Environment]::SetEnvironmentVariable( "OneDrive", $oneDrive, "User" )
-[Environment]::SetEnvironmentVariable( "OneDriveMicrosoft", $oneDriveMicrosoft, "User" )
-[Environment]::SetEnvironmentVariable( "Opensource", $opensource, "User" )
-[Environment]::SetEnvironmentVariable( "AzCompute", $azcompute, "User" )
-[Environment]::SetEnvironmentVariable( "ApGold", $apgold, "User" )
-[Environment]::SetEnvironmentVariable( "Root", $root, "User" )
+function Set-EnvironmentVariable( $name, $value )
+{
+    [Environment]::SetEnvironmentVariable( $name, $value, "User" )
+    if( (Get-Item env:$name -ea Ignore).Value -ne $value )
+    {
+        Set-Item env:$name $value
+    }
+}
+Set-EnvironmentVariable "Dropbox" $dropbox
+Set-EnvironmentVariable "OneDrive" $oneDrive
+Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
+Set-EnvironmentVariable "Opensource" $opensource
+Set-EnvironmentVariable "AzCompute" $azcompute
+Set-EnvironmentVariable "ApGold" $apgold
+Set-EnvironmentVariable "Root" $root
+Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Tools folder creation
 if( -not (Test-Path "c:\tools") )
