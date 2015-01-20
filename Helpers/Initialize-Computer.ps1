@@ -61,12 +61,19 @@ switch ($env:ComputerName)
     }
 }
 
-# TODO: test that we have admin rights?
-# or better - test that current user can do anything to drive c:\
+# Set up environment variables
+[Environment]::SetEnvironmentVariable( "Dropbox", $dropbox, "User" )
+[Environment]::SetEnvironmentVariable( "OneDrive", $oneDrive, "User" )
+[Environment]::SetEnvironmentVariable( "OneDriveMicrosoft", $oneDriveMicrosoft, "User" )
+[Environment]::SetEnvironmentVariable( "Opensource", $opensource, "User" )
+[Environment]::SetEnvironmentVariable( "AzCompute", $azcompute, "User" )
+[Environment]::SetEnvironmentVariable( "ApGold", $apgold, "User" )
+[Environment]::SetEnvironmentVariable( "Root", $root, "User" )
 
 # Tools folder creation
 if( -not (Test-Path "c:\tools") )
 {
+    # Do we need to test that we have admin rights / that current user can do anything to drive c:\ ?
     mkdir "c:\tools" -ea Stop | Out-Null
 }
 
@@ -80,8 +87,11 @@ foreach( $tool in ls $dropbox\tools -Directory | where Name -notmatch "^_" )
     }
 }
 
-# folder hide
+    # folder hide
 # orogram files function
 # environment variables setup - for total commander shortcuts
 # shortcut creation
 
+# f/t to move after/before first space
+# b/ge to move word wise
+# () to move in code quicker
