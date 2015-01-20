@@ -87,11 +87,7 @@ foreach( $tool in ls $dropbox\tools -Directory | where Name -notmatch "^_" )
     }
 }
 
-    # folder hide
-# orogram files function
-# environment variables setup - for total commander shortcuts
+# folder hide
+# program files function
 # shortcut creation
-
-# f/t to move after/before first space
-# b/ge to move word wise
-# () to move in code quicker
+# c:\tools\Multitran\network\ to path
