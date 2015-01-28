@@ -50,6 +50,16 @@ switch ($env:ComputerName)
         $apgold = "c:\src\autopilot\apgold_sd\"
         $root = "c:\src\root\"
     }
+    "AUTOPILOTHUB"
+    {
+        $dropbox = $null
+        $oneDrive = $null
+        $oneDriveMicrosoft = $null
+        $opensource = $null
+        $azcompute = $null
+        $apgold = "d:\enlistments\ApGold\"
+        $root = "c:\src\root\"
+    }
     "TACHIKOMA"
     {
         $dropbox = "d:\Dropbox\"
@@ -88,7 +98,7 @@ if( -not (Test-Path "c:\tools") )
 }
 
 # Tools junction creation
-foreach( $tool in ls $dropbox\tools -Directory | where Name -notmatch "^_" )
+foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     $to = "c:\tools\$($tool.Name)"
     if( -not (Test-Path $to) )
