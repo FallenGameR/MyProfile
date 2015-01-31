@@ -7,7 +7,7 @@ function devenv
 {
     if( -not $args )
     {
-        $file = @(ls "*.csproj")
+        $file = @(ls | where Name -match "\.(sln|csproj)")
         if( $file.Count -eq 1 )
         {
             & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $file[0]
