@@ -35,10 +35,10 @@ switch ($env:ComputerName)
         $dropbox = "e:\Dropbox\"
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
-        $opensource = $null
-        $azcompute = $null
-        $apgold = $null
-        $root = $null
+        $opensource = "d:\opensource\"
+        $azcompute = "d:\autopilot\az_compute\"
+        $apgold = "d:\autopilot\apgold\"
+        $root = "d:\root\"
     }
     "ALEXKO-X1"
     {
@@ -75,9 +75,9 @@ switch ($env:ComputerName)
 # Set up environment variables
 function Set-EnvironmentVariable( $name, $value )
 {
-    [Environment]::SetEnvironmentVariable( $name, $value, "User" )
     if( (Get-Item env:$name -ea Ignore).Value -ne $value )
     {
+        [Environment]::SetEnvironmentVariable( $name, $value, "User" )
         Set-Item env:$name $value
     }
 }
