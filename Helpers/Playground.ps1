@@ -10,7 +10,7 @@ function devenv
         $file = @(ls "*.csproj")
         if( $file.Count -eq 1 )
         {
-            & "c:\programs\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe" $file[0]
+            & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $file[0]
         }
         else
         {
@@ -18,7 +18,7 @@ function devenv
         }
     }
 
-    & "c:\programs\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe" $args
+    & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $args
 }
 
 function scd
