@@ -5,7 +5,11 @@
 
 function devenv
 {
-    if( -not $args )
+    if( $args )
+    {
+        & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $args
+    }
+    else
     {
         $file = @(ls | where Name -match "\.(sln|csproj)")
         if( $file.Count -eq 1 )
@@ -14,11 +18,9 @@ function devenv
         }
         else
         {
-            throw "use arguments, there are several projects in this folder"
+            throw "Can't auto resolve solution or project to open, pass file to open in arguments"
         }
     }
-
-    & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $args
 }
 
 function scd
