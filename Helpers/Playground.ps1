@@ -3,6 +3,14 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
+function Receive-FromBuildDrop( $phxShare, $path, $session = $(s (rnd) -cred) )
+{
+    icm $session {cd ~}
+    icm $session {ls | del}
+    icm $session {copy $USING:phxShare\retail\amd64\$path\* .}
+    receive-file $session C:\Users\alexko\Documents c:\Users\alexko\Downloads\builddrop
+}
+
 function devenv
 {
     if( $args )
