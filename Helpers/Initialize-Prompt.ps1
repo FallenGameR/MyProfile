@@ -19,7 +19,8 @@ $function:prompt = {
         if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
         {
             $SCRIPT:lastCommandId = $lastCommand.Id
-            Add-Content $historyFile $lastCommand.CommandLine
+            $normalized = $lastCommand.CommandLine -replace "`r?`n", "`r`n"
+            Add-Content $historyFile $lastCommand.CommandLine $normalized
         }
     }
     else
