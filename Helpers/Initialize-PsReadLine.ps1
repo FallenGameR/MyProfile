@@ -1,7 +1,8 @@
 # Workaround for Build that loads Powershell with profile and PsReadline
 # fails it with https://github.com/lzybkr/PSReadLine/issues/182
 $parentProcessId = (Get-CimInstance Win32_Process -Filter "ProcessId='$pid'").ParentProcessId
-if( (Get-Process -Id $parentProcessId).ProcessName -notmatch "explorer|TOTALCMD" )
+$parentProcess = Get-Process -Id $parentProcessId -ea Ignore
+if( $parentProcess -and ($parentProcess.ProcessName -notmatch "explorer|TOTALCMD") )
 {
     return
 }
