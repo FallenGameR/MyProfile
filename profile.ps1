@@ -21,6 +21,7 @@ $addToPath =
     "c:\tools\ILSpy\",
     "c:\tools\LinqPad\",
     "c:\tools\Tagger\",
+    "c:\tools\Ticino\",
     "c:\tools\WinDirStat\",
     "c:\tools\xts\"
 
