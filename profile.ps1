@@ -19,8 +19,10 @@ $addToPath =
     "c:\tools\SysinternalsSuite\",
     "c:\tools\Vim\vim74\",
     "c:\tools\ILSpy\",
+    "c:\tools\Lens\",
     "c:\tools\LinqPad\",
     "c:\tools\Tagger\",
+    "c:\tools\Ticino\",
     "c:\tools\WinDirStat\",
     "c:\tools\xts\"
 

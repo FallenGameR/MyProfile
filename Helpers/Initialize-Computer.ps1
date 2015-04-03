@@ -36,7 +36,7 @@ switch ($env:ComputerName)
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
         $opensource = "d:\opensource\"
-        $azcompute = "d:\autopilot\az_compute\"
+        $azcompute = "d:\autopilot\gitsd.az_compute\"
         $apgold = "d:\autopilot\apgold\"
         $root = "d:\root\"
     }
