@@ -28,6 +28,7 @@ $addToPath =
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
+$env:TERM = "msys"
 
 # CoreXTAutomation setup
 ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
