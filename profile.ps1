@@ -5,6 +5,7 @@ $global:MaximumHistoryCount = 1024
 $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
 $PSDefaultParameterValues["edit:NewEditor"] = $true
+$PSDefaultParameterValues["Enter-TunnelSession:AutoComplete"] = $true
 
 Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
 
