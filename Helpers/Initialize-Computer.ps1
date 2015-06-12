@@ -145,14 +145,29 @@ if( -not $elevated )
 }
 
 # Shortcut creation
-$existingShortcutPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
-$existingShortcut = Get-Item $existingShortcutPath -ea Ignore
-$correctShortcutPath = "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk"
-$correctShortcut = Get-Item $correctShortcutPath
-if( (-not $existingShortcut) -or ($existingShortcut.Length -ne $correctShortcut.Length) )
+function Copy-UpdatedFile( $from, $to )
 {
-    copy $correctShortcutPath $existingShortcutPath -Force
+    $toFile = Get-Item $to -ea Ignore
+    $fromFile = Get-Item $from
+
+    $toFolder = Split-Path $to
+    if( -not (Test-Path $toFolder) )
+    {
+        mkdir $toFolder | Out-Null
+    }
+
+    if( (-not $toFile) -or ($toFile.Length -ne $fromFile.Length) )
+    {
+        copy $from $to -Force
+    }
 }
+
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\OneNote 2013.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\OneNote 2013.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
+
 
 # Common root junctions
 New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
