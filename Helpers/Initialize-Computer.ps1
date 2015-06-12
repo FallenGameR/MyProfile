@@ -10,20 +10,34 @@ if( $initialized )
 function New-Junction( $from, $to )
 {
     # Set-junction is needed instead
-    cmd /c "mklink /J ""$To"" ""$From"""
+    if( -not (Test-Path $to) )
+    {
+        cmd /c "mklink /J ""$To"" ""$From"""
+    }
 }
 
 filter Set-Visible( [bool] $makeVisible )
 {
-    # TODO: debug
     $attributes = (Get-ItemProperty $psitem).Attributes
     $hidden = $attributes -band [Io.Fileattributes]::Hidden
-    if( $hidden -xor $makeVisible )
+
+    if( -not ($hidden -xor $makeVisible) )
     {
+        $attributes = $attributes -bxor [Io.Fileattributes]::Hidden
+        $attributes = $attributes -band (-bnot [Io.Fileattributes]::Directory)
         Set-ItemProperty `
             -Path $psitem `
             -Name Attributes `
-            -Value ($attributes -bxor [Io.Fileattributes]::Hidden)
+            -Value $attributes
+    }
+}
+
+function Set-EnvironmentVariable( $name, $value )
+{
+    if( (Get-Item env:$name -ea Ignore).Value -ne $value )
+    {
+        [Environment]::SetEnvironmentVariable( $name, $value, "User" )
+        Set-Item env:$name $value
     }
 }
 
@@ -73,14 +87,6 @@ switch ($env:ComputerName)
 }
 
 # Set up environment variables
-function Set-EnvironmentVariable( $name, $value )
-{
-    if( (Get-Item env:$name -ea Ignore).Value -ne $value )
-    {
-        [Environment]::SetEnvironmentVariable( $name, $value, "User" )
-        Set-Item env:$name $value
-    }
-}
 Set-EnvironmentVariable "Dropbox" $dropbox
 Set-EnvironmentVariable "OneDrive" $oneDrive
 Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
@@ -101,18 +107,8 @@ if( -not (Test-Path "c:\tools") )
 # Tools junction creation
 foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
-    $to = "c:\tools\$($tool.Name)"
-    if( -not (Test-Path $to) )
-    {
-        New-Junction $tool.FullName $to
-    }
+    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
-
-# folder hide
-# program files function
-
-
-
 
 # Default console color setup
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/
@@ -138,7 +134,6 @@ function Set-DefaultPowershellColors( $path )
 Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 
-
 # The rest of the commands are possible only from an elevated prompt
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $principal = [Security.Principal.WindowsPrincipal] $identity
@@ -159,9 +154,16 @@ if( (-not $existingShortcut) -or ($existingShortcut.Length -ne $correctShortcut.
     copy $correctShortcutPath $existingShortcutPath -Force
 }
 
+# Common root junctions
+New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
+New-Junction "c:\Program Files (x86)" "c:\programs"
+New-Junction $home "c:\home"
+
+# Folder hide
+"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
+
 # Installing tools
 return
-
 
 Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install gitextensions -y
