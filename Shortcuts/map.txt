@@ -19,7 +19,8 @@ Shortcuts copy to:
 C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
 C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013
-C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools
+
+copy ".\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
 
 Startup:
 - Winamp
