@@ -138,8 +138,6 @@ function Set-DefaultPowershellColors( $path )
 Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 
-# c:\tools\Multitran\network\ to path
-
 
 # The rest of the commands are possible only from an elevated prompt
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -167,6 +165,7 @@ return
 
 Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install gitextensions -y
+choco install kdiff3 -y
 
 # Setting up git
 git config --global user.name "Aleksandr Kostikov"
