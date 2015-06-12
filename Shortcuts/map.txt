@@ -15,15 +15,5 @@ Ctrl+Alt+O - OneNote
 Ctrl+Alt+P - LinqPad
 Ctrl+Alt+W - CodeFlow
 
-Shortcuts copy to:
-C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
-C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow
-
-
 Startup:
 - Winamp
-- WinPad
-- Tagger
-
-Gite presence
-Git aliases

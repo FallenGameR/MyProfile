@@ -167,7 +167,8 @@ Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\OneNote 2013.lnk" "C:\ProgramData\M
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
-
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Tagger.lnk" "c:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Tagger.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\WindowPad.lnk" "c:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WindowPad.lnk"
 
 # Common root junctions
 New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
