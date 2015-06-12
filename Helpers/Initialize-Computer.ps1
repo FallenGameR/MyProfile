@@ -160,7 +160,7 @@ Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powe
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 
 # The rest of the commands are possible only from an elevated prompt
-if( -not Test-Elevated )
+if( -not (Test-Elevated) )
 {
     return
 }
