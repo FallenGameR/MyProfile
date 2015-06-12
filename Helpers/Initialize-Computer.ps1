@@ -110,7 +110,9 @@ foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch
 
 # folder hide
 # program files function
-# Shortcut creation
+
+
+
 
 # Default console color setup
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/
@@ -138,7 +140,8 @@ Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powe
 
 # c:\tools\Multitran\network\ to path
 
-# Installing tools
+
+# The rest of the commands are possible only from an elevated prompt
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $principal = [Security.Principal.WindowsPrincipal] $identity
 $role = [Security.Principal.WindowsBuiltInRole] "Administrator"
@@ -147,6 +150,20 @@ if( -not $elevated )
 {
     return
 }
+
+# Shortcut creation
+$existingShortcutPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
+$existingShortcut = Get-Item $existingShortcutPath -ea Ignore
+$correctShortcutPath = "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk"
+$correctShortcut = Get-Item $correctShortcutPath
+if( (-not $existingShortcut) -or ($existingShortcut.Length -ne $correctShortcut.Length) )
+{
+    copy $correctShortcutPath $existingShortcutPath -Force
+}
+
+# Installing tools
+return
+
 
 Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install gitextensions -y
@@ -186,6 +203,3 @@ git config --global alias.df "diff head~1..head --word-diff-regex=[\.a-z]+"
 
 # Don't run computer configuration anymore
 Get-Date | Set-Content $initializedFile
-
-
-
