@@ -24,7 +24,6 @@ $addToPath =
     "c:\tools\LinqPad\",
     "c:\tools\Multitran\network",
     "c:\tools\Tagger\",
-    "c:\tools\Ticino\",
     "c:\tools\WinDirStat\",
     "c:\tools\xts\"
 
