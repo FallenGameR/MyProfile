@@ -187,12 +187,6 @@ function edit( [string] $File, [switch] $NewEditor )
     & gvim.exe $params
 }
 
-
-function cf
-{
-    & \\codeflow\public\cf $args
-}
-
 # Helpers
 function Get-FileNameArgument( [string] $file )
 {
@@ -212,8 +206,6 @@ function Get-FileNameArgument( [string] $file )
         (gi $file).FullName
     }
 }
-
-function dump( [string] $str ) { for( $i=0; $i -lt $str.Length; $i += 1 ) { $char = $str[$i]; $num = [int] $char; "$char - $num" } }
 
 function Find-VSCommand( [string] $command )
 {
