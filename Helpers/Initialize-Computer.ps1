@@ -88,6 +88,10 @@ function Copy-UpdatedFile( $from, $to )
     }
 }
 
+# Default console color setup
+Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
+Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
+
 # Cloud folders setup
 switch ($env:ComputerName)
 {
@@ -131,6 +135,11 @@ switch ($env:ComputerName)
         $apgold = $null
         $root = $null
     }
+    default
+    {
+        # No extra setup on unknown machines
+        return
+    }
 }
 
 # Set up environment variables
@@ -156,10 +165,6 @@ foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
-
-# Default console color setup
-Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
-Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 
 # The rest of the commands are possible only from an elevated prompt
 if( -not (Test-Elevated) )
