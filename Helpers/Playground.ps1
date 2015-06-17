@@ -3,6 +3,21 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
+function Send-Tool( $session, $tool )
+{
+    $toolPaths = @(ls c:\tools | where name -match $tool | % fullname)
+    if( -not $toolPaths )
+    {
+        Write-Warning "Can't find tool $tool in c:\tools"
+    }
+    if( $toolPaths.Count -gt 1 )
+    {
+        Write-Warning "Note that mutiple tools were matched: $($toolPaths.BaseName -join ", ")"
+    }
+
+    Send-File $session $toolPaths "~\..\Desktop" -Compress
+}
+
 function Get-Song( $artist, $song )
 {
     $music = "$oneDrive\music"
