@@ -10,6 +10,11 @@ function New-Junction( $from, $to )
 
 filter Set-Visible( [bool] $makeVisible )
 {
+    if( -not (Test-Path $psitem ) )
+    {
+        return
+    }
+
     $attributes = (Get-ItemProperty $psitem).Attributes
     $hidden = $attributes -band [Io.Fileattributes]::Hidden
 
