@@ -59,12 +59,14 @@ function Set-DefaultPowershellColors( $path )
     Set-Location $path
 
     New-ItemProperty . ColorTable05 -type DWORD -value 0x560080 -Force -ea Ignore | Out-Null
+    New-ItemProperty . FaceName -type STRING -value "Lucida Console" -Force -ea Ignore | Out-Null
+    New-ItemProperty . FontFamily -type DWORD -value 0x36 -Force -ea Ignore | Out-Null
+    New-ItemProperty . FontSize -type DWORD -value 0x140000 -Force -ea Ignore | Out-Null
+    New-ItemProperty . FontWeight -type DWORD -value 0x190 -Force -ea Ignore | Out-Null
     New-ItemProperty . PopupColors -type DWORD -value 0xf3 -Force -ea Ignore | Out-Null
+    New-ItemProperty . QuickEdit -type DWORD -value 0x1 -Force -ea Ignore | Out-Null
     New-ItemProperty . ScreenBufferSize -type DWORD -value 0x270f0078 -Force -ea Ignore | Out-Null
     New-ItemProperty . WindowSize -type DWORD -value 0x290078 -Force -ea Ignore | Out-Null
-    New-ItemProperty . FontSize -type DWORD -value 0x140000 -Force -ea Ignore | Out-Null
-    New-ItemProperty . FaceName -type STRING -value "Lucida Console" -Force -ea Ignore | Out-Null
-    New-ItemProperty . QuickEdit -type DWORD -value 0x1 -Force -ea Ignore | Out-Null
 
     Pop-Location
 }
