@@ -10,10 +10,13 @@ $SCRIPT:lastCommandId = -1
 # Prompt
 $function:prompt = {
     $realLastExitCode = $LASTEXITCODE
-    Set-ConsoleFont 10
+    if( $host.Name -eq "ConsoleHost" )
+    {
+        Set-ConsoleFont 10
+    }
 
     # Preserve last command in log file
-    $lastCommand = history -Count 1
+    $lastCommand = Get-History -Count 1
     if( $lastCommand )
     {
         if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
