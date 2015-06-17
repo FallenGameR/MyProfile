@@ -1,11 +1,3 @@
-# Test if initialization is needed
-$initializedFile = Join-Path (Split-Path $PROFILE) "initialized"
-$initialized = Test-Path $initializedFile
-if( $initialized )
-{
-    return
-}
-
 # Helper functions
 function New-Junction( $from, $to )
 {
@@ -188,8 +180,3 @@ New-Junction $home "c:\home"
 
 # Folder hide
 "c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
-
-# Don't run computer configuration anymore
-# NOTE: runs fast as it is - no need
-return
-Get-Date | Set-Content $initializedFile
