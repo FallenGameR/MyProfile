@@ -3,6 +3,14 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
+function Disable-Oacr
+{
+    $env:USE_OACR = 0
+    oacr stop
+    oacr clean
+    oacr set off
+}
+
 function Send-Tool( $session, $tool )
 {
     $toolPaths = @(ls c:\tools | where name -match $tool | % fullname)
