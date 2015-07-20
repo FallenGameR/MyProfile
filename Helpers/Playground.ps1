@@ -30,7 +30,7 @@ function Get-Song( $artist, $song )
 {
     $music = "$oneDrive\music"
     $artists = ls $music -Directory | where BaseName -match $artist
-    $artists | foreach{ ls $psitem.FullName -rec -file | where BaseName -match $song }
+    $artists | foreach{ ls $psitem.FullName -rec -file -force | where BaseName -match $song }
 }
 
 function Receive-FromBuildDrop( $phxShare, $path, $session = $(s (rnd) -cred) )
