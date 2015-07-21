@@ -196,6 +196,18 @@ Set-PSReadlineKeyHandler -Key Alt+b `
     [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
 }
 
+#
+# Alt+u git config remote.origin.url
+#
+Set-PSReadlineKeyHandler -Key Alt+u `
+                         -BriefDescription GitOriginUrl `
+                         -LongDescription "Gets git origin url" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("git config remote.origin.url")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
 # Sometimes you enter a command but realize you forgot to do something else first.
 # This binding will let you save that command in the history so you can recall it,
 # but it doesn't actually execute.  It also clears the line with RevertLine so the
