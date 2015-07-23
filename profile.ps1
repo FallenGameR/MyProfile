@@ -1,6 +1,7 @@
 # Powershell behaviour setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
+$env:PSModulePath += ";$PSScriptRoot\Modules"
 
 $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
