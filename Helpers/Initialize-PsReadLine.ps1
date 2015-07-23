@@ -173,6 +173,18 @@ Set-PSReadlineKeyHandler -Key Alt+x `
 }
 
 #
+# Alt+Shift+x invokes elevated powershell in new window
+#
+Set-PSReadlineKeyHandler -Key Alt+Shift+x `
+                         -BriefDescription PowershellElevatedNewWindow `
+                         -LongDescription "Opens elevated powershell in new window" `
+                         -ScriptBlock {
+    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [PSConsoleUtilities.PSConsoleReadLine]::Insert("start -FilePath (Get-Command powershell).Definition -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
+    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+}
+
+#
 # Alt+c invokes git commit
 #
 Set-PSReadlineKeyHandler -Key Alt+c `
