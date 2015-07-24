@@ -168,6 +168,11 @@ foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
 
+foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+{
+    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+}
+
 # The rest of the commands are possible only from an elevated prompt
 if( -not (Test-Elevated) )
 {
