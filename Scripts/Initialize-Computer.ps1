@@ -106,10 +106,10 @@ switch ($env:ComputerName)
     {
         $dropbox = "c:\Users\alexko\Dropbox\"
         $oneDrive = "c:\Users\alexko\OneDrive\"
-        $oneDriveMicrosoft = "c:\Users\alexko\SkyDrive @ Microsoft\"
-        $opensource = "c:\src\opensource\"
-        $azcompute = "c:\src\autopilot\az_compute\"
-        $apgold = "c:\src\autopilot\apgold_sd\"
+        $oneDriveMicrosoft = "c:\Users\alexko\OneDrive - Microsoft\"
+        $opensource = $null
+        $azcompute = "c:\src\gitsd.az_compute.trimmed\"
+        $apgold = "c:\src\apgold\"
         $root = "c:\src\root\"
     }
     "AUTOPILOTHUB"
