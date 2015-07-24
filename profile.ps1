@@ -37,6 +37,7 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 
 # Additional setup
 . $PSScriptRoot\Scripts\Playground.ps1
+. $PSScriptRoot\Scripts\Load-Functions.ps1
 . $PSScriptRoot\Scripts\Set-ConsoleFont.ps1 | Out-Null
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1

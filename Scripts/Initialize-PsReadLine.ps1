@@ -2,9 +2,23 @@
 # fails it with https://github.com/lzybkr/PSReadLine/issues/182
 $parentProcessId = (Get-CimInstance Win32_Process -Filter "ProcessId='$pid'").ParentProcessId
 $parentProcess = Get-Process -Id $parentProcessId -ea Ignore
-if( $parentProcess -and ($parentProcess.ProcessName -notmatch "explorer|TOTALCMD") )
+if( $parentProcess )
 {
-    return
+    if( $parentProcess.ProcessName -notmatch "explorer|TOTALCMD|Powershell" )
+    {
+        # we expect interactive Powershell session to be started only by
+        # explorer, totalcmd and another powershell precesses
+        return
+    }
+
+    $currentProcess = Get-Process -Id $pid -ea Stop
+    if( ($parentProcess.ProcessName -match "Powershell") -and
+        ((Test-ProcessRedirected $currentProcess) -or (Test-ProcessRedirected $parentProcess) ) )
+    {
+        # in case parent is another powershell process test that both parent and current processes
+        # don't redirect their output and thus are interactive
+        return
+    }
 }
 
 # TODO: ctrl+x selection/line cut/quit

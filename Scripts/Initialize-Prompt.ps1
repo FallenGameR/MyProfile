@@ -1,3 +1,6 @@
+# Elevated test
+$SCRIPT:isElevated = Test-Elevated
+
 # History folder and file
 $SCRIPT:historyFolder = "c:\automation\history\"
 if( -not (Test-Path $historyFolder) )
@@ -31,8 +34,15 @@ $function:prompt = {
         Add-Content $historyFile "# No history at this point of time"
     }
 
+    # Update title
+    $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
+    if( $SCRIPT:isElevated )
+    {
+        $title += "   ELEVATED"
+    }
+    $host.UI.RawUI.WindowTitle = $title
+
     # Update prompt
-    $host.UI.RawUI.WindowTitle = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen
     $LASTEXITCODE = $realLastExitCode
