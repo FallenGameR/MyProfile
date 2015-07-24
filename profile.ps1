@@ -36,11 +36,11 @@ $env:TERM = "msys"
 ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 
 # Additional setup
-. $PSScriptRoot\Helpers\Playground.ps1
-. $PSScriptRoot\Helpers\Set-ConsoleFont.ps1 | Out-Null
-. $PSScriptRoot\Helpers\Initialize-Computer.ps1
-. $PSScriptRoot\Helpers\Initialize-PsReadLine.ps1
-. $PSScriptRoot\Helpers\Initialize-Prompt.ps1
+. $PSScriptRoot\Scripts\Playground.ps1
+. $PSScriptRoot\Scripts\Set-ConsoleFont.ps1 | Out-Null
+. $PSScriptRoot\Scripts\Initialize-Computer.ps1
+. $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
+. $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 
 # Cleaning up variables
 Remove-Variable proc    # Don't know who populates this constant, but it hides pro<tab> = profile
