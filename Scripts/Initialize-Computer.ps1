@@ -100,6 +100,7 @@ switch ($env:ComputerName)
         $opensource = "d:\opensource\"
         $azcompute = "d:\autopilot\gitsd.az_compute\"
         $apgold = "d:\autopilot\apgold\"
+        $playground = $null
         $root = "d:\root\"
     }
     "ALEXKO-X1"
@@ -110,6 +111,7 @@ switch ($env:ComputerName)
         $opensource = $null
         $azcompute = "c:\src\gitsd.az_compute.trimmed\"
         $apgold = "c:\src\apgold\"
+        $playground = "c:\src\pg\"
         $root = "c:\src\root\"
     }
     "AUTOPILOTHUB"
@@ -120,6 +122,7 @@ switch ($env:ComputerName)
         $opensource = $null
         $azcompute = $null
         $apgold = "d:\enlistments\ApGold\"
+        $playground = $null
         $root = "c:\src\root\"
     }
     "TACHIKOMA"
@@ -130,6 +133,7 @@ switch ($env:ComputerName)
         $opensource = $null
         $azcompute = $null
         $apgold = $null
+        $playground = $null
         $root = $null
     }
     default
@@ -147,6 +151,7 @@ Set-EnvironmentVariable "Opensource" $opensource
 Set-EnvironmentVariable "AzCompute" $azcompute
 Set-EnvironmentVariable "ApGold" $apgold
 Set-EnvironmentVariable "Root" $root
+Set-EnvironmentVariable "Playground" $playground
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
 
