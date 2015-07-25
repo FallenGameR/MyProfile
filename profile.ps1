@@ -47,8 +47,8 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 Remove-Variable proc    # Don't know who populates this constant, but it hides pro<tab> = profile
 
 # That's hacky...
-if( -not (Test-Path "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
+if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 {
     return
 }
-. "E:\OneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
+. "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
