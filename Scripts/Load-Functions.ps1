@@ -63,7 +63,17 @@ function Set-DefaultPowershellColors( $path )
     New-ItemProperty . PopupColors -type DWORD -value 0xf3 -Force -ea Ignore | Out-Null
     New-ItemProperty . QuickEdit -type DWORD -value 0x1 -Force -ea Ignore | Out-Null
     New-ItemProperty . ScreenBufferSize -type DWORD -value 0x270f0078 -Force -ea Ignore | Out-Null
-    New-ItemProperty . WindowSize -type DWORD -value 0x290078 -Force -ea Ignore | Out-Null
+
+    if( $env:COMPUTERNAME -eq "ALEXKO-X1")
+    {
+        # Height - 38 lines
+        New-ItemProperty . WindowSize -type DWORD -value 0x260078 -Force -ea Ignore | Out-Null
+    }
+    else
+    {
+        # Height - 40 lines
+        New-ItemProperty . WindowSize -type DWORD -value 0x290078 -Force -ea Ignore | Out-Null
+    }
 
     Pop-Location
 }
