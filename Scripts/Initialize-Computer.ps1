@@ -94,13 +94,13 @@ if( -not (Test-Elevated) )
 
 # Shortcut creation
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\OneNote 2013.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\OneNote 2013.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "C:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Tagger.lnk" "c:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Tagger.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\WindowPad.lnk" "c:\Users\alexko\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WindowPad.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Tagger.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Tagger.lnk"
+Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\WindowPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\WindowPad.lnk"
 
 # Common root junctions
 New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
