@@ -1,5 +1,5 @@
 # Helper functions
-function New-Junction( $from, $to )
+function SCRIPT:New-Junction( $from, $to )
 {
     # Set-junction is needed instead
     if( -not (Test-Path $to) )
@@ -8,7 +8,7 @@ function New-Junction( $from, $to )
     }
 }
 
-filter Set-Visible( [bool] $makeVisible )
+filter SCRIPT:Set-Visible( [bool] $makeVisible )
 {
     if( -not (Test-Path $psitem ) )
     {
@@ -29,7 +29,7 @@ filter Set-Visible( [bool] $makeVisible )
     }
 }
 
-function Set-EnvironmentVariable( $name, $value )
+function SCRIPT:Set-EnvironmentVariable( $name, $value )
 {
     if( (Get-Item env:$name -ea Ignore).Value -ne $value )
     {
@@ -38,7 +38,7 @@ function Set-EnvironmentVariable( $name, $value )
     }
 }
 
-function Test-Elevated
+function SCRIPT:Test-Elevated
 {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = [Security.Principal.WindowsPrincipal] $identity
@@ -47,7 +47,7 @@ function Test-Elevated
 }
 
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/
-function Set-DefaultPowershellColors( $path )
+function SCRIPT:Set-DefaultPowershellColors( $path )
 {
     Push-Location
     Set-Location HKCU:\Console
@@ -78,7 +78,7 @@ function Set-DefaultPowershellColors( $path )
     Pop-Location
 }
 
-function Copy-UpdatedFile( $from, $to )
+function SCRIPT:Copy-UpdatedFile( $from, $to )
 {
     $toFile = Get-Item $to -ea Ignore
     $fromFile = Get-Item $from
@@ -95,7 +95,7 @@ function Copy-UpdatedFile( $from, $to )
     }
 }
 
-function Test-ProcessRedirected( $process )
+function SCRIPT:Test-ProcessRedirected( $process )
 {
     $process.StartInfo.RedirectStandardInput -or
     $process.StartInfo.RedirectStandardOutput -or
