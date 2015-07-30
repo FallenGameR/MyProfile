@@ -48,7 +48,10 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 Remove-Variable proc    # Don't know who populates this constant, but it hides pro<tab> = profile
 
 # Windows 10 has beatifull maximized powershell window
-Set-WindowStyle MAXIMIZE
+if( [Environment]::OSVersion.Version.Major -ge 10 )
+{
+    Set-WindowStyle MAXIMIZE
+}
 
 # That's hacky...
 if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
