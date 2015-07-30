@@ -1,3 +1,15 @@
+$SCRIPT:profiling = get-date
+$SCRIPT:profilingCounter = 1
+
+function SCRIPT:profile
+{
+    $now = get-date
+    Write-Host "$profilingCounter - $(($profiling - $now).ToString())"
+    $profiling = $now
+    $profilingCounter +=1
+}
+
+
 # Powershell behaviour setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
