@@ -5,7 +5,7 @@ $SCRIPT:ProfilingCounter = 1
 function SCRIPT:Get-Elapsed
 {
     $now = Get-Date
-    $message = "{0:00} # {1}" -f $profilingCounter, ($now - $profiling)
+    $message = "{0:00} #{1}" -f $profilingCounter, ($now - $profiling)
     Write-Host $message -fore darkgreen
     $SCRIPT:Profiling = $now
     $SCRIPT:ProfilingCounter +=1
