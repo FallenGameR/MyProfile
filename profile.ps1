@@ -3,6 +3,12 @@ $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 $env:PSModulePath += ";$PSScriptRoot\Modules"
 
+# PsReadline is already included in Windows 10, no need to have it in modules
+if( [Environment]::OSVersion.Version.Major -lt 10 )
+{
+    $env:PSModulePath += ";$PSScriptRoot\LegacyModules"
+}
+
 $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
 $PSDefaultParameterValues["edit:NewEditor"] = $true
@@ -45,12 +51,12 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Scripts\Playground.ps1
 # 00:00:00.0100053
 . $PSScriptRoot\Scripts\Load-Functions.ps1
-# 00:00:00.1971376
+# 00:00:00.1971376 - TODO: not needed on Win10, exclude from profile as well
 . $PSScriptRoot\Scripts\Set-ConsoleFont.ps1 | Out-Null
 Remove-Variable proc    # hides pro<tab> = profile
-# 00:00:00.2531752
+# 00:00:00.2531752 - TODO: optimize
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
-# 00:00:00.6534536
+# #00:00:00.4593232 - TODO: try to optimize (hard - majority of time is spent in color schema redifinition)
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 # 00:00:00.0170141
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
