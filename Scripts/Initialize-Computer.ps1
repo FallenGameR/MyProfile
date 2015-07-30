@@ -1,6 +1,7 @@
-# Default console color setup
+# Default console color setup -
 Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
+#00:00:00.1761166
 
 # Cloud folders setup
 switch ($env:ComputerName)
@@ -55,6 +56,7 @@ switch ($env:ComputerName)
         return
     }
 }
+#00:00:00.0020009
 
 # Set up environment variables
 Set-EnvironmentVariable "Dropbox" $dropbox
@@ -67,6 +69,7 @@ Set-EnvironmentVariable "Root" $root
 Set-EnvironmentVariable "Playground" $playground
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
+#00:00:00.0140094
 
 # Tools folder creation
 if( -not (Test-Path "c:\tools") )
@@ -74,17 +77,20 @@ if( -not (Test-Path "c:\tools") )
     # Do we need to test that we have admin rights / that current user can do anything to drive c:\ ?
     mkdir "c:\tools" -ea Stop | Out-Null
 }
+#00:00:00.0030026
 
 # Tools junction creation
 foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
+#00:00:00.0290176
 
 foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
+#00:00:00.0110072
 
 # The rest of the commands are possible only from an elevated prompt
 if( -not (Test-Elevated) )
@@ -101,15 +107,17 @@ Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\W
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Tagger.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Tagger.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\WindowPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\WindowPad.lnk"
+#00:00:00.0540369
 
 # Common root junctions
 New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
 New-Junction "c:\Program Files (x86)" "c:\programs"
 New-Junction $home "c:\home"
+#00:00:00.0030027
 
 # Folder hide
 "c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
-
+#00:00:00.0280187
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\PhxAutomation -ItemType Junction -Value e:\root\Compute\Core\PHXAutomation\src\PHXAutomation\
