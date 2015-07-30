@@ -68,6 +68,20 @@ Import-Module PsReadLine
 # Color scheme, the same is in 'source'
 # 00:00:00.3302302
 #
+Get-Elapsed
+<#
+$options = Get-PSReadlineOption
+$options.CommandForegroundColor = [ConsoleColor]::DarkCyan
+$options.CommentForegroundColor = [ConsoleColor]::DarkGreen
+$options.KeywordForegroundColor = [ConsoleColor]::Gray
+$options.NumberForegroundColor = [ConsoleColor]::DarkGray
+$options.MemberForegroundColor = [ConsoleColor]::DarkCyan
+$options.OperatorForegroundColor = [ConsoleColor]::DarkRed
+$options.ParameterForegroundColor = [ConsoleColor]::DarkMagenta
+$options.StringForegroundColor = [ConsoleColor]::DarkYellow
+$options.TypeForegroundColor = [ConsoleColor]::DarkCyan
+$options.VariableForegroundColor = [ConsoleColor]::DarkGray
+#>
 Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
 Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
@@ -78,6 +92,7 @@ Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
 Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
 Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
+Get-Elapsed
 
 #
 # Other options
