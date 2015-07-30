@@ -151,29 +151,29 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
     # Work as cut if text is selected
     $start = $null
     $length = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
     if( $length -gt 0 )
     {
-        [PSConsoleUtilities.PSConsoleReadLine]::Cut()
+        [Microsoft.Powershell.PSConsoleReadLine]::Cut()
         return
     }
 
     # Work as line cut if no text is selected, but there is input
     $string = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
     if( $string )
     {
         Add-Type -AssemblyName PresentationCore
         [System.Windows.Clipboard]::SetText($string)
-        [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+        [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
         return
     }
 
     # Otherwise quicly close the console
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("exit")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -183,9 +183,9 @@ Set-PSReadlineKeyHandler -Key Alt+g `
                          -BriefDescription GVim `
                          -LongDescription "GVim invocation" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("gvim")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gvim")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -195,9 +195,9 @@ Set-PSReadlineKeyHandler -Key Alt+t `
                          -BriefDescription Translator `
                          -LongDescription "Translator invocation" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("c:\tools\Multitran\network\multitran.exe")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("c:\tools\Multitran\network\multitran.exe")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -207,9 +207,9 @@ Set-PSReadlineKeyHandler -Key Alt+x `
                          -BriefDescription PowershellNewWindow `
                          -LongDescription "Opens powershell in new window" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("start powershell")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start powershell")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -219,9 +219,9 @@ Set-PSReadlineKeyHandler -Key Alt+Shift+x `
                          -BriefDescription PowershellElevatedNewWindow `
                          -LongDescription "Opens elevated powershell in new window" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("start -FilePath (Get-Command powershell).Definition -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start -FilePath (Get-Command powershell).Definition -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -231,9 +231,9 @@ Set-PSReadlineKeyHandler -Key Alt+c `
                          -BriefDescription GitExtensionsCommit `
                          -LongDescription "GitExtensions commit dialog invocation" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("gite commit")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gite commit")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -243,9 +243,9 @@ Set-PSReadlineKeyHandler -Key Alt+b `
                          -BriefDescription GitExtensions `
                          -LongDescription "GitExtensions main dialog invocation" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("gite")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gite")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
@@ -255,9 +255,9 @@ Set-PSReadlineKeyHandler -Key Alt+u `
                          -BriefDescription GitOriginUrl `
                          -LongDescription "Gets git origin url" `
                          -ScriptBlock {
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-    [PSConsoleUtilities.PSConsoleReadLine]::Insert("git config remote.origin.url")
-    [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("git config remote.origin.url")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 # Sometimes you enter a command but realize you forgot to do something else first.
@@ -272,9 +272,9 @@ Set-PSReadlineKeyHandler -Key Alt+w `
 
     $line = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-    [PSConsoleUtilities.PSConsoleReadLine]::AddToHistory($line)
-    [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::AddToHistory($line)
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
 }
 
 # Insert text from the clipboard as a here string
@@ -289,11 +289,11 @@ Set-PSReadlineKeyHandler -Key Ctrl+Shift+v `
     {
         # Get clipboard text - remove trailing spaces, convert \r\n to \n, and remove the final \n.
         $text = ([System.Windows.Clipboard]::GetText() -replace "\p{Zs}*`r?`n","`n").TrimEnd()
-        [PSConsoleUtilities.PSConsoleReadLine]::Insert("@'`n$text`n'@")
+        [Microsoft.Powershell.PSConsoleReadLine]::Insert("@'`n$text`n'@")
     }
     else
     {
-        [PSConsoleUtilities.PSConsoleReadLine]::Ding()
+        [Microsoft.Powershell.PSConsoleReadLine]::Ding()
     }
 }
 
@@ -309,20 +309,20 @@ Set-PSReadlineKeyHandler -Key 'Alt+9' `
 
     $selectionStart = $null
     $selectionLength = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetSelectionState([ref]$selectionStart, [ref]$selectionLength)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref]$selectionStart, [ref]$selectionLength)
 
     $line = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     if ($selectionStart -ne -1)
     {
-        [PSConsoleUtilities.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, '(' + $line.SubString($selectionStart, $selectionLength) + ')')
-        [PSConsoleUtilities.PSConsoleReadLine]::SetCursorPosition($selectionStart + $selectionLength + 2)
+        [Microsoft.Powershell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, '(' + $line.SubString($selectionStart, $selectionLength) + ')')
+        [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition($selectionStart + $selectionLength + 2)
     }
     else
     {
-        [PSConsoleUtilities.PSConsoleReadLine]::Replace(0, $line.Length, '(' + $line + ')')
-        [PSConsoleUtilities.PSConsoleReadLine]::EndOfLine()
+        [Microsoft.Powershell.PSConsoleReadLine]::Replace(0, $line.Length, '(' + $line + ')')
+        [Microsoft.Powershell.PSConsoleReadLine]::EndOfLine()
     }
 }
 
@@ -339,7 +339,7 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
     $tokens = $null
     $errors = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
     $tokenToChange = $null
     foreach ($token in $tokens)
@@ -383,7 +383,7 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
             $replacement = "'" + $tokenText + "'"
         }
 
-        [PSConsoleUtilities.PSConsoleReadLine]::Replace(
+        [Microsoft.Powershell.PSConsoleReadLine]::Replace(
             $extent.StartOffset,
             $tokenText.Length,
             $replacement)
@@ -401,7 +401,7 @@ Set-PSReadlineKeyHandler -Key "Alt+n" `
     $tokens = $null
     $errors = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
     $startAdjustment = 0
     foreach ($token in $tokens)
@@ -438,7 +438,7 @@ Set-PSReadlineKeyHandler -Key "Alt+n" `
             {
                 $extent = $token.Extent
                 $length = $extent.EndOffset - $extent.StartOffset
-                [PSConsoleUtilities.PSConsoleReadLine]::Replace(
+                [Microsoft.Powershell.PSConsoleReadLine]::Replace(
                     $extent.StartOffset + $startAdjustment,
                     $length,
                     $resolvedCommand)
@@ -462,13 +462,13 @@ Set-PSReadlineKeyHandler -Key F1 `
     $tokens = $null
     $errors = $null
     $cursor = $null
-    [PSConsoleUtilities.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
     if( ($tokens.Count -eq 1) -and ($tokens.Kind -eq "EndOfInput") )
     {
-        [PSConsoleUtilities.PSConsoleReadLine]::RevertLine()
-        [PSConsoleUtilities.PSConsoleReadLine]::Insert("Measure-LastCommand")
-        [PSConsoleUtilities.PSConsoleReadLine]::AcceptLine()
+        [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+        [Microsoft.Powershell.PSConsoleReadLine]::Insert("Measure-LastCommand")
+        [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
         return
     }
 
