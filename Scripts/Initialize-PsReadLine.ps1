@@ -1,5 +1,13 @@
 # Workaround for Build that loads Powershell with profile and PsReadline
 # fails it with https://github.com/lzybkr/PSReadLine/issues/182
+#00:00:00.0550417
+if( Test-ProcessRedirected (Get-Process -Id $pid) )
+{
+    return
+}
+
+<#
+#00:00:00.2922512
 $parentProcessId = (Get-CimInstance Win32_Process -Filter "ProcessId='$pid'").ParentProcessId
 $parentProcess = Get-Process -Id $parentProcessId -ea Ignore
 if( $parentProcess )
@@ -20,6 +28,7 @@ if( $parentProcess )
         return
     }
 }
+#>
 
 # TODO: ctrl+x selection/line cut/quit
 # TODO: ctrl+p variable name auto suggection
@@ -57,6 +66,7 @@ Import-Module PsReadLine
 
 #
 # Color scheme, the same is in 'source'
+# 00:00:00.3302302
 #
 Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
