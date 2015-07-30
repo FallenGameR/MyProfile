@@ -68,7 +68,7 @@ Import-Module PsReadLine
 # Color scheme, the same is in 'source'
 # 00:00:00.3302302
 #
-Get-Elapsed
+#Get-Elapsed
 <#
 $options = Get-PSReadlineOption
 $options.CommandForegroundColor = [ConsoleColor]::DarkCyan
@@ -92,7 +92,7 @@ Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
 Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
 Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
-Get-Elapsed
+#Get-Elapsed
 
 #
 # Other options
@@ -134,6 +134,9 @@ Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
+
+# Pre win 10 - [PSConsoleUtilities.PSConsoleReadLine]
+# After win 10 - [Microsoft.PowerShell.PSConsoleReadLine]
 
 #
 # Ctrl+X that either:
