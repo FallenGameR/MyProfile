@@ -63,7 +63,7 @@ Remove-Variable proc    # hides pro<tab> = profile
 
 
 # Windows 10 has beatifull maximized powershell window
-if( [Environment]::OSVersion.Version.Major -ge 10 )
+if( ([Environment]::OSVersion.Version.Major -ge 10) -and ($env:COMPUTERNAME -eq "alexko-x1") )
 {
     # 00:00:00.1370967
     Set-WindowStyle MAXIMIZE
