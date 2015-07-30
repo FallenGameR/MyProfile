@@ -7,14 +7,14 @@ switch ($env:ComputerName)
 {
     "ALEXKO-DEV"
     {
-        $dropbox = "e:\Dropbox\"
-        $oneDrive = "e:\OneDrive\"
-        $oneDriveMicrosoft = "e:\OneDriveMicrosoft\"
-        $opensource = "d:\opensource\"
-        $azcompute = "d:\autopilot\gitsd.az_compute\"
-        $apgold = "d:\autopilot\apgold\"
-        $playground = $null
-        $root = "d:\root\"
+        $dropbox = "d:\Dropbox\"
+        $oneDrive = "d:\OneDrive\"
+        $oneDriveMicrosoft = "d:\OneDrive - Microsoft\"
+        $opensource = "e:\external\"
+        $azcompute = "e:\autopilot\gitsd.az_compute\"
+        $apgold = "e:\autopilot\apgold\"
+        $playground = "e:\git\pg"
+        $root = "e:\root\"
     }
     "ALEXKO-X1"
     {
@@ -109,3 +109,7 @@ New-Junction $home "c:\home"
 
 # Folder hide
 "c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
+
+
+#new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
+#new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\PhxAutomation -ItemType Junction -Value e:\root\Compute\Core\PHXAutomation\src\PHXAutomation\
