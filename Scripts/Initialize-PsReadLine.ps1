@@ -85,8 +85,6 @@ Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
-Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+e' -Function EnableDemoMode
-Set-PSReadlineKeyHandler -Chord 'Ctrl+d,Ctrl+d' -Function DisableDemoMode
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 
