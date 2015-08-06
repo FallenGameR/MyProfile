@@ -92,16 +92,22 @@ function Receive-FromBuildDrop( $phxShare, $path, $session = $(s (rnd) -cred) )
 
 function devenv
 {
+    $path = "c:\programs\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe"
+    if( -not $path )
+    {
+        $path = "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"
+    }
+
     if( $args )
     {
-        & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $args
+        & $path $args
     }
     else
     {
         $file = @(ls | where Name -match "\.(sln|csproj)")
         if( $file.Count -eq 1 )
         {
-            & "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe" $file[0]
+            & $path $file[0]
         }
         else
         {
