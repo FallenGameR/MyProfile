@@ -121,4 +121,4 @@ New-Junction $home "c:\home"
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\PhxAutomation -ItemType Junction -Value e:\root\Compute\Core\PHXAutomation\src\PHXAutomation\
-#New-Item -Path c:\Users\alexko\Documents\WindowsPowerShell\Modules\FcShell -ItemType Junction -Value $oneDriveMicrosoft\Tools\FcShell\
+#New-Item -Path c:\Users\alexko\Documents\WindowsPowerShell\Modules\fabric -ItemType Junction -Value $oneDriveMicrosoft\Tools\FcShell\
