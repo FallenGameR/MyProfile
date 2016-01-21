@@ -38,7 +38,8 @@ $addToPath =
     "c:\tools\Tagger\",
     "c:\tools\TeamHub\",
     "c:\tools\WinDirStat\",
-    "c:\tools\xts\"
+    "c:\tools\xts\",
+    "e:\root\Compute\Core\NtpInvestigations\FcShell\"
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
