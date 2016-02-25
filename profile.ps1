@@ -13,6 +13,11 @@ $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
 $PSDefaultParameterValues["edit:NewEditor"] = $true
 $PSDefaultParameterValues["Enter-TunnelSession:AutoComplete"] = $true
+$PSDefaultParameterValues["Enter-PhxMachine:TwoFactorAuth"] = $true
+$PSDefaultParameterValues["Enter-TunnelSession:TwoFactorAuth"] = $true
+$PSDefaultParameterValues["Get-TunnelSession:TwoFactorAuth"] = $true
+$PSDefaultParameterValues["Invoke-ApTool:TwoFactorAuth"] = $true
+
 
 # Was fixed in Windows 10
 if( [Environment]::OSVersion.Version.Major -lt 10 )
