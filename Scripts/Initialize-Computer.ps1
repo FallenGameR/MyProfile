@@ -17,6 +17,17 @@ switch ($env:ComputerName)
         $playground = "e:\git\pg"
         $root = "e:\root\"
     }
+    "ALEXKO-DS"
+    {
+        $dropbox = "e:\Dropbox\"
+        $oneDrive = "e:\OneDrive\"
+        $oneDriveMicrosoft = "e:\OneDrive - Microsoft\"
+        $opensource = "f:\external\"
+        $azcompute = "f:\autopilot\move\"
+        $apgold = "f:\autopilot\apgold\"
+        $playground = $null
+        $root = "f:\onebranch\"
+    }
     "ALEXKO-X1"
     {
         $dropbox = "c:\Users\alexko\Dropbox\"
