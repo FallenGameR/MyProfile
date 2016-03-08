@@ -12,7 +12,7 @@ switch ($env:ComputerName)
         $oneDrive = "d:\OneDrive\"
         $oneDriveMicrosoft = "d:\OneDrive - Microsoft\"
         $opensource = "e:\external\"
-        $azcompute = "e:\autopilot\git.az_compute\"
+        $azcompute = "e:\root\Azure\Compute-Move\"
         $apgold = "e:\autopilot\apgold\"
         $playground = "e:\git\pg"
         $root = "e:\root\"
