@@ -77,6 +77,24 @@ if( ([Environment]::OSVersion.Version.Major -ge 10) -and ($env:COMPUTERNAME -eq 
     Set-WindowStyle MAXIMIZE
 }
 
+# Setup for tye fuck program
+# https://github.com/nvbn/thefuck/wiki/Shell-aliases
+# Update: pip.exe install thefuck --upgrade
+# Requirement - latest python installed and availabe in path
+# Interesting commands:
+# cd_correction  – spellchecks and correct failed cd commands;
+# cd_mkdir  – creates directories before cd'ing into them;
+#
+function fuck
+{
+    $fuck = $(thefuck (Get-History -Count 1).CommandLine)
+    if (-not [string]::IsNullOrWhiteSpace($fuck))
+    {
+        if ($fuck.StartsWith("echo")) { $fuck = $fuck.Substring(5) }
+        else { iex "$fuck" }
+    }
+}
+
 # That's hacky...
 if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 {
