@@ -45,7 +45,8 @@ $addToPath =
     "c:\tools\WinDirStat\",
     "c:\tools\xts\",
     "e:\root\Compute\Core\NtpInvestigations\FcShell\",
-    "f:\autopilot\move\src\Tools\Git\GitNuke\"
+    "f:\autopilot\move\src\Tools\Git\GitNuke\",
+    "f:\autopilot\move\src\Tools\Git\GitTrack\"
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
