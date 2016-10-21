@@ -1,4 +1,4 @@
-# Powershell behaviour setup
+﻿# Powershell behaviour setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 $env:PSModulePath += ";$PSScriptRoot\Modules"
@@ -68,14 +68,6 @@ Remove-Variable proc    # hides pro<tab> = profile
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 # 00:00:00.0170141
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
-
-
-# Windows 10 has beatifull maximized powershell window
-if( ([Environment]::OSVersion.Version.Major -ge 10) -and ($env:COMPUTERNAME -eq "alexko-x1") )
-{
-    # 00:00:00.1370967
-    Set-WindowStyle MAXIMIZE
-}
 
 # Setup for tye fuck program
 # https://github.com/nvbn/thefuck/wiki/Shell-aliases
