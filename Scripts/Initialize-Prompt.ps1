@@ -13,7 +13,7 @@ $SCRIPT:lastCommandId = -1
 # Prompt
 $function:prompt = {
     $realLastExitCode = $LASTEXITCODE
-    if( $host.Name -eq "ConsoleHost" )
+    if( ($host.Name -eq "ConsoleHost") -and ($PSVersionTable.PSVersion -lt "5.1") )
     {
         Set-ConsoleFont 10
     }
