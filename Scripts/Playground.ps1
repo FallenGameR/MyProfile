@@ -108,7 +108,7 @@ function srch( $text ) {git grep -iF $text}
 # Invocations
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" (pwd) }
 
-function edit( [string] $File, [switch] $NewEditor )
+function edit( [string] $File, [switch] $SameEditor )
 {
     $position = $file | parse ":(\d+):?"
     $file = Get-FileNameArgument ($file -replace ":\d+:?")
@@ -121,7 +121,7 @@ function edit( [string] $File, [switch] $NewEditor )
 
     $params = @()
 
-    if( (-not $newEditor) -and (-not $position) )
+    if( $SameEditor -and (-not $position) )
     {
         # http://vim.wikia.com/wiki/Launch_files_in_new_tabs_under_Windows
         $params += "--remote-tab-silent"
