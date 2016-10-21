@@ -91,7 +91,7 @@ if( -not (Test-Path "c:\tools") )
 #00:00:00.0030026
 
 # Tools junction creation
-foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
