@@ -44,6 +44,8 @@ $addToPath =
     "c:\tools\TeamHub\",
     "c:\tools\WinDirStat\",
     "c:\tools\xts\",
+    "c:\tools\odd\",
+    "C:\tools\SdApi\",
     "e:\root\Compute\Core\NtpInvestigations\FcShell\",
     "f:\autopilot\move\src\Tools\Git\GitNuke\",
     "f:\autopilot\move\src\Tools\Git\GitTrack\"
