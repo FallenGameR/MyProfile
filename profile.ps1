@@ -44,8 +44,11 @@ $addToPath =
     "c:\tools\TeamHub\",
     "c:\tools\WinDirStat\",
     "c:\tools\xts\",
+    "c:\tools\odd\",
+    "C:\tools\SdApi\",
     "e:\root\Compute\Core\NtpInvestigations\FcShell\",
-    "f:\autopilot\move\src\Tools\Git\GitNuke\"
+    "f:\autopilot\move\src\Tools\Git\GitNuke\",
+    "f:\autopilot\move\src\Tools\Git\GitTrack\"
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
@@ -108,3 +111,9 @@ if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
     return
 }
 . "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
+
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
