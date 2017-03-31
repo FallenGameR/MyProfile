@@ -1,6 +1,9 @@
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
 
+# Don't use history in PsReadLine, it is buggy in the latest PS release
+Set-PSReadlineOption -HistorySaveStyle SaveNothing
+
 # History folder and file
 $SCRIPT:historyFolder = "c:\automation\history\"
 if( -not (Test-Path $historyFolder) )
