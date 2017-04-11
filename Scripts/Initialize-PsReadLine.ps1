@@ -65,6 +65,12 @@ if( $parentProcess )
 Import-Module PsReadLine
 
 #
+# Since PS 5.1 console beeps on backspace while on empty prompt
+# https://superuser.com/questions/1113429/disable-powershell-beep-on-backspace
+#
+Set-PSReadlineOption -BellStyle None
+
+#
 # Color scheme, the same is in 'source'
 # 00:00:00.3302302
 #
