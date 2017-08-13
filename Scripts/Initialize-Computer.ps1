@@ -39,10 +39,10 @@ switch ($env:ComputerName)
         $playground = $null
         $root = "c:\src\root\"
     }
-    "TACHIKOMA"
+    "Sekirei"
     {
-        $dropbox = "d:\Dropbox\"
-        $oneDrive = "d:\OneDrive\"
+        $dropbox = "f:\Dropbox\"
+        $oneDrive = "f:\OneDrive\"
         $oneDriveMicrosoft = $null
         $opensource = $null
         $azcompute = $null
