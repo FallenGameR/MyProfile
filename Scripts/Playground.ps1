@@ -3,62 +3,6 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
-function Set-WindowStyle
-{
-    # NOTE: https://gist.github.com/jakeballard/11240204
-    param
-    (
-        [ValidateSet(
-            'FORCEMINIMIZE', 'HIDE', 'MAXIMIZE', 'MINIMIZE', 'RESTORE',
-            'SHOW', 'SHOWDEFAULT', 'SHOWMAXIMIZED', 'SHOWMINIMIZED',
-            'SHOWMINNOACTIVE', 'SHOWNA', 'SHOWNOACTIVATE', 'SHOWNORMAL')]
-        $Style = 'SHOW',
-        $MainWindowHandle
-    )
-
-    if( -not $MainWindowHandle )
-    {
-        $MainWindowHandle = Get-Process -id $pid | % MainWindowHandle
-    }
-
-    $WindowStates = @{
-        'FORCEMINIMIZE'   = 11
-        'HIDE'            = 0
-        'MAXIMIZE'        = 3
-        'MINIMIZE'        = 6
-        'RESTORE'         = 9
-        'SHOW'            = 5
-        'SHOWDEFAULT'     = 10
-        'SHOWMAXIMIZED'   = 3
-        'SHOWMINIMIZED'   = 2
-        'SHOWMINNOACTIVE' = 7
-        'SHOWNA'          = 8
-        'SHOWNOACTIVATE'  = 4
-        'SHOWNORMAL'      = 1
-    }
-
-    $definition =
-@"
-    [DllImport("user32.dll")]
-    public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-"@
-
-    $Win32ShowWindowAsync = Add-Type `
-        -memberDefinition $definition `
-        -name "Win32ShowWindowAsync" `
-        -namespace "Win32Functions" `
-        -passThru
-    $Win32ShowWindowAsync::ShowWindowAsync($MainWindowHandle, $WindowStates[$Style]) | Out-Null
-    Write-Verbose ("Set Window Style '{1} on '{0}'" -f $MainWindowHandle, $Style)
-}
-
-function Disable-Oacr
-{
-    $env:USE_OACR = 0
-    oacr stop
-    oacr clean
-    oacr set off
-}
 
 function Send-Tool( $session, $tool )
 {
@@ -80,14 +24,6 @@ function Get-Song( $artist, $song )
     $music = "$oneDrive\music"
     $artists = ls $music -Directory | where BaseName -match $artist
     $artists | foreach{ ls $psitem.FullName -rec -file -force | where BaseName -match $song }
-}
-
-function Receive-FromBuildDrop( $phxShare, $path, $session = $(s (rnd) -cred) )
-{
-    icm $session {cd ~}
-    icm $session {ls | del}
-    icm $session {copy $USING:phxShare\retail\amd64\$path\* .}
-    receive-file $session C:\Users\alexko\Documents c:\Users\alexko\Downloads\builddrop
 }
 
 function devenv
@@ -116,34 +52,6 @@ function devenv
     }
 }
 
-function scd
-{
-    param
-    (
-        [ValidateSet("Override", "Diff", "Submit")]
-        [string] $command
-    )
-
-    if( $command -eq "Override" )
-    {
-        APConfigTool Override -s ServiceBusNode -f ServiceConfig.ini
-        $override = ls | sort LastWriteTime -Descending | select -f 1
-        edit $override
-    }
-
-    if( $command -eq "Diff" )
-    {
-        $override = ls | where name -match Replacement | sort LastWriteTime -Descending | select -f 1
-        APConfigTool Diff -f $override.FullName
-    }
-
-    if( $command -eq "Submit" )
-    {
-        $override = ls | sort LastWriteTime -Descending | select -f 1
-        sd add $override.FullName
-        sd submit
-    }
-}
 
 filter Set-ReadOnlyFlag( [bool] $flag = $true )
 {
@@ -188,42 +96,6 @@ Extract-Xml $switch
 
 # Playground
 
-function Invoke-CheckCluster( [string] $name )
-{
-    if( -not $name )
-    {
-        $name = $pwd | parse "autopilotService\\([^\\]+)"
-    }
-
-    Write-Host "Checking cluster: $name" -fore DarkGreen
-
-    $searchGold = (Get-Enlistment data).Root
-    Push-Location "$searchGold\AutopilotService"
-    & "$searchGold\tools\vlad\CheckCluster2\CheckCluster.exe" -c $name | ConvertFrom-ApLogs
-    Pop-Location
-}
-
-function Invoke-ClusterTool
-{
-    $searchGold = (Get-Enlistment data).Root
-    $path = "$searchGold\data\Ironman\InternalTools\ClusterTool.exe"
-    #$path = "c:\Users\alexko\Downloads\ClusterTool.exe"
-    & $path $args | ConvertFrom-ApLogs
-}
-
-function Invoke-ClusterPreattyPrint( [string] $name )
-{
-    if( -not $name )
-    {
-        $name = $pwd | parse "autopilotService\\([^\\]+)"
-    }
-
-    Write-Host "Preatty print for cluster: $name" -fore DarkGreen
-
-    $searchGold = (Get-Enlistment data).Root
-    $path = "$searchGold\autopilotService\$name"
-    Invoke-ClusterTool PrettyPrint $path
-}
 
 function change( $from, $to, $encoding = "ascii" )
 {
@@ -236,7 +108,7 @@ function srch( $text ) {git grep -iF $text}
 # Invocations
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" (pwd) }
 
-function edit( [string] $File, [switch] $NewEditor )
+function edit( [string] $File, [switch] $SameEditor )
 {
     $position = $file | parse ":(\d+):?"
     $file = Get-FileNameArgument ($file -replace ":\d+:?")
@@ -249,7 +121,7 @@ function edit( [string] $File, [switch] $NewEditor )
 
     $params = @()
 
-    if( (-not $newEditor) -and (-not $position) )
+    if( $SameEditor -and (-not $position) )
     {
         # http://vim.wikia.com/wiki/Launch_files_in_new_tabs_under_Windows
         $params += "--remote-tab-silent"

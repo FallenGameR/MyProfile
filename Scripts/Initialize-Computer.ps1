@@ -12,10 +12,21 @@ switch ($env:ComputerName)
         $oneDrive = "d:\OneDrive\"
         $oneDriveMicrosoft = "d:\OneDrive - Microsoft\"
         $opensource = "e:\external\"
-        $azcompute = "e:\autopilot\git.az_compute\"
+        $azcompute = "e:\root\Azure\Compute-Move\"
         $apgold = "e:\autopilot\apgold\"
         $playground = "e:\git\pg"
         $root = "e:\root\"
+    }
+    "ALEXKO-DS"
+    {
+        $dropbox = "e:\Dropbox\"
+        $oneDrive = "e:\OneDrive\"
+        $oneDriveMicrosoft = "e:\OneDrive - Microsoft\"
+        $opensource = "f:\external\"
+        $azcompute = "f:\autopilot\move\"
+        $apgold = "f:\autopilot\apgold\"
+        $playground = $null
+        $root = "f:\onebranch\"
     }
     "ALEXKO-X1"
     {
@@ -80,7 +91,7 @@ if( -not (Test-Path "c:\tools") )
 #00:00:00.0030026
 
 # Tools junction creation
-foreach( $tool in ls $dropbox\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
@@ -105,8 +116,6 @@ Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\OneNote 2013.lnk" "C:\ProgramData\M
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Tagger.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Tagger.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\WindowPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\WindowPad.lnk"
 #00:00:00.0540369
 
 # Common root junctions
@@ -121,3 +130,4 @@ New-Junction $home "c:\home"
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\PhxAutomation -ItemType Junction -Value e:\root\Compute\Core\PHXAutomation\src\PHXAutomation\
+#New-Item -Path c:\Users\alexko\Documents\WindowsPowerShell\Modules\fabric -ItemType Junction -Value $oneDriveMicrosoft\Tools\FcShell\
