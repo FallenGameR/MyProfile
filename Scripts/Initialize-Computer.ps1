@@ -34,10 +34,10 @@ switch ($env:ComputerName)
         $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "c:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
-        $azcompute = "c:\src\gitsd.az_compute.trimmed\"
+        $azcompute = "d:\src\root\Azure\Compute-Move\"
         $apgold = "c:\src\apgold\"
-        $playground = "c:\src\pg\"
-        $root = "c:\src\root\"
+        $playground = $null
+        $root = "d:\src\root\"
     }
     "AUTOPILOTHUB"
     {
