@@ -1,4 +1,9 @@
 #requires -Version 2.0 
+
+if( $ExecutionContext.SessionState.LanguageMode -ne "FullLanguage" )
+{
+    return
+}
  
 $STD_OUTPUT_HANDLE = -11 
  
@@ -6,7 +11,7 @@ $source = @"
     public delegate bool SetConsoleFont( 
         IntPtr hWnd, 
         uint DWORD 
-    ); 
+); 
  
     public delegate uint GetNumberOfConsoleFonts(); 
  

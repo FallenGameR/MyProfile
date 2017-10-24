@@ -52,10 +52,15 @@ function SCRIPT:Set-EnvironmentVariable( $name, $value )
 
 function SCRIPT:Test-Elevated
 {
-    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal = [Security.Principal.WindowsPrincipal] $identity
-    $role = [Security.Principal.WindowsBuiltInRole] "Administrator"
-    $principal.IsInRole($role)
+    if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
+    {
+        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = [Security.Principal.WindowsPrincipal] $identity
+        $role = [Security.Principal.WindowsBuiltInRole] "Administrator"
+        return $principal.IsInRole($role)
+    }
+
+    return $false
 }
 
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/

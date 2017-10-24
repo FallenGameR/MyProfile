@@ -16,7 +16,9 @@ $SCRIPT:lastCommandId = -1
 # Prompt
 $function:prompt = {
     $realLastExitCode = $LASTEXITCODE
-    if( ($host.Name -eq "ConsoleHost") -and ($PSVersionTable.PSVersion -lt "5.1") )
+    if( ($host.Name -eq "ConsoleHost") -and 
+        ($PSVersionTable.PSVersion -lt "5.1") -and 
+        ($ExecutionContext.SessionState.LanguageMode -eq "FullLanguage") )
     {
         Set-ConsoleFont 10
     }
@@ -38,13 +40,16 @@ $function:prompt = {
     }
 
     # Update title
-    $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
-    if( $SCRIPT:isElevated )
+    if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
-        $title += "   ELEVATED"
+        $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
+        if( $SCRIPT:isElevated )
+        {
+            $title += "   ELEVATED"
+        }
+        $host.UI.RawUI.WindowTitle = $title
     }
-    $host.UI.RawUI.WindowTitle = $title
-
+    
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen
