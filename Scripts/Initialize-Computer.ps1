@@ -22,11 +22,11 @@ switch ($env:ComputerName)
         $dropbox = "e:\Dropbox\"
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDrive - Microsoft\"
-        $opensource = "f:\external\"
-        $azcompute = "f:\autopilot\move\"
-        $apgold = "f:\autopilot\apgold\"
+        $opensource = "e:\Code\external"
+        $azcompute = "e:\Code\autopilot\move\"
+        $apgold = "e:\Code\autopilot\apgold\"
         $playground = $null
-        $root = "f:\onebranch\"
+        $root = "e:\Code\onebranch\"
     }
     "ALEXKO-X1"
     {
@@ -68,6 +68,14 @@ switch ($env:ComputerName)
     }
 }
 #00:00:00.0020009
+
+# Current path fix
+if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Users\alexko.REDMOND")) )
+{
+    $newLocation = $pwd -replace [regex]::Escape("C:\Users\alexko.REDMOND"), "C:\Users\alexko"
+    cd $newLocation
+    [Environment]::CurrentDirectory = $pwd 
+}
 
 # Set up environment variables
 Set-EnvironmentVariable "Dropbox" $dropbox
@@ -125,7 +133,8 @@ New-Junction $home "c:\home"
 #00:00:00.0030027
 
 # Folder hide
-"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
+"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | Set-Visible $false
+"$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\OneDrive", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | Set-Visible $false
 #00:00:00.0280187
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
