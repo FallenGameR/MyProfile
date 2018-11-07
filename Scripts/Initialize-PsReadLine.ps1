@@ -127,7 +127,7 @@ else
 #
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
-Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
+Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 
