@@ -74,7 +74,7 @@ if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Us
 {
     $newLocation = $pwd -replace [regex]::Escape("C:\Users\alexko.REDMOND"), "C:\Users\alexko"
     cd $newLocation
-    [Environment]::CurrentDirectory = $pwd 
+    [Environment]::CurrentDirectory = $pwd
 }
 
 # Set up environment variables
@@ -133,8 +133,8 @@ New-Junction $home "c:\home"
 #00:00:00.0030027
 
 # Folder hide
-"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | Set-Visible $false
-"$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\OneDrive", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | Set-Visible $false
+"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | where{gi $psitem -ea ignore} | Set-Visible $false
+"$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | where{gi $psitem -ea ignore} | Set-Visible $false
 #00:00:00.0280187
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
