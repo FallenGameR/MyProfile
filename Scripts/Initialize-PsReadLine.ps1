@@ -88,16 +88,38 @@ $options.StringForegroundColor = [ConsoleColor]::DarkYellow
 $options.TypeForegroundColor = [ConsoleColor]::DarkCyan
 $options.VariableForegroundColor = [ConsoleColor]::DarkGray
 #>
-Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
-Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
-Set-PSReadlineOption -TokenKind Number -ForegroundColor DarkGray
-Set-PSReadlineOption -TokenKind Member -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkRed
-Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
-Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
-Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
+
+
+if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.1") -gt 0 )
+{
+    # RS4 and before use this API
+    Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
+    Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
+    Set-PSReadlineOption -TokenKind Number -ForegroundColor DarkGray
+    Set-PSReadlineOption -TokenKind Member -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkRed
+    Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
+    Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
+    Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
+}
+else
+{
+    # RS5 and after use this API
+    $colors = @{}
+    $colors["Command"] = [ConsoleColor]::DarkCyan
+    $colors["Comment"] = [ConsoleColor]::DarkGreen
+    $colors["Keyword"] = [ConsoleColor]::Gray
+    $colors["Number"] = [ConsoleColor]::DarkGray
+    $colors["Member"] = [ConsoleColor]::DarkCyan
+    $colors["Operator"] = [ConsoleColor]::DarkRed
+    $colors["Parameter"] = [ConsoleColor]::DarkMagenta
+    $colors["String"] = [ConsoleColor]::DarkYellow
+    $colors["Type"] = [ConsoleColor]::DarkCyan
+    $colors["Variable"] = [ConsoleColor]::DarkGray
+    Set-PSReadlineOption -Colors $colors
+}
 #Get-Elapsed
 
 #
