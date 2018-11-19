@@ -90,7 +90,7 @@ $options.VariableForegroundColor = [ConsoleColor]::DarkGray
 #>
 
 
-if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.1") -gt 0 )
+if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.134") -lt 0 )
 {
     # RS4 and before use this API
     Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
