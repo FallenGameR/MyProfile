@@ -1,6 +1,10 @@
 # Default console color setup -
 Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
+
+pushd "$PsScriptRoot\..\Bin\ColorTool\"
+.\ColorTool.exe -b -q campbell | Out-Null
+popd
 #00:00:00.1761166
 
 # Cloud folders setup

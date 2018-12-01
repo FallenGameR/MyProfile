@@ -59,6 +59,7 @@ function SCRIPT:Test-Elevated
 }
 
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/
+# Override defaults in registry
 function SCRIPT:Set-DefaultPowershellColors( $path )
 {
     Push-Location
