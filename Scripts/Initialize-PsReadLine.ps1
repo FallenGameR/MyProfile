@@ -65,6 +65,12 @@ if( $parentProcess )
 Import-Module PsReadLine
 
 #
+# Since PS 5.1 console beeps on backspace while on empty prompt
+# https://superuser.com/questions/1113429/disable-powershell-beep-on-backspace
+#
+Set-PSReadlineOption -BellStyle None
+
+#
 # Color scheme, the same is in 'source'
 # 00:00:00.3302302
 #
@@ -82,16 +88,38 @@ $options.StringForegroundColor = [ConsoleColor]::DarkYellow
 $options.TypeForegroundColor = [ConsoleColor]::DarkCyan
 $options.VariableForegroundColor = [ConsoleColor]::DarkGray
 #>
-Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
-Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
-Set-PSReadlineOption -TokenKind Number -ForegroundColor DarkGray
-Set-PSReadlineOption -TokenKind Member -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkRed
-Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
-Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
-Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
-Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
+
+
+if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.134") -lt 0 )
+{
+    # RS4 and before use this API
+    Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
+    Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
+    Set-PSReadlineOption -TokenKind Number -ForegroundColor DarkGray
+    Set-PSReadlineOption -TokenKind Member -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkRed
+    Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
+    Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
+    Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
+    Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
+}
+else
+{
+    # RS5 and after use this API
+    $colors = @{}
+    $colors["Command"] = [ConsoleColor]::DarkCyan
+    $colors["Comment"] = [ConsoleColor]::DarkGreen
+    $colors["Keyword"] = [ConsoleColor]::Gray
+    $colors["Number"] = [ConsoleColor]::DarkGray
+    $colors["Member"] = [ConsoleColor]::DarkCyan
+    $colors["Operator"] = [ConsoleColor]::DarkRed
+    $colors["Parameter"] = [ConsoleColor]::DarkMagenta
+    $colors["String"] = [ConsoleColor]::DarkYellow
+    $colors["Type"] = [ConsoleColor]::DarkCyan
+    $colors["Variable"] = [ConsoleColor]::DarkGray
+    Set-PSReadlineOption -Colors $colors
+}
 #Get-Elapsed
 
 #
@@ -99,7 +127,7 @@ Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
 #
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
-Set-PSReadlineKeyHandler -Chord "Ctrl+d, Ctrl+c" -Function CaptureScreen
+Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
 

@@ -29,11 +29,11 @@ switch ($env:ComputerName)
         $dropbox = "e:\Dropbox\"
         $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = "e:\OneDrive - Microsoft\"
-        $opensource = "f:\external\"
-        $azcompute = "f:\autopilot\move\"
-        $apgold = "f:\autopilot\apgold\"
+        $opensource = "e:\Code\external"
+        $azcompute = "e:\Code\autopilot\move\"
+        $apgold = "e:\Code\autopilot\apgold\"
         $playground = $null
-        $root = "f:\onebranch\"
+        $root = "e:\Code\onebranch\"
     }
     "ALEXKO-X1"
     {
@@ -41,10 +41,10 @@ switch ($env:ComputerName)
         $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "c:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
-        $azcompute = "c:\src\gitsd.az_compute.trimmed\"
+        $azcompute = "d:\src\root\Azure\Compute-Move\"
         $apgold = "c:\src\apgold\"
-        $playground = "c:\src\pg\"
-        $root = "c:\src\root\"
+        $playground = $null
+        $root = "d:\src\root\"
     }
     "AUTOPILOTHUB"
     {
@@ -75,6 +75,14 @@ switch ($env:ComputerName)
     }
 }
 #00:00:00.0020009
+
+# Current path fix
+if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Users\alexko.REDMOND")) )
+{
+    $newLocation = $pwd -replace [regex]::Escape("C:\Users\alexko.REDMOND"), "C:\Users\alexko"
+    cd $newLocation
+    [Environment]::CurrentDirectory = $pwd
+}
 
 # Set up environment variables
 Set-EnvironmentVariable "OneDrive" $oneDrive
@@ -129,7 +137,8 @@ New-Junction $home "c:\home"
 #00:00:00.0030027
 
 # Folder hide
-"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows" | Set-Visible $false
+"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | where{gi $psitem -ea ignore} | Set-Visible $false
+"$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | where{gi $psitem -ea ignore} | Set-Visible $false
 #00:00:00.0280187
 
 #new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation

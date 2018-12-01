@@ -1,6 +1,9 @@
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
 
+# Don't use history in PsReadLine, it is buggy in the latest PS release
+Set-PSReadlineOption -HistorySaveStyle SaveNothing
+
 # History folder and file
 $SCRIPT:historyFolder = "c:\automation\history\"
 if( -not (Test-Path $historyFolder) )
@@ -13,6 +16,7 @@ $SCRIPT:lastCommandId = -1
 # Prompt
 $function:prompt = {
     $realLastExitCode = $LASTEXITCODE
+
 
     # Preserve last command in log file
     $lastCommand = Get-History -Count 1
@@ -31,13 +35,16 @@ $function:prompt = {
     }
 
     # Update title
-    $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
-    if( $SCRIPT:isElevated )
+    if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
-        $title += "   ELEVATED"
+        $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
+        if( $SCRIPT:isElevated )
+        {
+            $title += "   ELEVATED"
+        }
+        $host.UI.RawUI.WindowTitle = $title
     }
-    $host.UI.RawUI.WindowTitle = $title
-
+    
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen

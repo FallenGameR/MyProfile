@@ -64,7 +64,7 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Scripts\Load-Functions.ps1
 # 00:00:00.1971376 - TODO: not needed on Win10, exclude from profile as well
 . $PSScriptRoot\Scripts\Set-ConsoleFont.ps1 | Out-Null
-Remove-Variable proc    # hides pro<tab> = profile
+Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 # 00:00:00.2531752 - TODO: optimize
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
 # #00:00:00.4593232 - TODO: try to optimize (hard - majority of time is spent in color schema redifinition)
@@ -105,12 +105,18 @@ function fuck
     }
 }
 
-# That's hacky...
+# That's hacky... but it can dot script other script here
 if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 {
     return
 }
 . "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
+
+if( -not (Test-Path "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1") )
+{
+    return
+}
+. "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1"
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
