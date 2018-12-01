@@ -2,6 +2,19 @@
 $SCRIPT:Profiling = get-date
 $SCRIPT:ProfilingCounter = 1
 
+function SCRIPT:Complete-Once( $name, $script )
+{
+    if( -not (Get-Item "HKCU:\Console\ProfileSetup").GetValue($name) )
+    {
+        Write-Host "Setting up $name"
+
+        & $script
+
+        New-Item "HKCU:\Console\ProfileSetup" -ea Ignore
+        Set-ItemProperty "HKCU:\Console\ProfileSetup" -Name $name -Value "1"
+    }
+}
+
 function SCRIPT:Get-Elapsed
 {
     $now = Get-Date
