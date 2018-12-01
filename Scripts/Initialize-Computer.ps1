@@ -112,8 +112,6 @@ if( -not (Test-Elevated) )
 # Shortcut creation
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\OneNote 2013.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\OneNote 2013.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Codeflow Launcher.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\CodeFlow\Codeflow Launcher.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
 #00:00:00.0540369
