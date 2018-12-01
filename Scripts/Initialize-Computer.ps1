@@ -2,9 +2,16 @@
 Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
 Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 
-pushd "$PsScriptRoot\..\Bin\ColorTool\"
-.\ColorTool.exe -b -q campbell | Out-Null
-popd
+if( -not (Get-Item "HKCU:\Console\ProfileSetup").GetValue("ColorTool") )
+{
+    pushd "$PsScriptRoot\..\Bin\ColorTool\"
+    .\ColorTool.exe -b -q campbell | Out-Null
+    popd
+
+    New-Item "HKCU:\Console\ProfileSetup" -ea Ignore
+    Set-ItemProperty "HKCU:\Console\ProfileSetup" -Name 'ColorTool' -Value '1'
+    Write-Host "Color tool setup"
+}
 #00:00:00.1761166
 
 # Cloud folders setup
