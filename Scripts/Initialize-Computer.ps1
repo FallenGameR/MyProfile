@@ -77,7 +77,6 @@ switch ($env:ComputerName)
 #00:00:00.0020009
 
 # Set up environment variables
-Set-EnvironmentVariable "Dropbox" $dropbox
 Set-EnvironmentVariable "OneDrive" $oneDrive
 Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
 Set-EnvironmentVariable "Opensource" $opensource
