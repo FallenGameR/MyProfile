@@ -4,13 +4,14 @@ $SCRIPT:ProfilingCounter = 1
 
 function SCRIPT:Complete-Once( $name, $script )
 {
-    if( -not (Get-Item "HKCU:\Console\ProfileSetup").GetValue($name) )
+    $setup = Get-Item "HKCU:\Console\ProfileSetup" -ea Ignore
+    if( -not($setup -and $setup.GetValue($name)) )
     {
         Write-Host "Setting up $name"
 
         & $script
 
-        New-Item "HKCU:\Console\ProfileSetup" -ea Ignore
+        New-Item "HKCU:\Console\ProfileSetup" -ea Ignore | Out-Null
         Set-ItemProperty "HKCU:\Console\ProfileSetup" -Name $name -Value "1"
     }
 }
