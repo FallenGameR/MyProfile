@@ -62,8 +62,6 @@ ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 . $PSScriptRoot\Scripts\Playground.ps1
 # 00:00:00.0100053
 . $PSScriptRoot\Scripts\Load-Functions.ps1
-# 00:00:00.1971376 - TODO: not needed on Win10, exclude from profile as well
-. $PSScriptRoot\Scripts\Set-ConsoleFont.ps1 | Out-Null
 Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 # 00:00:00.2531752 - TODO: optimize
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1

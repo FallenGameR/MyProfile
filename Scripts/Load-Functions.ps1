@@ -2,6 +2,20 @@
 $SCRIPT:Profiling = get-date
 $SCRIPT:ProfilingCounter = 1
 
+function SCRIPT:Complete-Once( $name, $script )
+{
+    $setup = Get-Item "HKCU:\Console\ProfileSetup" -ea Ignore
+    if( -not($setup -and $setup.GetValue($name)) )
+    {
+        Write-Host "Setting up $name"
+
+        & $script
+
+        New-Item "HKCU:\Console\ProfileSetup" -ea Ignore | Out-Null
+        Set-ItemProperty "HKCU:\Console\ProfileSetup" -Name $name -Value "1"
+    }
+}
+
 function SCRIPT:Get-Elapsed
 {
     $now = Get-Date
@@ -64,6 +78,7 @@ function SCRIPT:Test-Elevated
 }
 
 # NOTE: http://www.leeholmes.com/blog/2008/06/01/powershells-noble-blue/
+# Override defaults in registry
 function SCRIPT:Set-DefaultPowershellColors( $path )
 {
     Push-Location

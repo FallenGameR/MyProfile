@@ -12,14 +12,9 @@ choco install git -y
 choco install gitextensions -y
 choco install git-credential-winstore -y
 choco install kdiff3 -y
-choco install firefox -y
-choco install flashplayerplugin -y
 choco install 7zip.install -y
 choco install skype -y
-choco install dropbox -y
-choco install foxitreader -y
 choco install steam -y
-choco install ack -y
 choco install dependencywalker -y
 choco install stylecop -y
 choco install markdownpad2 -y
