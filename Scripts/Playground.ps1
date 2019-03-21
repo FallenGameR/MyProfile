@@ -26,10 +26,16 @@ function Get-Song( $artist, $song )
     $artists | foreach{ ls $psitem.FullName -rec -file -force | where BaseName -match $song }
 }
 
-function devenv
+function devenv( [switch] $vs2017, [switch] $vs2015 )
 {
-    $path = "c:\programs\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe"
-    if( -not $path )
+    $path = "C:\programs\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"
+
+    if( $vs2017 )
+    {
+        $path = "c:\programs\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe"
+    }
+
+    if( $vs2015 )
     {
         $path = "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"
     }
