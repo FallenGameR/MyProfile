@@ -28,7 +28,7 @@ function Get-Song( $artist, $song )
 
 function devenv( [switch] $vs2017, [switch] $vs2015 )
 {
-    $path = "C:\programs\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"
+    $path = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"
 
     if( $vs2017 )
     {
@@ -57,7 +57,6 @@ function devenv( [switch] $vs2017, [switch] $vs2015 )
         }
     }
 }
-
 
 filter Set-ReadOnlyFlag( [bool] $flag = $true )
 {
