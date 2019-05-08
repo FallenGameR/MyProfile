@@ -89,7 +89,8 @@ $options.TypeForegroundColor = [ConsoleColor]::DarkCyan
 $options.VariableForegroundColor = [ConsoleColor]::DarkGray
 #>
 
-
+# Old API prior to RS5
+<#
 if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.134") -lt 0 )
 {
     # RS4 and before use this API
@@ -104,22 +105,22 @@ if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.134") -lt 0 )
     Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
     Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
 }
-else
-{
-    # RS5 and after use this API
-    $colors = @{}
-    $colors["Command"] = [ConsoleColor]::DarkCyan
-    $colors["Comment"] = [ConsoleColor]::DarkGreen
-    $colors["Keyword"] = [ConsoleColor]::Gray
-    $colors["Number"] = [ConsoleColor]::DarkGray
-    $colors["Member"] = [ConsoleColor]::DarkCyan
-    $colors["Operator"] = [ConsoleColor]::DarkRed
-    $colors["Parameter"] = [ConsoleColor]::DarkMagenta
-    $colors["String"] = [ConsoleColor]::DarkYellow
-    $colors["Type"] = [ConsoleColor]::DarkCyan
-    $colors["Variable"] = [ConsoleColor]::DarkGray
-    Set-PSReadlineOption -Colors $colors
-}
+#>
+
+# RS5 and after use this API
+$colors = @{}
+$colors["Command"] = [ConsoleColor]::DarkCyan
+$colors["Comment"] = [ConsoleColor]::DarkGreen
+$colors["Keyword"] = [ConsoleColor]::Gray
+$colors["Number"] = [ConsoleColor]::DarkGray
+$colors["Member"] = [ConsoleColor]::DarkCyan
+$colors["Operator"] = [ConsoleColor]::DarkRed
+$colors["Parameter"] = [ConsoleColor]::DarkMagenta
+$colors["String"] = [ConsoleColor]::DarkYellow
+$colors["Type"] = [ConsoleColor]::DarkCyan
+$colors["Variable"] = [ConsoleColor]::DarkGray
+Set-PSReadlineOption -Colors $colors
+
 #Get-Elapsed
 
 #
