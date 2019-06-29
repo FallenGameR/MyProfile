@@ -37,7 +37,7 @@ $function:prompt = {
     # Update title
     if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
-        $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
+        $title = $pwd -replace [regex]::Escape($env:home), "~"
         if( $SCRIPT:isElevated )
         {
             $title += "   ELEVATED"
