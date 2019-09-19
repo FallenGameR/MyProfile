@@ -50,12 +50,12 @@ switch ($env:ComputerName)
     {
         $dropbox = $null
         $oneDrive = "c:\Users\alexko\OneDrive\"
-        $oneDriveMicrosoft = $null
+        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
-        $azcompute = $null
+        $azcompute = "C:\src\one\Move\"
         $apgold = $null
         $playground = $null
-        $root = $null
+        $root = "C:\src\one\"
     }
     "AUTOPILOTHUB"
     {
