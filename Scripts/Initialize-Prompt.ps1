@@ -37,13 +37,20 @@ $function:prompt = {
     # Update title
     if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
-        $title = $pwd -replace [regex]::Escape($env:home), "~"
-        $title = $title -replace [regex]::Escape($env:inetroot)
-        if( -not $title ) { $title = "\" }
-        $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
-        if( -not $title ) { $title = "NTP\" }
+        if( $GLOBAL:WindowTitle )
+        {
+            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle 
+        }
+        else
+        {
+            $title = $pwd -replace [regex]::Escape($env:home), "~"
+            $title = $title -replace [regex]::Escape($env:inetroot)
+            if( -not $title ) { $title = "\" }
+            $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
+            if( -not $title ) { $title = "NTP\" }
 
-        $host.UI.RawUI.WindowTitle = $title
+            $host.UI.RawUI.WindowTitle = $title
+        }
     }
 
     # Update prompt
