@@ -63,8 +63,8 @@ switch ($env:ComputerName)
         $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
-        $azcompute = "C:\src\one\Move\"
-        $apgold = $null
+        $azcompute = "c:\src\mv\"
+        $apgold = "c:\src\gold\ap\"
         $playground = $null
         $root = "C:\src\one\"
     }
