@@ -37,17 +37,31 @@ $function:prompt = {
     # Update title
     if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
-        $title = "$pwd   [$Env:ComputerName]   $env:UserDomain\$env:UserName"
-        if( $SCRIPT:isElevated )
+        if( $GLOBAL:WindowTitle )
         {
-            $title += "   ELEVATED"
+            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle 
         }
-        $host.UI.RawUI.WindowTitle = $title
+        else
+        {
+            $title = $pwd -replace [regex]::Escape($env:home), "~"
+            $title = $title -replace [regex]::Escape($env:inetroot)
+            if( -not $title ) { $title = "\" }
+            $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
+            if( -not $title ) { $title = "NTP\" }
+
+            $host.UI.RawUI.WindowTitle = $title
+        }
     }
 
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen
+    Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen -NoNewline
+    if( $SCRIPT:isElevated )
+    {
+        Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
+    }
+    Write-Host ""
+    
     $LASTEXITCODE = $realLastExitCode
     [char] 187 + " "
 }

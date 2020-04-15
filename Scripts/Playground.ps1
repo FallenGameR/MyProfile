@@ -3,59 +3,11 @@
     Experimental playground with unstable or hardcoded stuff.
 #>
 
-
-function Send-Tool( $session, $tool )
-{
-    $toolPaths = @(ls c:\tools | where name -match $tool | % fullname)
-    if( -not $toolPaths )
-    {
-        Write-Warning "Can't find tool $tool in c:\tools"
-    }
-    if( $toolPaths.Count -gt 1 )
-    {
-        Write-Warning "Note that mutiple tools were matched: $($toolPaths.BaseName -join ", ")"
-    }
-
-    Send-File $session $toolPaths "~\..\Desktop" -Compress
-}
-
 function Get-Song( $artist, $song )
 {
     $music = "$oneDrive\music"
     $artists = ls $music -Directory | where BaseName -match $artist
     $artists | foreach{ ls $psitem.FullName -rec -file -force | where BaseName -match $song }
-}
-
-function devenv( [switch] $vs2017, [switch] $vs2015 )
-{
-    $path = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"
-
-    if( $vs2017 )
-    {
-        $path = "c:\programs\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe"
-    }
-
-    if( $vs2015 )
-    {
-        $path = "c:\programs\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"
-    }
-
-    if( $args )
-    {
-        & $path $args
-    }
-    else
-    {
-        $file = @(ls | where Name -match "\.(sln|csproj)")
-        if( $file.Count -eq 1 )
-        {
-            & $path $file[0]
-        }
-        else
-        {
-            throw "Can't auto resolve solution or project to open, pass file to open in arguments"
-        }
-    }
 }
 
 filter Set-ReadOnlyFlag( [bool] $flag = $true )
@@ -101,7 +53,6 @@ Extract-Xml $switch
 
 # Playground
 
-
 function change( $from, $to, $encoding = "ascii" )
 {
     $files = git grep -iFl "$from"
@@ -115,31 +66,22 @@ function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" (pwd) }
 
 function edit( [string] $File, [switch] $SameEditor )
 {
-    $position = $file | parse ":(\d+):?"
-    $file = Get-FileNameArgument ($file -replace ":\d+:?")
-
-    if( (Get-Item $file).PSIsContainer )
-    {
-        Write-Warning "'$file' is a directory."
-        return
-    }
-
     $params = @()
 
-    if( $SameEditor -and (-not $position) )
+    if( $SameEditor )
     {
-        # http://vim.wikia.com/wiki/Launch_files_in_new_tabs_under_Windows
-        $params += "--remote-tab-silent"
+        $params += "--reuse-window"
+    }
+
+    if( $File -match ":" )
+    {
+        $params += "--goto"
     }
 
     $params += $file
 
-    if( $position )
-    {
-        $params += "+$position"
-    }
-
-    & gvim.exe $params
+    # code --help | code -
+    & code $params
 }
 
 # Helpers

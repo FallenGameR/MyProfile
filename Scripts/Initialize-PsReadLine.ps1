@@ -249,7 +249,7 @@ Set-PSReadlineKeyHandler -Key Alt+Shift+x `
                          -LongDescription "Opens elevated powershell in new window" `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start -FilePath (Get-Command powershell).Definition -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start -FilePath (Get-Process -PID $pid | % Path) -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
