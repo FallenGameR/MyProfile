@@ -1,7 +1,22 @@
-﻿# Powershell behaviour setup
+﻿$stopwatch = [system.diagnostics.stopwatch]::StartNew()
+$enableTiming = $false
+# pwsh -noprofile
+# . "C:\Users\alexko\OneDrive - Microsoft\Documents\PowerShell\profile.ps1"
+
+function tm($info = "=>")
+{
+    if( $enableTiming )
+    {
+        Write-Host "$info $($stopwatch.ElapsedMilliseconds / 1000)"
+        $stopwatch.Restart()
+    }
+}
+
+# Powershell behaviour setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 $env:PSModulePath += ";$PSScriptRoot\Modules"
+tm init
 
 # PsReadline is already included in Windows 10, no need to have it in modules
 if( [Environment]::OSVersion.Version.Major -lt 10 )
@@ -17,7 +32,7 @@ $PSDefaultParameterValues["Enter-PhxMachine:TwoFactorAuth"] = $true
 $PSDefaultParameterValues["Enter-TunnelSession:TwoFactorAuth"] = $true
 $PSDefaultParameterValues["Get-TunnelSession:TwoFactorAuth"] = $true
 $PSDefaultParameterValues["Invoke-ApTool:TwoFactorAuth"] = $true
-
+tm defaults
 
 # Was fixed in Windows 10
 if( [Environment]::OSVersion.Version.Major -lt 10 )
@@ -29,6 +44,7 @@ Set-Alias new New-Object
 Set-Alias rename Rename-Item
 Set-Alias m Measure-Object
 Set-Alias gite "c:\programs\GitExtensions\GitExtensions.exe"
+tm alias
 
 # Environment setup
 $addToPath =
@@ -56,52 +72,30 @@ $env:TERM = "msys"
 
 # CoreXTAutomation setup
 ${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
+tm environent
 
 # Additional setup
 # 00:00:00.0140114
 . $PSScriptRoot\Scripts\Playground.ps1
+tm playground
+
 # 00:00:00.0100053
 . $PSScriptRoot\Scripts\Load-Functions.ps1
 Remove-Variable proc -ea Ignore # hides pro<tab> = profile
+tm func
+
 # 00:00:00.2531752 - TODO: optimize
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
+tm comp
+
 # #00:00:00.4593232 - TODO: try to optimize (hard - majority of time is spent in color schema redifinition)
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
+tm readline
+
 # 00:00:00.0170141
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
+tm prompt
 
-# Setup for tye fuck program
-# https://github.com/nvbn/thefuck/wiki/Shell-aliases
-# Update: pip.exe install thefuck --upgrade
-# Requirement - latest python installed and availabe in path
-#
-# Interesting commands:
-# cd_correction  – spellchecks and correct failed cd commands;
-# cd_mkdir  – creates directories before cd'ing into them;
-# dirty_unzip  – fixes  unzip  command that unzipped in the current directory;
-# dry  – fixes repetitions like  git git push ;
-# git_branch_delete  – changes  git branch -d  to  git branch -D ;
-# git_branch_list  – catches  git branch list  in place of  git branch  and removes created branch;
-# git_checkout  – fixes branch name or creates new branch;
-# git_help_aliased  – fixes  git help <alias>  commands replacing with the aliased command;
-# git_pull  – sets upstream before executing previous  git pull ;
-# git_push_pull  – runs  git pull  when  push  was rejected;
-# git_stash  – stashes you local modifications before rebasing or switching branch;
-# git_two_dashes  – adds a missing dash to commands like  git commit -amend  or  git rebase -continue ;
-# has_exists_script  – prepends  ./  when script/binary exists;
-# history  – tries to replace command with most similar command from history;
-# sed_unterminated_s  – adds missing '/' to  sed 's  s  commands;
-# sl_ls  – changes  sl  to  ls ;
-# switch_lang  – switches command from your local layout to en;
-function fuck
-{
-    $fuck = $(thefuck (Get-History -Count 1).CommandLine)
-    if (-not [string]::IsNullOrWhiteSpace($fuck))
-    {
-        if ($fuck.StartsWith("echo")) { $fuck = $fuck.Substring(5) }
-        else { iex "$fuck" }
-    }
-}
 
 # That's hacky... but it can dot script other script here
 if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
@@ -109,15 +103,13 @@ if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
     return
 }
 . "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
+tm ProtectedPlayground
 
 if( -not (Test-Path "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1") )
 {
     return
 }
 . "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1"
+tm Deployment
 
-# Chocolatey profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
+$enableTiming = $true
