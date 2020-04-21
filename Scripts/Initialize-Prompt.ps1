@@ -43,7 +43,8 @@ $function:prompt = {
         }
         else
         {
-            $title = $pwd -replace [regex]::Escape($env:home), "~"
+            $title = $pwd
+            if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }             
             $title = $title -replace [regex]::Escape($env:inetroot)
             if( -not $title ) { $title = "\" }
             $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
