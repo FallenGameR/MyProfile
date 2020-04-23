@@ -14,7 +14,8 @@ $SCRIPT:historyFile = "$historyFolder\{0}--$pid.ps1" -f [DateTime]::Now.ToString
 $SCRIPT:lastCommandId = -1
 
 # Prompt
-$function:prompt = {
+function prompt 
+{
     $realLastExitCode = $LASTEXITCODE
 
 
@@ -55,7 +56,7 @@ $function:prompt = {
 
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen -NoNewline
+    Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
     {
         Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
