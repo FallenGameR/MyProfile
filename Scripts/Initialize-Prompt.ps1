@@ -46,11 +46,13 @@ function prompt
         {
             $title = $pwd
             if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }             
-            $title = $title -replace [regex]::Escape($env:inetroot)
-            if( -not $title ) { $title = "\" }
-            $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
-            if( -not $title ) { $title = "NTP\" }
-
+            if( $env:inetroot )
+            {
+                $title = $title -replace [regex]::Escape($env:inetroot)
+                if( -not $title ) { $title = "\" }
+                $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
+                if( -not $title ) { $title = "NTP\" }
+            }
             $host.UI.RawUI.WindowTitle = $title
         }
     }
