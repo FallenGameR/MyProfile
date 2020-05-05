@@ -69,30 +69,22 @@ $addToPath =
 $env:Path += ";" + ($addToPath -join ";")
 $env:SdEditor = "gvim.exe"
 $env:TERM = "msys"
-
-# CoreXTAutomation setup
-${GLOBAL:CoreXTAutomation.CodeFlow} = "\\codeflow\public\cfdog.cmd"
 tm environent
 
 # Additional setup
-# 00:00:00.0140114
 . $PSScriptRoot\Scripts\Playground.ps1
 tm playground
 
-# 00:00:00.0100053
 . $PSScriptRoot\Scripts\Load-Functions.ps1
 Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 tm func
 
-# 00:00:00.2531752 - TODO: optimize
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
 tm comp
 
-# #00:00:00.4593232 - TODO: try to optimize (hard - majority of time is spent in color schema redifinition)
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 tm readline
 
-# 00:00:00.0170141
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt
 
@@ -104,12 +96,5 @@ if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
 }
 . "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
 tm ProtectedPlayground
-
-if( -not (Test-Path "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1") )
-{
-    return
-}
-. "$oneDriveMicrosoft\Projects\Deployments\scripts\Deployment.ps1"
-tm Deployment
 
 $enableTiming = $true
