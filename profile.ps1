@@ -3,7 +3,7 @@
 param()
 
 $stopwatch = [system.diagnostics.stopwatch]::StartNew()
-$enableTiming = $false
+$enableTiming = $true
 # pwsh -noprofile
 # . "C:\Users\alexko\OneDrive - Microsoft\Documents\PowerShell\profile.ps1"
 
