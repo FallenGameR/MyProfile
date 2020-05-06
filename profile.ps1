@@ -1,4 +1,8 @@
-﻿$stopwatch = [system.diagnostics.stopwatch]::StartNew()
+﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars')]
+param()
+
+$stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $enableTiming = $false
 # pwsh -noprofile
 # . "C:\Users\alexko\OneDrive - Microsoft\Documents\PowerShell\profile.ps1"
@@ -12,7 +16,7 @@ function tm($info = "=>")
     }
 }
 
-# Powershell behaviour setup
+# Powershell behavior setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
 $env:PSModulePath += ";$PSScriptRoot\Modules"
@@ -67,9 +71,7 @@ $addToPath =
     "f:\autopilot\move\src\Tools\Git\GitTrack\"
 
 $env:Path += ";" + ($addToPath -join ";")
-$env:SdEditor = "gvim.exe"
-$env:TERM = "msys"
-tm environent
+tm environment
 
 # Additional setup
 . $PSScriptRoot\Scripts\Playground.ps1
@@ -83,7 +85,7 @@ tm func
 tm comp
 
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
-tm readline
+tm psreadline
 
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt
