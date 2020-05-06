@@ -3,7 +3,7 @@
 param()
 
 $stopwatch = [system.diagnostics.stopwatch]::StartNew()
-$enableTiming = $true
+$enableTiming = $false
 # pwsh -noprofile
 # . "C:\Users\alexko\OneDrive - Microsoft\Documents\PowerShell\profile.ps1"
 
@@ -54,21 +54,12 @@ tm alias
 $addToPath =
     "c:\tools\BeyondCompare4\",
     "c:\tools\SysinternalsSuite\",
-    "c:\tools\Vim\vim74\",
     "c:\tools\ILSpy\",
-    "c:\tools\Lens\",
     "c:\tools\LinqPad\",
     "c:\tools\Multitran\network\",
-    "c:\tools\prorab\",
     "c:\tools\Tagger\",
-    "c:\tools\TeamHub\",
     "c:\tools\WinDirStat\",
-    "c:\tools\xts\",
-    "c:\tools\odd\",
-    "C:\tools\SdApi\",
-    "e:\root\Compute\Core\NtpInvestigations\FcShell\",
-    "f:\autopilot\move\src\Tools\Git\GitNuke\",
-    "f:\autopilot\move\src\Tools\Git\GitTrack\"
+    "c:\tools\xts\"
 
 $env:Path += ";" + ($addToPath -join ";")
 tm environment
