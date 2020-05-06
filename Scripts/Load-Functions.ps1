@@ -1,3 +1,6 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
+param()
+
 # Helper functions
 $SCRIPT:Profiling = get-date
 $SCRIPT:ProfilingCounter = 1
@@ -20,7 +23,7 @@ function SCRIPT:Get-Elapsed
 {
     $now = Get-Date
     $message = "{0:00} #{1}" -f $profilingCounter, ($now - $profiling)
-    Write-Host $message -fore darkgreen
+    Write-Host $message -fore DarkGreen
     $SCRIPT:Profiling = $now
     $SCRIPT:ProfilingCounter +=1
 }
@@ -42,12 +45,12 @@ filter SCRIPT:Set-Visible( [bool] $makeVisible )
     }
 
     $attributes = (Get-ItemProperty $psitem).Attributes
-    $hidden = $attributes -band [Io.Fileattributes]::Hidden
+    $hidden = $attributes -band [Io.FileAttributes]::Hidden
 
     if( -not ($hidden -xor $makeVisible) )
     {
-        $attributes = $attributes -bxor [Io.Fileattributes]::Hidden
-        $attributes = $attributes -band (-bnot [Io.Fileattributes]::Directory)
+        $attributes = $attributes -bxor [Io.FileAttributes]::Hidden
+        $attributes = $attributes -band (-bnot [Io.FileAttributes]::Directory)
         Set-ItemProperty `
             -Path $psitem `
             -Name Attributes `

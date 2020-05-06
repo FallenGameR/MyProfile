@@ -1,3 +1,7 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars')]
+param()
+
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
 
@@ -14,7 +18,7 @@ $SCRIPT:historyFile = "$historyFolder\{0}--$pid.ps1" -f [DateTime]::Now.ToString
 $SCRIPT:lastCommandId = -1
 
 # Prompt
-function prompt 
+function prompt
 {
     $realLastExitCode = $LASTEXITCODE
 
@@ -40,12 +44,12 @@ function prompt
     {
         if( $GLOBAL:WindowTitle )
         {
-            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle 
+            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle
         }
         else
         {
             $title = $pwd
-            if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }             
+            if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }
             if( $env:inetroot )
             {
                 $title = $title -replace [regex]::Escape($env:inetroot)
@@ -65,7 +69,7 @@ function prompt
         Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
     }
     Write-Host ""
-    
+
     $LASTEXITCODE = $realLastExitCode
     [char] 187 + " "
 }

@@ -1,7 +1,9 @@
 @{
     'Rules' = @{
         'PSAvoidUsingCmdletAliases' = @{
-            'Whitelist' = @("ls","cd","gsp","where","%","?","foreach","select")
+            'Whitelist' = @(
+                "ls", "cd", "gsp", "where", "%", "?",
+                "foreach", "select", "copy")
         }
     }
 }
