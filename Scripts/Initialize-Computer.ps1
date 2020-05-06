@@ -1,3 +1,6 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments')]
+param()
+
 # Default console color setup
 Complete-Once "Fonts" {
     Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
@@ -5,9 +8,9 @@ Complete-Once "Fonts" {
 }
 
 Complete-Once "ColorTool" {
-    pushd "$PsScriptRoot\..\Bin\ColorTool\"
+    Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
-    popd
+    Pop-Location
 }
 
 # Cloud folders setup
@@ -45,7 +48,7 @@ switch ($env:ComputerName)
         $apgold = "D:\Code\Autopilot\ApGold\"
         $playground = $null
         $root = "D:\Code\Onebranch\"
-    }    
+    }
     "ALEXKO-X1"
     {
         $dropbox = "c:\Users\alexko\Dropbox\"
@@ -148,7 +151,6 @@ if( -not (Test-Elevated) )
 # Shortcut creation
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
 #00:00:00.0540369
 
