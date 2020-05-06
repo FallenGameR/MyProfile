@@ -7,41 +7,6 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 }
 
 <#
-#00:00:00.2922512
-$parentProcessId = (Get-CimInstance Win32_Process -Filter "ProcessId='$pid'").ParentProcessId
-$parentProcess = Get-Process -Id $parentProcessId -ea Ignore
-if( $parentProcess )
-{
-    if( $parentProcess.ProcessName -notmatch "explorer|TOTALCMD|Powershell" )
-    {
-        # we expect interactive Powershell session to be started only by
-        # explorer, totalcmd and another powershell precesses
-        return
-    }
-
-    $currentProcess = Get-Process -Id $pid -ea Stop
-    if( ($parentProcess.ProcessName -match "Powershell") -and
-        ((Test-ProcessRedirected $currentProcess) -or (Test-ProcessRedirected $parentProcess) ) )
-    {
-        # in case parent is another powershell process test that both parent and current processes
-        # don't redirect their output and thus are interactive
-        return
-    }
-}
-#>
-
-# TODO: ctrl+x selection/line cut/quit
-# TODO: ctrl+p variable name auto suggestion
-# TODO: Current char casing change
-# TODO: Integrate shell chords to vim
-# TODO: help opens msdn on .NET methods
-# TODO: normalization normalizes .NET method names
-#
-# Combinations that wouldn't work:
-#
-# Alt+[Shift+]Up/Down/Left/Right - caused by .NET handling of Alt-unicode combinations)
-# [Ctrl+]Shift+Up/Down - unclear reason why this doesn't work
-# Ctrl+Alt+Up/Down/Left/Right - reserved for WinAmp
 #
 # Combinations to remember:
 #
@@ -61,6 +26,7 @@ if( $parentProcess )
 # Alt+' - change surrounding quotation
 # Alt+( - add surrounding braces
 #
+#>
 
 Import-Module PsReadLine
 
@@ -69,43 +35,6 @@ Import-Module PsReadLine
 # https://superuser.com/questions/1113429/disable-powershell-beep-on-backspace
 #
 Set-PSReadlineOption -BellStyle None
-
-#
-# Color scheme, the same is in 'source'
-# 00:00:00.3302302
-#
-#Get-Elapsed
-<#
-$options = Get-PSReadlineOption
-$options.CommandForegroundColor = [ConsoleColor]::DarkCyan
-$options.CommentForegroundColor = [ConsoleColor]::DarkGreen
-$options.KeywordForegroundColor = [ConsoleColor]::Gray
-$options.NumberForegroundColor = [ConsoleColor]::DarkGray
-$options.MemberForegroundColor = [ConsoleColor]::DarkCyan
-$options.OperatorForegroundColor = [ConsoleColor]::DarkRed
-$options.ParameterForegroundColor = [ConsoleColor]::DarkMagenta
-$options.StringForegroundColor = [ConsoleColor]::DarkYellow
-$options.TypeForegroundColor = [ConsoleColor]::DarkCyan
-$options.VariableForegroundColor = [ConsoleColor]::DarkGray
-#>
-
-# Old API prior to RS5
-<#
-if( $PSVersionTable.PSVersion.CompareTo([version]"5.1.17763.134") -lt 0 )
-{
-    # RS4 and before use this API
-    Set-PSReadlineOption -TokenKind Command -ForegroundColor DarkCyan
-    Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGreen
-    Set-PSReadlineOption -TokenKind Keyword -ForegroundColor Gray
-    Set-PSReadlineOption -TokenKind Number -ForegroundColor DarkGray
-    Set-PSReadlineOption -TokenKind Member -ForegroundColor DarkCyan
-    Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkRed
-    Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkMagenta
-    Set-PSReadlineOption -TokenKind String -ForegroundColor DarkYellow
-    Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
-    Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGray
-}
-#>
 
 # RS5 and after use this API
 $colors = @{}
@@ -121,15 +50,12 @@ $colors["Type"] = [ConsoleColor]::DarkCyan
 $colors["Variable"] = [ConsoleColor]::DarkGray
 Set-PSReadlineOption -Colors $colors
 
-#Get-Elapsed
-
 #
 # Other options
 #
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen
-Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behavior
 
 #
@@ -137,8 +63,6 @@ Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behav
 #
 Remove-PSReadlineKeyHandler -Chord "Ctrl+r"
 Remove-PSReadlineKeyHandler -Chord "Ctrl+s"
-Set-PSReadlineKeyHandler -Chord "F2" -Function ReverseSearchHistory
-Set-PSReadlineKeyHandler -Chord "Shift+F2" -Function ForwardSearchHistory
 
 #
 # Navigation
@@ -163,9 +87,6 @@ Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
-
-# Pre win 10 - [PSConsoleUtilities.PSConsoleReadLine]
-# After win 10 - [Microsoft.PowerShell.PSConsoleReadLine]
 
 #
 # Ctrl+X that either:
@@ -237,7 +158,7 @@ Set-PSReadlineKeyHandler -Key Alt+x `
                          -LongDescription "Opens powershell in new window" `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start powershell")
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start wt")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
@@ -249,7 +170,7 @@ Set-PSReadlineKeyHandler -Key Alt+Shift+x `
                          -LongDescription "Opens elevated powershell in new window" `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start -FilePath (Get-Process -PID $pid | % Path) -ArgumentList '-NoExit -Command cd ''$pwd''' -Verb RunAs")
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start wt -Verb RunAs")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
@@ -274,18 +195,6 @@ Set-PSReadlineKeyHandler -Key Alt+b `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("gite")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+u git config remote.origin.url
-#
-Set-PSReadlineKeyHandler -Key Alt+u `
-                         -BriefDescription GitOriginUrl `
-                         -LongDescription "Gets git origin url" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("git config remote.origin.url")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
