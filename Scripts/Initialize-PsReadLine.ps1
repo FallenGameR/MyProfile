@@ -31,7 +31,7 @@ if( $parentProcess )
 #>
 
 # TODO: ctrl+x selection/line cut/quit
-# TODO: ctrl+p variable name auto suggection
+# TODO: ctrl+p variable name auto suggestion
 # TODO: Current char casing change
 # TODO: Integrate shell chords to vim
 # TODO: help opens msdn on .NET methods
@@ -130,7 +130,7 @@ Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Chord "Ctrl+l" -Function ScrollDisplayToCursor
-Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behaviour
+Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behavior
 
 #
 # Search
@@ -199,21 +199,21 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
         return
     }
 
-    # Otherwise quicly close the console
+    # Otherwise quickly close the console
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
 #
-# Alt+g invokes gvim
+# Alt+g invokes code
 #
 Set-PSReadlineKeyHandler -Key Alt+g `
-                         -BriefDescription GVim `
-                         -LongDescription "GVim invocation" `
+                         -BriefDescription Code `
+                         -LongDescription "Code invocation" `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gvim")
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("code")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
@@ -327,7 +327,7 @@ Set-PSReadlineKeyHandler -Key Ctrl+Shift+v `
 }
 
 # Sometimes you want to get a property of invoke a member on what you've entered so far
-# but you need parens to do that.  This binding will help by putting parens around the current selection,
+# but you need parents to do that.  This binding will help by putting parents around the current selection,
 # or if nothing is selected, the whole line.
 # Alt+(
 Set-PSReadlineKeyHandler -Key 'Alt+9' `
