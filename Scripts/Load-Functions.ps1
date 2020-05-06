@@ -7,16 +7,17 @@ $SCRIPT:ProfilingCounter = 1
 
 function SCRIPT:Complete-Once( $name, $script )
 {
-    $setup = Get-Item "HKCU:\Console\ProfileSetup" -ea Ignore
-    if( -not($setup -and $setup.GetValue($name)) )
+    # Skip if one time setup was already done
+    $flag = "$PSScriptRoot\OneTime\$name"
+    if( Test-Path $flag )
     {
-        Write-Host "Setting up $name"
-
-        & $script
-
-        New-Item "HKCU:\Console\ProfileSetup" -ea Ignore | Out-Null
-        Set-ItemProperty "HKCU:\Console\ProfileSetup" -Name $name -Value "1"
+        return
     }
+
+    # Do one time setup
+    Write-Host "Setting up $name"
+    & $script
+    mkdir $flag | Out-Null
 }
 
 function SCRIPT:Get-Elapsed

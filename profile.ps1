@@ -11,7 +11,7 @@ function tm($info = "=>")
 {
     if( $enableTiming )
     {
-        Write-Host "$info $($stopwatch.ElapsedMilliseconds / 1000)"
+        Write-Host "$($stopwatch.ElapsedMilliseconds / 1000) $info"
         $stopwatch.Restart()
     }
 }
