@@ -169,8 +169,9 @@ Set-PSReadlineKeyHandler -Key Alt+Shift+x `
                          -BriefDescription PowershellElevatedNewWindow `
                          -LongDescription "Opens elevated powershell in new window" `
                          -ScriptBlock {
+    # start wt -Verb RunAs - doesn't work for some reason
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start wt -Verb RunAs")
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert('start cmd -ArgumentList "/c start /b wt" -Verb runas -WindowStyle Minimized')
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
