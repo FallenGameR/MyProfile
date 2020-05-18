@@ -22,20 +22,8 @@ $global:MaximumHistoryCount = 1024
 $env:PSModulePath += ";$PSScriptRoot\Modules"
 tm init
 
-# PsReadline is already included in Windows 10, no need to have it in modules
-if( [Environment]::OSVersion.Version.Major -lt 10 )
-{
-    $env:PSModulePath += ";$PSScriptRoot\LegacyModules"
-}
-
+# Default command arguments
 $PSDefaultParameterValues["Get-Command:All"] = $true
-$PSDefaultParameterValues["Set-Content:Encoding"] = "ASCII"
-$PSDefaultParameterValues["edit:NewEditor"] = $true
-$PSDefaultParameterValues["Enter-TunnelSession:AutoComplete"] = $true
-$PSDefaultParameterValues["Enter-PhxMachine:TwoFactorAuth"] = $true
-$PSDefaultParameterValues["Enter-TunnelSession:TwoFactorAuth"] = $true
-$PSDefaultParameterValues["Get-TunnelSession:TwoFactorAuth"] = $true
-$PSDefaultParameterValues["Invoke-ApTool:TwoFactorAuth"] = $true
 tm defaults
 
 # Was fixed in Windows 10
