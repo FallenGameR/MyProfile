@@ -45,9 +45,7 @@ if( [Environment]::OSVersion.Version.Major -lt 10 )
 }
 
 Set-Alias new New-Object
-Set-Alias rename Rename-Item
 Set-Alias m Measure-Object
-Set-Alias gite "c:\programs\GitExtensions\GitExtensions.exe"
 tm alias
 
 # Environment setup
