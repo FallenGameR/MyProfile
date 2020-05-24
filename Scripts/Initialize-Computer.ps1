@@ -1,14 +1,19 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+param()
+
 # Default console color setup
 Complete-Once "Fonts" {
     Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
     Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
 }
+tm fonts
 
 Complete-Once "ColorTool" {
-    pushd "$PsScriptRoot\..\Bin\ColorTool\"
+    Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
-    popd
+    Pop-Location
 }
+tm ColorTool
 
 # Cloud folders setup
 switch ($env:ComputerName)
@@ -45,7 +50,7 @@ switch ($env:ComputerName)
         $apgold = "D:\Code\Autopilot\ApGold\"
         $playground = $null
         $root = "D:\Code\Onebranch\"
-    }    
+    }
     "ALEXKO-X1"
     {
         $dropbox = "c:\Users\alexko\Dropbox\"
@@ -96,7 +101,7 @@ switch ($env:ComputerName)
         return
     }
 }
-#00:00:00.0020009
+tm "Variables setup"
 
 # Current path fix
 if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Users\alexko.REDMOND")) )
@@ -105,6 +110,7 @@ if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Us
     cd $newLocation
     [Environment]::CurrentDirectory = $pwd
 }
+tm "Path fix"
 
 # Set up environment variables
 Set-EnvironmentVariable "OneDrive" $oneDrive
@@ -116,7 +122,7 @@ Set-EnvironmentVariable "Root" $root
 Set-EnvironmentVariable "Playground" $playground
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
-#00:00:00.0140094
+tm "Environment setup"
 
 # Tools folder creation
 if( -not (Test-Path "c:\tools") )
@@ -124,45 +130,41 @@ if( -not (Test-Path "c:\tools") )
     # Do we need to test that we have admin rights / that current user can do anything to drive c:\ ?
     mkdir "c:\tools" -ea Stop | Out-Null
 }
-#00:00:00.0030026
+tm "Tools root setup"
 
 # Tools junction creation
 foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
-#00:00:00.0290176
+tm "Tool junctions creation"
 
 foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
-#00:00:00.0110072
+tm "Microsoft specific tool junctions creation"
 
 # The rest of the commands are possible only from an elevated prompt
 if( -not (Test-Elevated) )
 {
     return
 }
+tm "Elevation test"
 
 # Shortcut creation
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\GVim.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\GVim.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
-#00:00:00.0540369
+tm "Shortcut creation"
 
 # Common root junctions
 New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
 New-Junction "c:\Program Files (x86)" "c:\programs"
 New-Junction $home "c:\home"
-#00:00:00.0030027
+tm "Common junctions setup"
 
 # Folder hide
 "c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | where{gi $psitem -ea ignore} | Set-Visible $false
 "$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | where{gi $psitem -ea ignore} | Set-Visible $false
-#00:00:00.0280187
-
-#new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\CoreXtAutomation -ItemType Junction -Value e:\root\Compute\Core\CoreXTAutomation\src\CoreXTAutomation
-#new-item -path c:\Users\alexko\Documents\WindowsPowerShell\Modules\PhxAutomation -ItemType Junction -Value e:\root\Compute\Core\PHXAutomation\src\PHXAutomation\
-#New-Item -Path c:\Users\alexko\Documents\WindowsPowerShell\Modules\fabric -ItemType Junction -Value $oneDriveMicrosoft\Tools\FcShell\
+tm "Folder hiding junctions setup"

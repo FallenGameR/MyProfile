@@ -1,3 +1,7 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
+param()
+
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
 
@@ -14,7 +18,8 @@ $SCRIPT:historyFile = "$historyFolder\{0}--$pid.ps1" -f [DateTime]::Now.ToString
 $SCRIPT:lastCommandId = -1
 
 # Prompt
-$function:prompt = {
+function prompt
+{
     $realLastExitCode = $LASTEXITCODE
 
 
@@ -39,29 +44,32 @@ $function:prompt = {
     {
         if( $GLOBAL:WindowTitle )
         {
-            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle 
+            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle
         }
         else
         {
-            $title = $pwd -replace [regex]::Escape($env:home), "~"
-            $title = $title -replace [regex]::Escape($env:inetroot)
-            if( -not $title ) { $title = "\" }
-            $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
-            if( -not $title ) { $title = "NTP\" }
-
+            $title = $pwd
+            if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }
+            if( $env:inetroot )
+            {
+                $title = $title -replace [regex]::Escape($env:inetroot)
+                if( -not $title ) { $title = "\" }
+                $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
+                if( -not $title ) { $title = "NTP\" }
+            }
             $host.UI.RawUI.WindowTitle = $title
         }
     }
 
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$Env:ComputerName] $env:UserDomain\$env:UserName" -ForegroundColor DarkGreen -NoNewline
+    Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
     {
         Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
     }
     Write-Host ""
-    
+
     $LASTEXITCODE = $realLastExitCode
     [char] 187 + " "
 }
