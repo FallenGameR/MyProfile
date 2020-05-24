@@ -82,7 +82,7 @@ switch ($env:ComputerName)
     "Sekirei"
     {
         $dropbox = "f:\Dropbox\"
-        $oneDrive = "f:\OneDrive\"
+        $oneDrive = "e:\OneDrive\"
         $oneDriveMicrosoft = $null
         $opensource = $null
         $azcompute = $null
