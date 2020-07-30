@@ -77,8 +77,8 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 #
 # Deletion
 #
-Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
-Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
+#Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
+#Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
 Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
