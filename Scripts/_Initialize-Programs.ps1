@@ -1,20 +1,31 @@
 #Requires -RunAsAdministrator
 
 
-Find-Package ack -Provider chocolatey | Install-Package -Force -ForceBootstrap -Verbose
-Install-package –ProviderName chocolatey –Force –FirceBootStrap –Verbose –Name <package>
+#Find-Package ack -Provider chocolatey | Install-Package -Force -ForceBootstrap -Verbose
+#Install-package –ProviderName chocolatey –Force –FirceBootStrap –Verbose –Name <package>
+
+
+# powershell admin
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Add windows exclusion folder (during installations)?
+C:\ProgramData\chocolatey\lib, C:\src as well
+
+# new admin console
+choco install powershell-core -y
+choco install googlechrome -y
+choco install firacode -y
+choco install less -y
+
+choco install vscode git gitextensions kdiff3 -y
+choco install miniconda3 microsoft-teams microsoft-windows-terminal visualstudio2019enterprise -y
 
 
 
-Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-choco install git -y
-choco install gitextensions -y
-choco install kdiff3 -y
-choco install code -y
-choco install ilspy -y
-choco install sysinternals -y
 
-Clone PSToolbox
-Run git setup from PSToolbox
+#choco install ilspy -y
+#choco install sysinternals -y
 
-Create junction to the tools?
+#Clone PSToolbox
