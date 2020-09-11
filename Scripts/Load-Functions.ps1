@@ -45,17 +45,14 @@ filter SCRIPT:Set-Visible( [bool] $makeVisible )
         return
     }
 
-    $attributes = (Get-ItemProperty $psitem).Attributes
-    $hidden = $attributes -band [Io.FileAttributes]::Hidden
-
-    if( -not ($hidden -xor $makeVisible) )
+    $item = Get-Item $psitem
+    if( $makeVisible )
     {
-        $attributes = $attributes -bxor [Io.FileAttributes]::Hidden
-        $attributes = $attributes -band (-bnot [Io.FileAttributes]::Directory)
-        Set-ItemProperty `
-            -Path $psitem `
-            -Name Attributes `
-            -Value $attributes
+        $item.Attributes = $item.Attributes -band (-bnot [Io.FileAttributes]::Hidden)
+    }
+    else
+    {
+        $item.Attributes = $item.Attributes -bor "Hidden"
     }
 }
 

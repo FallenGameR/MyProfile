@@ -29,17 +29,6 @@ switch ($env:ComputerName)
         $playground = "e:\git\pg"
         $root = "e:\root\"
     }
-    "ALEXKO-DS"
-    {
-        $dropbox = "e:\Dropbox\"
-        $oneDrive = "e:\OneDrive\"
-        $oneDriveMicrosoft = "e:\OneDrive - Microsoft\"
-        $opensource = "e:\Code\external"
-        $azcompute = "e:\Code\autopilot\move\"
-        $apgold = "e:\Code\autopilot\apgold\"
-        $playground = $null
-        $root = "e:\Code\onebranch\"
-    }
     "ALEXKO-LS"
     {
         $dropbox = $null
@@ -63,6 +52,17 @@ switch ($env:ComputerName)
         $root = "d:\src\root\"
     }
     "ALEXKO-SB"
+    {
+        $dropbox = $null
+        $oneDrive = "c:\Users\alexko\OneDrive\"
+        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
+        $opensource = $null
+        $azcompute = "c:\src\mv\"
+        $apgold = "c:\src\gold\ap\"
+        $playground = $null
+        $root = "C:\src\one\"
+    }
+    "ALEXKO-TS"
     {
         $dropbox = $null
         $oneDrive = "c:\Users\alexko\OneDrive\"
