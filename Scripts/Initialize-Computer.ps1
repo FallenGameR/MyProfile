@@ -62,6 +62,17 @@ switch ($env:ComputerName)
         $playground = $null
         $root = "C:\src\one\"
     }
+    "ALEXKO-SB2"
+    {
+        $dropbox = $null
+        $oneDrive = "c:\Users\alexko\OneDrive\"
+        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
+        $opensource = $null
+        $azcompute = "c:\src\mv\"
+        $apgold = "c:\src\gold\ap\"
+        $playground = $null
+        $root = "C:\src\one\"
+    }
     "ALEXKO-TS"
     {
         $dropbox = $null
