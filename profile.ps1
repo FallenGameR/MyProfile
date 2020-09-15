@@ -38,14 +38,9 @@ tm alias
 
 # Environment setup
 $addToPath =
-    "c:\tools\BeyondCompare4\",
-    "c:\tools\SysinternalsSuite\",
-    "c:\tools\ILSpy\",
-    "c:\tools\LinqPad\",
-    "c:\tools\Multitran\network\",
-    "c:\tools\Tagger\",
-    "c:\tools\WinDirStat\",
-    "c:\tools\xts\"
+"c:\tools\LinqPad5\",
+"C:\Program Files\Beyond Compare 4\",
+"C:\Program Files (x86)\WinDirStat\"
 
 $env:Path += ";" + ($addToPath -join ";")
 tm environment
