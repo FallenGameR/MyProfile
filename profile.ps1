@@ -39,7 +39,7 @@ tm alias
 # Environment setup
 $addToPath =
 "c:\tools\LinqPad5\",
-"c:\tools\xts\"
+"c:\tools\xts\",
 "C:\Program Files\Beyond Compare 4\",
 "C:\Program Files (x86)\WinDirStat\"
 
