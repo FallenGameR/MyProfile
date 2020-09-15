@@ -18,14 +18,15 @@ choco install powershell-core -y
 choco install googlechrome -y
 choco install firacode -y
 choco install less -y
+choco install gimp -y
 
 choco install vscode git gitextensions kdiff3 -y
-choco install miniconda3 microsoft-teams microsoft-windows-terminal visualstudio2019enterprise -y
-
-
-
+choco install microsoft-teams microsoft-windows-terminal visualstudio2019enterprise -y
+choco install miniconda3 --params="'/AddToPath:1'" -y
 
 #choco install ilspy -y
 #choco install sysinternals -y
-
 #Clone PSToolbox
+
+# how
+conda install ipython jupyter -y
