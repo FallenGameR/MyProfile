@@ -18,21 +18,9 @@ tm ColorTool
 # Cloud folders setup
 switch ($env:ComputerName)
 {
-    "ALEXKO-DEV"
-    {
-        $dropbox = "d:\Dropbox\"
-        $oneDrive = "d:\OneDrive\"
-        $oneDriveMicrosoft = "d:\OneDrive - Microsoft\"
-        $opensource = "e:\external\"
-        $azcompute = "e:\root\Azure\Compute-Move\"
-        $apgold = "e:\autopilot\apgold\"
-        $playground = "e:\git\pg"
-        $root = "e:\root\"
-    }
     "ALEXKO-LS"
     {
         $dropbox = $null
-        $oneDrive = "D:\OneDrive\"
         $oneDriveMicrosoft = "D:\OneDrive - Microsoft\"
         $opensource = "D:\Code\External"
         $azcompute = "D:\Code\Autopilot\Move\"
@@ -40,32 +28,9 @@ switch ($env:ComputerName)
         $playground = $null
         $root = "D:\Code\Onebranch\"
     }
-    "ALEXKO-X1"
-    {
-        $dropbox = "c:\Users\alexko\Dropbox\"
-        $oneDrive = "c:\Users\alexko\OneDrive\"
-        $oneDriveMicrosoft = "c:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
-        $azcompute = "d:\src\root\Azure\Compute-Move\"
-        $apgold = "c:\src\apgold\"
-        $playground = $null
-        $root = "d:\src\root\"
-    }
-    "ALEXKO-SB"
-    {
-        $dropbox = $null
-        $oneDrive = "c:\Users\alexko\OneDrive\"
-        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
-        $azcompute = "c:\src\mv\"
-        $apgold = "c:\src\gold\ap\"
-        $playground = $null
-        $root = "C:\src\one\"
-    }
     "ALEXKO-SB2"
     {
         $dropbox = $null
-        $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
         $azcompute = "c:\src\mv\"
@@ -76,7 +41,6 @@ switch ($env:ComputerName)
     "ALEXKO-TS"
     {
         $dropbox = $null
-        $oneDrive = "c:\Users\alexko\OneDrive\"
         $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
         $opensource = $null
         $azcompute = "c:\src\mv\"
@@ -84,21 +48,9 @@ switch ($env:ComputerName)
         $playground = $null
         $root = "C:\src\one\"
     }
-    "AUTOPILOTHUB"
-    {
-        $dropbox = $null
-        $oneDrive = $null
-        $oneDriveMicrosoft = $null
-        $opensource = $null
-        $azcompute = $null
-        $apgold = "d:\enlistments\ApGold\"
-        $playground = $null
-        $root = "c:\src\root\"
-    }
     "Sekirei"
     {
-        $dropbox = "f:\Dropbox\"
-        $oneDrive = "e:\OneDrive\"
+        $dropbox = $null
         $oneDriveMicrosoft = $null
         $opensource = $null
         $azcompute = $null
@@ -108,8 +60,7 @@ switch ($env:ComputerName)
     }
     default
     {
-        # No extra setup on unknown machines
-        return
+        $oneDrive = $env:OneDriveConsumer
     }
 }
 tm "Variables setup"
