@@ -65,15 +65,6 @@ switch ($env:ComputerName)
 }
 tm "Variables setup"
 
-# Current path fix
-if( ($env:ComputerName -eq "ALEXKO-DS") -and ($pwd -match [regex]::Escape("C:\Users\alexko.REDMOND")) )
-{
-    $newLocation = $pwd -replace [regex]::Escape("C:\Users\alexko.REDMOND"), "C:\Users\alexko"
-    cd $newLocation
-    [Environment]::CurrentDirectory = $pwd
-}
-tm "Path fix"
-
 # Set up environment variables
 Set-EnvironmentVariable "OneDrive" $oneDrive
 Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
