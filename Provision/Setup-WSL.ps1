@@ -5,7 +5,8 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 https://aka.ms/wsl2kernel
-
+wsl --set-default-version 2
+ 
 # All distribs
 sudo apt update && sudo apt upgrade -y
 sudo apt install fortune cowsay lolcat htop mc tmux cmatrix -y
