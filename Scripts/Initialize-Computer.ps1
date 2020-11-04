@@ -20,59 +20,23 @@ switch ($env:ComputerName)
 {
     "ALEXKO-LS"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = "D:\OneDrive - Microsoft\"
-        $opensource = "D:\Code\External"
-        $azcompute = "D:\Code\Autopilot\Move\"
-        $apgold = "D:\Code\Autopilot\ApGold\"
-        $playground = $null
-        $root = "D:\Code\Onebranch\"
+        $azcompute = "D:\src\mv\"
+        $apgold = "D:\src\golds\ap\"
+        $ntp = "D:\src\ntp\"
     }
     "ALEXKO-SB2"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
         $azcompute = "c:\src\mv\"
         $apgold = "c:\src\gold\ap\"
-        $playground = $null
-        $root = "C:\src\one\"
-    }
-    "ALEXKO-TS"
-    {
-        $dropbox = $null
-        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
-        $azcompute = "c:\src\mv\"
-        $apgold = "c:\src\gold\ap\"
-        $playground = $null
-        $root = "C:\src\one\"
-    }
-    "Sekirei"
-    {
-        $dropbox = $null
-        $oneDriveMicrosoft = $null
-        $opensource = $null
-        $azcompute = $null
-        $apgold = $null
-        $playground = $null
-        $root = $null
-    }
-    default
-    {
-        $oneDrive = $env:OneDriveConsumer
+        $ntp = "C:\src\ntp\"
     }
 }
 tm "Variables setup"
 
 # Set up environment variables
-Set-EnvironmentVariable "OneDrive" $oneDrive
-Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
-Set-EnvironmentVariable "Opensource" $opensource
 Set-EnvironmentVariable "AzCompute" $azcompute
 Set-EnvironmentVariable "ApGold" $apgold
-Set-EnvironmentVariable "Root" $root
-Set-EnvironmentVariable "Playground" $playground
+Set-EnvironmentVariable "NTP" $ntp
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
 tm "Environment setup"
