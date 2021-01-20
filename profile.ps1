@@ -4,8 +4,6 @@ param()
 
 $stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $enableTiming = $false
-# pwsh -noprofile
-# . "C:\Users\alexko\OneDrive - Microsoft\Documents\PowerShell\profile.ps1"
 
 function tm($info = "=>")
 {
@@ -63,13 +61,16 @@ tm psreadline
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt
 
+# For some reason autoimport does work
+ipmo PsToolset
+tm psToolset
 
 # That's hacky... but it can dot script other script here
-if( -not (Test-Path "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1") )
+if( -not (Test-Path "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1") )
 {
     return
 }
-. "$oneDriveMicrosoft\Projects\ProtectedPlayground.ps1"
+. "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1"
 tm ProtectedPlayground
 
 $enableTiming = $true

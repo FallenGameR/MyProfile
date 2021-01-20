@@ -50,13 +50,13 @@ if( -not (Test-Path "c:\tools") )
 tm "Tools root setup"
 
 # Tools junction creation
-foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
 tm "Tool junctions creation"
 
-foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
