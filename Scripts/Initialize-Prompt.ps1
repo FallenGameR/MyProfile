@@ -22,7 +22,6 @@ function prompt
 {
     $realLastExitCode = $LASTEXITCODE
 
-
     # Preserve last command in log file
     $lastCommand = Get-History -Count 1
     if( $lastCommand )
@@ -59,6 +58,13 @@ function prompt
             }
             $host.UI.RawUI.WindowTitle = $title
         }
+    }
+
+    # Make sure modules path is not lost (this is a hack, but can't find how the modules path is reset)
+    $modules = Join-Path (Split-Path $profile) Modules
+    if( -not $env:PSModulePath.Contains($modules) )
+    {
+        $env:PSModulePath += ";$modules"
     }
 
     # Update prompt

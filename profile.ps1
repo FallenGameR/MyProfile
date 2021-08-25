@@ -61,9 +61,9 @@ tm psreadline
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt
 
-# For some reason autoimport does work
-ipmo PsToolset
-tm psToolset
+# For some reason they changed progress color in PS 7.1.1
+$host.privatedata.ProgressBackgroundColor = "DarkCyan"
+$host.privatedata.ProgressForegroundColor = "White"
 
 # That's hacky... but it can dot script other script here
 if( -not (Test-Path "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1") )
