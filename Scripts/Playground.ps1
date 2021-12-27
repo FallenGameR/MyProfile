@@ -25,3 +25,15 @@ function edit( [string] $File, [switch] $SameEditor )
     # code --help | code -
     & code $params
 }
+
+function capp( $url, [switch] $Music )
+{
+    if( $music )
+    {
+        & "C:\Program Files\Google\Chrome\Application\chrome.exe" "--app=https://music.youtube.com"
+    }
+    else
+    {
+        & "C:\Program Files\Google\Chrome\Application\chrome.exe" "--app=$url"
+    }
+}

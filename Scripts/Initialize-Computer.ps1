@@ -20,59 +20,34 @@ switch ($env:ComputerName)
 {
     "ALEXKO-LS"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = "D:\OneDrive - Microsoft\"
-        $opensource = "D:\Code\External"
         $azcompute = "D:\Code\Autopilot\Move\"
-        $apgold = "D:\Code\Autopilot\ApGold\"
-        $playground = $null
-        $root = "D:\Code\Onebranch\"
+        $ntp = "D:\Code\Onebranch\"
     }
     "ALEXKO-SB2"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
         $azcompute = "c:\src\mv\"
-        $apgold = "c:\src\gold\ap\"
-        $playground = $null
-        $root = "C:\src\one\"
+        $ntp = "C:\src\ntp\"
     }
     "ALEXKO-TS"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = "C:\Users\alexko\OneDrive - Microsoft\"
-        $opensource = $null
         $azcompute = "c:\src\mv\"
-        $apgold = "c:\src\gold\ap\"
-        $playground = $null
-        $root = "C:\src\one\"
+        $ntp = "C:\src\ntp\"
     }
     "Sekirei"
     {
-        $dropbox = $null
-        $oneDriveMicrosoft = $null
-        $opensource = $null
         $azcompute = $null
-        $apgold = $null
-        $playground = $null
-        $root = $null
-    }
-    default
-    {
-        $oneDrive = $env:OneDriveConsumer
+        $ntp = $null
     }
 }
+$oneDrive = $env:OneDriveConsumer
+$oneDriveMicrosoft = $env:OneDriveCommercial
 tm "Variables setup"
 
 # Set up environment variables
 Set-EnvironmentVariable "OneDrive" $oneDrive
 Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
-Set-EnvironmentVariable "Opensource" $opensource
 Set-EnvironmentVariable "AzCompute" $azcompute
-Set-EnvironmentVariable "ApGold" $apgold
-Set-EnvironmentVariable "Root" $root
-Set-EnvironmentVariable "Playground" $playground
+Set-EnvironmentVariable "NTP" $ntp
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
 tm "Environment setup"
@@ -86,13 +61,13 @@ if( -not (Test-Path "c:\tools") )
 tm "Tools root setup"
 
 # Tools junction creation
-foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -NotMatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
 tm "Tool junctions creation"
 
-foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -NotMatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
