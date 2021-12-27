@@ -30,6 +30,14 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 
 Import-Module PsReadLine
 
+# Added only in 7.2
+if( $PSVersionTable.PSVersion -ge 7.2 )
+{
+    # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
+    Set-PSReadLineOption -PredictionSource History
+    $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan
+}
+
 #
 # Since PS 5.1 console beeps on backspace while on empty prompt
 # https://superuser.com/questions/1113429/disable-powershell-beep-on-backspace

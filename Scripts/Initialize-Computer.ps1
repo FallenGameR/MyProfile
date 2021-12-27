@@ -20,23 +20,15 @@ switch ($env:ComputerName)
 {
     "ALEXKO-LS"
     {
-        $azcompute = "D:\Code\Autopilot\Move\"
-        $ntp = "D:\Code\Onebranch\"
+        $azcompute = "D:\src\mv\"
+        $apgold = "D:\src\golds\ap\"
+        $ntp = "D:\src\ntp\"
     }
     "ALEXKO-SB2"
     {
         $azcompute = "c:\src\mv\"
+        $apgold = "c:\src\gold\ap\"
         $ntp = "C:\src\ntp\"
-    }
-    "ALEXKO-TS"
-    {
-        $azcompute = "c:\src\mv\"
-        $ntp = "C:\src\ntp\"
-    }
-    "Sekirei"
-    {
-        $azcompute = $null
-        $ntp = $null
     }
 }
 $oneDrive = $env:OneDriveConsumer
@@ -44,9 +36,8 @@ $oneDriveMicrosoft = $env:OneDriveCommercial
 tm "Variables setup"
 
 # Set up environment variables
-Set-EnvironmentVariable "OneDrive" $oneDrive
-Set-EnvironmentVariable "OneDriveMicrosoft" $oneDriveMicrosoft
 Set-EnvironmentVariable "AzCompute" $azcompute
+Set-EnvironmentVariable "ApGold" $apgold
 Set-EnvironmentVariable "NTP" $ntp
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE
@@ -61,13 +52,13 @@ if( -not (Test-Path "c:\tools") )
 tm "Tools root setup"
 
 # Tools junction creation
-foreach( $tool in ls $oneDrive\Distrib\tools -Directory -ea Ignore | where Name -NotMatch "^_" )
+foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
 tm "Tool junctions creation"
 
-foreach( $tool in ls $oneDriveMicrosoft\tools -Directory -ea Ignore | where Name -NotMatch "^_" )
+foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
