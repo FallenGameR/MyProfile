@@ -60,13 +60,6 @@ function prompt
         }
     }
 
-    # Make sure modules path is not lost (this is a hack, but can't find how the modules path is reset)
-    $modules = Join-Path (Split-Path $profile) Modules
-    if( -not $env:PSModulePath.Contains($modules) )
-    {
-        $env:PSModulePath += ";$modules"
-    }
-
     # Update prompt
     Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline

@@ -17,7 +17,13 @@ function tm($info = "=>")
 # Powershell behavior setup
 $global:Profile = $PSCommandPath
 $global:MaximumHistoryCount = 1024
-$env:PSModulePath += ";$PSScriptRoot\Modules"
+
+# Make sure modules path is not lost (it should be present but some times it is not)
+$modules = Join-Path (Split-Path $profile) Modules
+if( -not $env:PSModulePath.Contains($modules) )
+{
+    $env:PSModulePath += ";$modules"
+}
 tm init
 
 # Default command arguments

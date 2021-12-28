@@ -34,8 +34,14 @@ Import-Module PsReadLine
 if( $PSVersionTable.PSVersion -ge 7.2 )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
-    Set-PSReadLineOption -PredictionSource History
     $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan
+}
+
+# Added only in 2.1.0, should be included in PS 7.2 but there may be weird combinations
+if( (get-module psreadline).Version -ge 2.1 )
+{
+    # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
+    Set-PSReadLineOption -PredictionSource History
 }
 
 #
