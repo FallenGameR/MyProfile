@@ -16,6 +16,8 @@ choco install -s=chocolatey powershell-core googlechrome firacode less microsoft
 # Visual studio
 choco install -s=chocolatey visualstudio2019enterprise visualstudio2019-workload-azure visualstudio2019-workload-manageddesktop visualstudio2019-workload-nativedesktop visualstudio2019-workload-netcoretools -y
 
+# New additions
+choco install -s=chocolatey dnspy openhardwaremonitor etcher
 
 # MS specific
 if( $MsSpecific )
