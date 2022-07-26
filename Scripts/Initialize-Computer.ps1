@@ -30,6 +30,12 @@ switch ($env:ComputerName)
         $apgold = "c:\src\gold\ap\"
         $ntp = "C:\src\ntp\"
     }
+    "ALEXKO-11"
+    {
+        $azcompute = "d:\src\mv\"
+        $apgold = "d:\src\golds\ap\"
+        $ntp = "d:\src\ntp\"
+    }
 }
 $oneDrive = $env:OneDriveConsumer
 $oneDriveMicrosoft = $env:OneDriveCommercial

@@ -8,22 +8,25 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 # C:\ProgramData\chocolatey\lib, C:\src as well
 
 # Tools instalation
-choco install -s=chocolatey powershell-core googlechrome firacode less microsoft-windows-terminal vscode git gitextensions kdiff3 windirstat beyondcompare gimp ilspy dnspy sysinternals mp3tag far mls-software-openssh -y
+choco install -s=chocolatey powershell-core googlechrome firacode less microsoft-windows-terminal vscode git gitextensions windirstat beyondcompare gimp dnspy sysinternals mp3tag mls-software-openssh openhardwaremonitor -y
 
-# linqpad5 CRC broken, find alternatives, for now we are taking it from OneDrive and MyProfile
-#choco install linqpad5 -y
 
-# Visual studio
+# Visual studio 2019
 choco install -s=chocolatey visualstudio2019enterprise visualstudio2019-workload-azure visualstudio2019-workload-manageddesktop visualstudio2019-workload-nativedesktop visualstudio2019-workload-netcoretools -y
 
-# New additions
-choco install -s=chocolatey dnspy openhardwaremonitor etcher
+# VS 2022 - features need to be installed from VS itself
+$list = @(
+    "visualstudio2022enterprise"
+)
 
-# MS specific
-if( $MsSpecific )
-{
-    choco install -s=chocolatey microsoft-teams -y
-}
+$param = @(
+    "install",
+    "-s=chocolatey",
+    $list,
+    "-y"
+)
+
+choco @param
 
 # Home specific
 if( $HomeSpecific )
