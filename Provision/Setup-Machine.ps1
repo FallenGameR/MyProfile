@@ -10,6 +10,8 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 # Tools instalation
 choco install -s=chocolatey powershell-core googlechrome firacode less microsoft-windows-terminal vscode git gitextensions kdiff3 windirstat beyondcompare gimp ilspy dnspy sysinternals mp3tag far mls-software-openssh -y
 
+choco install -s=chocolatey bat hyperfine
+
 # linqpad5 CRC broken, find alternatives, for now we are taking it from OneDrive and MyProfile
 #choco install linqpad5 -y
 
