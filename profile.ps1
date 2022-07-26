@@ -48,6 +48,7 @@ $addToPath =
 "C:\Program Files (x86)\WinDirStat\"
 
 $env:Path += ";" + ($addToPath -join ";")
+$env:LESS="-I"
 tm environment
 
 # Additional setup
