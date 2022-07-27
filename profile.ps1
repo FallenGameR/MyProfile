@@ -50,7 +50,7 @@ $addToPath =
 $env:Path += ";" + ($addToPath -join ";")
 $env:LESS = "-IeFRX"
 $env:BAT_THEME = "Visual Studio Dark+"
-$env:DELTA_PAGER = "0" # By default it uses less with -R incompatible switch set
+#$env:DELTA_PAGER = "0" # By default it uses less with -R incompatible switch set - but this breaks git
 tm environment
 
 # Additional setup
