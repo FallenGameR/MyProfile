@@ -48,7 +48,7 @@ $addToPath =
 "C:\Program Files (x86)\WinDirStat\"
 
 $env:Path += ";" + ($addToPath -join ";")
-$env:LESS="-I"
+$env:LESS="-IeFRX"
 tm environment
 
 # Additional setup
