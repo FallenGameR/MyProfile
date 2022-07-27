@@ -48,7 +48,7 @@
 	co = checkout
 	ci = commit
 	st = status
-	br = branch
+	br = branch --verbose
 	lg = log --graph --pretty=format:'%C(reset)%C(yellow)%h%C(reset) -%C(bold yellow)%d%C(reset) %s %C(green)(%cr) %C(cyan)<%an>%C(reset)' --abbrev-commit --date=relative -n 10
 	gr = grep --break --heading --line-number -iIE
 [diff]
