@@ -1,0 +1,73 @@
+#[include]
+#	path = ~/Documents/Powershell/.gitconfig
+
+[core]
+	editor = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait
+    pager = delta           # --show-config check current settings
+[delta]
+    navigate = true         # use n and N to move between diff sections
+    light = false           # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    line-numbers = true     # show line numbers
+    features = defaults this-computer # special setup to use
+    #side-by-side = true    # uncomment for side-by-side view
+[delta "defaults"]
+    # Theme
+    syntax-theme = Visual Studio Dark+
+    # Files
+    file-style = green
+    file-decoration-style = ol ul seagreen
+    # Hunks
+    hunk-header-style = omit
+    # Labels
+    file-added-label = + ADD
+    file-copied-label = COPY
+    file-modified-label = ▶️ MOD
+    file-removed-label = - DEL
+    file-renamed-label = REN
+    #file-transformation = s:src/smth|other_path::gi
+[interactive]
+    diffFilter = delta --color-only
+[add.interactive]
+    useBuiltin = false # required for git 2.37.0
+[color]
+	grep = auto
+[color "grep"]
+	filename = green
+	linenumber = cyan
+	match = magenta
+	separator = black
+[grep]
+	lineNumber = true
+	extendedRegexp = true
+[color "diff"]
+	meta = yellow
+	frag = cyan
+	func = cyan bold
+	commit = yellow bold
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	lg = log --graph --pretty=format:'%C(reset)%C(yellow)%h%C(reset) -%C(bold yellow)%d%C(reset) %s %C(green)(%cr) %C(cyan)<%an>%C(reset)' --abbrev-commit --date=relative -n 10
+	gr = grep --break --heading --line-number -iIE
+[diff]
+	guitool = vscode
+    colorMoved = default
+[difftool "vscode"]
+	path = C:/Program Files/Microsoft VS Code/code.exe
+	cmd = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait --diff \"$LOCAL\" \"$REMOTE\"
+[merge]
+	guitool = vscode
+    conflictstyle = diff3
+[mergetool "vscode"]
+	path = C:/Program Files/Microsoft VS Code/code.exe
+	cmd = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait \"$MERGED\"
+[pull]
+	rebase = false
+[fetch]
+	prune = false
+[rebase]
+	autoStash = false
+[submodule]
+	recurse = true

@@ -48,7 +48,8 @@ $addToPath =
 "C:\Program Files (x86)\WinDirStat\"
 
 $env:Path += ";" + ($addToPath -join ";")
-$env:LESS="-IeFRX"
+$env:LESS = "-IeFRX"
+$env:BAT_THEME = "Visual Studio Dark+"
 tm environment
 
 # Additional setup
