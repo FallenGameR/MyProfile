@@ -50,6 +50,7 @@ $addToPath =
 $env:Path += ";" + ($addToPath -join ";")
 $env:LESS = "-IeFRX"
 $env:BAT_THEME = "Visual Studio Dark+"
+$env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\rg.config"
 #$env:DELTA_PAGER = "0" # By default it uses less with -R incompatible switch set - but this breaks git
 tm environment
 
@@ -66,6 +67,14 @@ tm comp
 
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 tm psreadline
+
+# fe, fh, fkill, fd, frg
+Set-PSFzfOption -EnableAliasFuzzyEdit
+Set-PSFzfOption -EnableAliasFuzzyHistory
+Set-PSFzfOption -EnableAliasFuzzyKillProcess
+Set-PSFzfOption -EnableAliasFuzzySetLocation
+Set-Alias frg Invoke-PsFzfRipgrep
+tm pffzf
 
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt

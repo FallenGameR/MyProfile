@@ -2,7 +2,7 @@
 #	path = ~/Documents/Powershell/.gitconfig
 
 [core]
-	editor = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait
+	editor = code --wait
     pager = delta           # --show-config check current settings
 [delta]
     navigate = true         # use n and N to move between diff sections
@@ -52,17 +52,17 @@
 	lg = log --graph --pretty=format:'%C(reset)%C(yellow)%h%C(reset) -%C(bold yellow)%d%C(reset) %s %C(green)(%cr) %C(cyan)<%an>%C(reset)' --abbrev-commit --date=relative -n 10
 	gr = grep --break --heading --line-number -iIE
 [diff]
+	tool = vscode
 	guitool = vscode
     colorMoved = default
 [difftool "vscode"]
-	path = C:/Program Files/Microsoft VS Code/code.exe
-	cmd = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait --diff \"$LOCAL\" \"$REMOTE\"
+	cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
 [merge]
+	tool = vscode
 	guitool = vscode
     conflictstyle = diff3
 [mergetool "vscode"]
-	path = C:/Program Files/Microsoft VS Code/code.exe
-	cmd = \"C:/Program Files/Microsoft VS Code/code.exe\" --wait \"$MERGED\"
+	cmd = code --wait \"$MERGED\"
 [pull]
 	rebase = false
 [fetch]
