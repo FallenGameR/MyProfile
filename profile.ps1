@@ -69,11 +69,14 @@ tm comp
 tm psreadline
 
 # fe, fh, fkill, fd, frg
+Set-Alias frg Invoke-PsFzfRipgrep
 Set-PSFzfOption -EnableAliasFuzzyEdit
 Set-PSFzfOption -EnableAliasFuzzyHistory
 Set-PSFzfOption -EnableAliasFuzzyKillProcess
 Set-PSFzfOption -EnableAliasFuzzySetLocation
-Set-Alias frg Invoke-PsFzfRipgrep
+Set-PsFzfOption -PSReadlineChordProvider 'Alt+f' -PSReadlineChordReverseHistory "Alt+h"
+Set-PsFzfOption -TabExpansion
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 tm pffzf
 
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
