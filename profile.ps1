@@ -52,6 +52,8 @@ $env:LESS = "-IeFRX"
 $env:BAT_THEME = "Visual Studio Dark+"
 $env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\rg.config"
 #$env:DELTA_PAGER = "0" # By default it uses less with -R incompatible switch set - but this breaks git
+$env:FZF_DEFAULT_OPTS = "--layout=reverse --height 60%"
+
 tm environment
 
 # Additional setup
