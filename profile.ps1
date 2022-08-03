@@ -42,10 +42,9 @@ tm alias
 
 # Environment setup
 $addToPath =
-"c:\tools\LinqPad5\",
-"c:\tools\xts\",
 "C:\Program Files\Beyond Compare 4\",
-"C:\Program Files (x86)\WinDirStat\"
+"C:\Program Files (x86)\WinDirStat\",
+"C:\Program Files (x86)\LINQPad5\"
 
 $env:Path += ";" + ($addToPath -join ";")
 $env:LESS = "-IeFRX"
