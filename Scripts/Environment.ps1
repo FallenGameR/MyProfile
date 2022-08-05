@@ -5,8 +5,8 @@ $addToPath =
 $env:Path += ";" + ($addToPath -join ";")
 
 $env:LESS = "-IeFRX"
-$env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\rg.config"
-$env:BAT_CONFIG_PATH = "$PSScriptRoot\bat.config"
+$env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\..\rg.config"
+$env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
 #$env:DELTA_PAGER = "0" # By default it uses less with -R incompatible switch set - but this breaks git
 
 # FZF
