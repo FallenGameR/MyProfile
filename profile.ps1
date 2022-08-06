@@ -45,9 +45,6 @@ tm alias
 tm environment
 
 # Additional setup
-. $PSScriptRoot\Scripts\Playground.ps1
-tm playground
-
 . $PSScriptRoot\Scripts\Load-Functions.ps1
 Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 tm func
@@ -58,18 +55,15 @@ tm comp
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 tm psreadline
 
-Set-PsFzfOption -PSReadlineChordProvider 'Alt+f' -PSReadlineChordReverseHistory "Alt+h"
-Set-PsFzfOption -TabExpansion
-Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
-Set-Alias killf Invoke-FuzzyKillProcess
-tm pffzf
-
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
 tm prompt
 
 # For some reason they changed progress color in PS 7.1.1
 $host.privatedata.ProgressBackgroundColor = "DarkCyan"
 $host.privatedata.ProgressForegroundColor = "White"
+
+. $PSScriptRoot\Scripts\Playground.ps1
+tm playground
 
 # That's hacky... but it can dot script other script here
 if( -not (Test-Path "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1") )
@@ -78,5 +72,3 @@ if( -not (Test-Path "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1") 
 }
 . "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1"
 tm ProtectedPlayground
-
-$enableTiming = $true

@@ -4,6 +4,60 @@
 #>
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
+Set-PSReadlineKeyHandler -Key Alt+h `
+                         -BriefDescription hf `
+                         -LongDescription "quick history invoke" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("hf")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+Set-PSReadlineKeyHandler -Key Alt+r `
+                         -BriefDescription rgf `
+                         -LongDescription "quick ripgrep" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("rgf")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+Set-PSReadlineKeyHandler -Key Alt+k `
+                         -BriefDescription killf `
+                         -LongDescription "quick process kil" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("killf")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+Set-PSReadlineKeyHandler -Key "Alt+f" `
+                         -BriefDescription codef_file `
+                         -LongDescription "quick file open" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("codef")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+Set-PSReadlineKeyHandler -Key "Alt+o" `
+                         -BriefDescription codef_file `
+                         -LongDescription "quick file open" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("codef -d")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+Set-PSReadlineKeyHandler -Key "Alt+d" `
+                         -BriefDescription "cdf" `
+                         -LongDescription "quick directory change" `
+                         -ScriptBlock {
+    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.Powershell.PSConsoleReadLine]::Insert("cdf -q")
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
 function codef
 {
     param
@@ -117,6 +171,7 @@ function hf
     if( $result )
     {
         $command = $result -join ";"
+        $command
         Invoke-Expression $command
     }
 }
@@ -155,6 +210,7 @@ function cdf( $Path, [switch] $Quick )
     }
 
     $destination = pipe | fzf @fzfArgs
+    $destination
     if( $destination )
     {
         cd $destination
@@ -164,15 +220,19 @@ function cdf( $Path, [switch] $Quick )
 function killf( $name )
 {
     $fzfArgs = @()
+    $fzfArgs += "--ansi"
+    $fzfArgs += "--header-lines=3"
+    $fzfArgs += "--height"
+    $fzfArgs += "99%"
+
     if( $name )
     {
         $fzfArgs += "-q"
         $fzfArgs += $name
-        $fzfArgs += "--ansi"
-        $fzfArgs += "--header-lines=3"
+
     }
 
-    $lines = gps | fzf @fzfArgs
+    $lines = gps | fzf --ansi @fzfArgs
     if( -not $lines ) {return}
 
     $lines | foreach{

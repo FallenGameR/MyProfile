@@ -12,9 +12,6 @@ choco install -s=chocolatey powershell-core googlechrome firacode less microsoft
 
 choco install -s=chocolatey bat hyperfine fzf ripgrep
 
-# https://github.com/kelleyma49/PSFzf
-Install-Module -Name PSFzf -RequiredVersion 2.4.9
-
 # Visual studio 2019
 choco install -s=chocolatey visualstudio2019enterprise visualstudio2019-workload-azure visualstudio2019-workload-manageddesktop visualstudio2019-workload-nativedesktop visualstudio2019-workload-netcoretools -y
 
