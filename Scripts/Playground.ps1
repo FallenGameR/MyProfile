@@ -24,10 +24,13 @@ function codef
     {
         if( $Directory )
         {
-            $paths = & "C:\Program Files\Git\usr\bin\find.exe" * -type d | fzf `
-                --margin "1%" `
-                --padding "1%" `
-                --border
+            $paths =
+                Get-ChildItem -Directory -Recurse -ErrorAction Ignore |
+                foreach fullname |
+                fzf `
+                    --margin "1%" `
+                    --padding "1%" `
+                    --border
         }
         else
         {
@@ -158,24 +161,25 @@ function cdf( $Path, [switch] $Quick )
     }
 }
 
-function edit( [string] $File, [switch] $SameEditor )
+function killf( $name )
 {
-    $params = @()
-
-    if( $SameEditor )
+    $fzfArgs = @()
+    if( $name )
     {
-        $params += "--reuse-window"
+        $fzfArgs += "-q"
+        $fzfArgs += $name
+        $fzfArgs += "--ansi"
+        $fzfArgs += "--header-lines=3"
     }
 
-    if( $File -match ":" )
-    {
-        $params += "--goto"
+    $lines = gps | fzf @fzfArgs
+    if( -not $lines ) {return}
+
+    $lines | foreach{
+        $split = $psitem -split "\s+" | where{ $psitem }
+        $id = $split[4]
+        Stop-Process -Id $id -Verbose
     }
-
-    $params += $file
-
-    # code --help | code -
-    & code $params
 }
 
 function capp( $url, [switch] $Music )
