@@ -40,9 +40,9 @@ Set-PSReadlineKeyHandler -Key "Alt+f" `
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 
-Set-PSReadlineKeyHandler -Key "Alt+o" `
+Set-PSReadlineKeyHandler -Key "Alt+v" `
                          -BriefDescription codef_file `
-                         -LongDescription "quick file open" `
+                         -LongDescription "quick directory open in code" `
                          -ScriptBlock {
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("codef -d")
@@ -78,8 +78,14 @@ function codef
     {
         if( $Directory )
         {
+            function list
+            {
+                $pwd | gi
+                Get-ChildItem -Directory -Recurse -ErrorAction Ignore
+            }
+
             $paths =
-                Get-ChildItem -Directory -Recurse -ErrorAction Ignore |
+                list |
                 foreach fullname |
                 fzf `
                     --margin "1%" `
