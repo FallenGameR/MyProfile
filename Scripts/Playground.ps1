@@ -65,11 +65,17 @@ function rgf
     # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
     param
     (
-        [Parameter(Mandatory)] $Query
+        [Parameter(Mandatory)] $Query,
+        [switch] $NoIgnore
     )
 
     $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
     $rg = "rg --column --line-number --no-heading --color=always --smart-case "
+
+    if( $NoIgnore )
+    {
+        $rg += "--no-ignore "
+    }
 
     try
     {
