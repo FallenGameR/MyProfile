@@ -22,18 +22,21 @@ switch ($env:ComputerName)
     {
         $azcompute = "D:\src\mv\"
         $apgold = "D:\src\golds\ap\"
+        $pfgold = "D:\src\golds\pf\"
         $ntp = "D:\src\ntp\"
     }
     "ALEXKO-SB2"
     {
         $azcompute = "c:\src\mv\"
         $apgold = "c:\src\gold\ap\"
+        $pfgold = "c:\src\gold\pf\"
         $ntp = "C:\src\ntp\"
     }
     "ALEXKO-11"
     {
         $azcompute = "d:\src\mv\"
         $apgold = "d:\src\golds\ap\"
+        $pfgold = "d:\src\golds\pf\"
         $ntp = "d:\src\ntp\"
     }
 }
@@ -44,6 +47,7 @@ tm "Variables setup"
 # Set up environment variables
 Set-EnvironmentVariable "AzCompute" $azcompute
 Set-EnvironmentVariable "ApGold" $apgold
+Set-EnvironmentVariable "PfGold" $pfgold
 Set-EnvironmentVariable "NTP" $ntp
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 Set-EnvironmentVariable "Home" $env:USERPROFILE

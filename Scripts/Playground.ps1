@@ -57,6 +57,7 @@ function codef
 
     # Invoke code
     $invoke = "$editor $editorOptions --goto {0}" -f ($paths -join " ")
+    $invoke
     Invoke-Expression $invoke
 }
 
@@ -65,18 +66,11 @@ function rgf
     # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
     param
     (
-        [Parameter(Mandatory)] $Query,
-        [switch] $NoIgnore
+        [Parameter(Mandatory)] $Query
     )
 
     $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
     $rg = "rg --column --line-number --no-heading --color=always --smart-case "
-
-    if( $NoIgnore )
-    {
-        # TODO: allow any switch, like: rg 'int main' -g '*.{c,h}'
-        $rg += "--no-ignore "
-    }
 
     try
     {
@@ -103,6 +97,7 @@ function rgf
 
         if( $paths )
         {
+            $paths
             codef $paths
         }
     }
@@ -120,6 +115,46 @@ function hf
     {
         $command = $result -join ";"
         Invoke-Expression $command
+    }
+}
+
+function cdf( $Path, [switch] $Quick )
+{
+    function quick
+    {
+        "$env:HOME\Documents"
+        "$env:HOME\Downloads"
+        "$env:OneDriveConsumer"
+        "$env:OneDriveCommercial"
+        "$env:AzCompute\src\Client\NTP\managed\"
+        "$env:NTP\investigations"
+        "$env:NTP\udel"
+        "$env:NTP\TimeWiki"
+        "$env:pfgold\data\Autopilot\NtpReferenceClock\Firmware"
+        "$env:pfgold\pf\AutopilotService\Global\VirtualEnvironments\Autopilot"
+    }
+
+    function pipe
+    {
+        if( $Quick )
+        {
+            quick | where{ Test-Path $psitem -ea Ignore }
+        }
+
+        Get-ChildItem -Directory -Recurse -ErrorAction Ignore | % FullName
+    }
+
+    $fzfArgs = @()
+    if( $path )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $path
+    }
+
+    $destination = pipe | fzf @fzfArgs
+    if( $destination )
+    {
+        cd $destination
     }
 }
 

@@ -62,7 +62,6 @@ Set-PsFzfOption -PSReadlineChordProvider 'Alt+f' -PSReadlineChordReverseHistory 
 Set-PsFzfOption -TabExpansion
 Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 Set-Alias killf Invoke-FuzzyKillProcess
-Set-Alias cdf Invoke-FuzzySetLocation
 tm pffzf
 
 . $PSScriptRoot\Scripts\Initialize-Prompt.ps1
