@@ -74,6 +74,7 @@ function rgf
 
     if( $NoIgnore )
     {
+        # TODO: allow any switch, like: rg 'int main' -g '*.{c,h}'
         $rg += "--no-ignore "
     }
 

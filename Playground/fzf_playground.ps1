@@ -13,6 +13,23 @@ find * | fzf --prompt 'All> ' \
 
 # TODO: rgf uses dull colors now. used to work fine
 
+<#
+fzf `
+    --ansi `
+    --height "99%" `
+    --color "hl:-1:bold,hl+:-1:bold:reverse" `
+    --disabled --query "$Query" `
+    --bind "change:reload: $rg {q} || cd ." `
+    --bind "alt-f:unbind(change,alt-f)+change-prompt(fzf> )+enable-search+clear-query+rebind(alt-r)" `
+    --bind "alt-r:unbind(alt-r)+change-prompt(rg> )+disable-search+reload($rg {q} || cd .)+rebind(change,alt-f)" `
+    --prompt 'rg> ' `
+    --delimiter : `
+    --header '<ALT-R: rg> <ALT-F: fzf>' `
+    --preview 'bat --plain --color=always {1} --highlight-line {2}' `
+    --preview-window 'up,72%,border-bottom,+{2}+3/3,~3'
+
+
+#>
 function rgf2
 {
     # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
