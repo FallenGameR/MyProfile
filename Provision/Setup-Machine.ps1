@@ -10,7 +10,7 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 # Tools instalation
 choco install -s=chocolatey powershell-core googlechrome firacode less microsoft-windows-terminal vscode git gitextensions kdiff3 windirstat beyondcompare gimp ilspy dnspy sysinternals mp3tag far mls-software-openssh openhardwaremonitor -y
 
-choco install -s=chocolatey bat hyperfine fzf ripgrep
+choco install -s=chocolatey bat hyperfine fzf ripgrep -y
 
 # Visual studio 2019
 choco install -s=chocolatey visualstudio2019enterprise visualstudio2019-workload-azure visualstudio2019-workload-manageddesktop visualstudio2019-workload-nativedesktop visualstudio2019-workload-netcoretools -y
