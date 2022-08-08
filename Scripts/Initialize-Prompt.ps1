@@ -61,7 +61,8 @@ function prompt
     }
 
     # Update prompt
-    Write-Host "$pwd" -ForegroundColor DarkYellow -NoNewline
+    $path = $pwd -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
     {
