@@ -11,14 +11,16 @@ $env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
 
 # FZF
 $options = @(
-    "--layout=reverse",
-    "--height 60%",
-    "--tabstop=4",
-    "--multi",
-    "--cycle",
+    "--layout=reverse",             # Grow list down, not upwards
+    "--height 60%",                 # Leave some space intact
+    "--tabstop=4",                  # Standart tab size
+    "--multi",                      # Multi select possible
+    "--bind",
+        "alt-t:toggle-all",         # Alt+t toggles selection
+    "--cycle",                      # Cycle the list
     "--ansi",                       # Use Powershell colors
     "--no-mouse",                   # We need terminal mouse behaviour, not custom one
-    "--tiebreak='length,index'",
+    "--tiebreak='length,index'",    # Priorities to resolve ties (index comes last always)
     "--color=bg:#0C0C0C",           # Background (current line) = Black
     "--color=bg+:#0C0C0C",          # Background (current line) = Black
     "--color=fg+:#F2F2F2",          # Text (current line) = White
@@ -26,7 +28,7 @@ $options = @(
     "--color=pointer:#3A96DD",      # Pointer to the current line = DarkCyan
     "--color=preview-bg:#0C0C0C",   # Preview window background = Black
     "--color=prompt:#CCCCCC",       # Prompt = Gray
-    "--info=hidden"`
+    "--info=hidden"`                # Hide info pannel by default
 )
 
 <#

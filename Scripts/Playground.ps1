@@ -144,6 +144,7 @@ function rgf
             --bind "alt-r:unbind(alt-r)+change-prompt(rg> )+disable-search+reload($rg {q} || cd .)+rebind(change,alt-f)" `
             --prompt "rg> " `
             --delimiter ":" `
+            "--info=default" `  # We want to see progress on large amounts of files
             --tiebreak "begin,length" `
             --header '<ALT-R: rg> <ALT-F: fzf>' `
             --preview 'bat --plain --color=always {1} --highlight-line {2}' `
@@ -225,7 +226,6 @@ function killf( $name )
     {
         $fzfArgs += "-q"
         $fzfArgs += $name
-
     }
 
     $lines = gps | fzf --ansi @fzfArgs
