@@ -5,6 +5,7 @@
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
 Register-Shortcut "Alt+h" "hf" "History search"
+Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
 Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file"
@@ -17,7 +18,7 @@ function hlp($exe)
     {
         if( $exe )
         {
-            & $exe --help | help
+            & $exe --help | hlp
             return
         }
         $accumulator = @()
@@ -26,6 +27,29 @@ function hlp($exe)
     end
     {
         $accumulator | bat -pl help --theme=
+    }
+}
+
+function startf
+{
+    param
+    (
+        $Path
+    )
+
+    $fzfArgs = @()
+    if( $path )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $path
+    }
+
+    $destination = fzf @fzfArgs
+    $destination
+
+    if( $destination )
+    {
+        start $destination
     }
 }
 
@@ -161,19 +185,14 @@ function cdf( $Path, [switch] $Quick )
         "$env:HOME\Downloads"
         "$env:OneDriveConsumer"
         "$env:OneDriveCommercial"
-        "$env:AzCompute\src\Client\NTP\managed\"
-        "$env:NTP\investigations"
-        "$env:NTP\udel"
-        "$env:NTP\TimeWiki"
-        "$env:pfgold\data\Autopilot\NtpReferenceClock\Firmware"
-        "$env:pfgold\pf\AutopilotService\Global\VirtualEnvironments\Autopilot"
+        $GLOBAL:PROFILE_FastPaths
     }
 
     function pipe
     {
         if( $Quick )
         {
-            quick | where{ Test-Path $psitem -ea Ignore }
+            quick | where{ Test-Path $psitem -ea Ignore } | foreach{ [System.IO.Path]::GetFullPath($psitem) }
         }
 
         Get-ChildItem -Directory -Recurse -ErrorAction Ignore | % FullName
