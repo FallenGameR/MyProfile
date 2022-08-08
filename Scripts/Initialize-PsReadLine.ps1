@@ -12,16 +12,11 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 #
 # Ctrl+Space - menu complete
 # Ctrl+a - select whole line
-# F2(Shift) - command search
-# F3(Shift) - char search
-# F8(Shift) - history search
 # Ctrl+l - clear screen
 # Ctrl+d,Ctrl+c - capture screen
 # Ctrl+] - matching brace
 # Alt+?(Ctrl) - get binding
 # Ctrl+x - close on new line
-# Alt+z/c - delete shell word on left/right
-# Alt+w - stash line
 # Alt+n - normalize command (expand alias, fix casing)
 # Alt+' - change surrounding quotation
 # Alt+( - add surrounding braces
@@ -29,6 +24,36 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 #>
 
 Import-Module PsReadLine
+
+function Register-Shortcut
+{
+    param (
+        [Parameter(Mandatory)]
+        $Key,
+        [Parameter(Mandatory)]
+        $Command,
+        $Description
+    )
+
+    $SCRIPT:CommandCopy = $Command.ToString()
+
+    Set-PSReadlineKeyHandler `
+        -Key $Key `
+        -BriefDescription $Command `
+        -LongDescription $Description `
+        -ScriptBlock `
+        {
+            [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+            [Microsoft.Powershell.PSConsoleReadLine]::Insert($SCRIPT:CommandCopy)
+            [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+        }
+}
+
+Register-Shortcut "Alt+g" "code" "Code open"
+Register-Shortcut "Alt+x" 'start cmd -ArgumentList "/c start /b wt" -Verb runas -WindowStyle Minimized' "Open elevated powershell in new window"
+Register-Shortcut "Alt+c" "gite commit" "GitExtensions commit"
+Register-Shortcut "Alt+b" "gite" "GitExtensions browse"
+
 
 # Added only in 7.2
 if( $PSVersionTable.PSVersion -ge 7.2 )
@@ -91,12 +116,6 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 #
 # Deletion
 #
-#Remove-PSReadlineKeyHandler -Chord "Ctrl+Backspace"
-#Remove-PSReadlineKeyHandler -Chord "Ctrl+Delete"
-#Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
-#Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
-#Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
-#Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
@@ -137,79 +156,6 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
     # Otherwise quickly close the console
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+g invokes code
-#
-Set-PSReadlineKeyHandler -Key Alt+g `
-                         -BriefDescription Code `
-                         -LongDescription "Code invocation" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("code")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+t invokes translator
-#
-Set-PSReadlineKeyHandler -Key Alt+t `
-                         -BriefDescription Translator `
-                         -LongDescription "Translator invocation" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("c:\tools\Multitran\network\multitran.exe")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+x invokes powershell in new window
-#
-Set-PSReadlineKeyHandler -Key Alt+x `
-                         -BriefDescription PowershellNewWindow `
-                         -LongDescription "Opens powershell in new window" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("start wt")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+Shift+x invokes elevated powershell in new window
-#
-Set-PSReadlineKeyHandler -Key Alt+Shift+x `
-                         -BriefDescription PowershellElevatedNewWindow `
-                         -LongDescription "Opens elevated powershell in new window" `
-                         -ScriptBlock {
-    # start wt -Verb RunAs - doesn't work for some reason
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert('start cmd -ArgumentList "/c start /b wt" -Verb runas -WindowStyle Minimized')
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+c invokes git commit
-#
-Set-PSReadlineKeyHandler -Key Alt+c `
-                         -BriefDescription GitExtensionsCommit `
-                         -LongDescription "GitExtensions commit dialog invocation" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gite commit")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-#
-# Alt+b invokes gite
-#
-Set-PSReadlineKeyHandler -Key Alt+b `
-                         -BriefDescription GitExtensions `
-                         -LongDescription "GitExtensions main dialog invocation" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("gite")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 

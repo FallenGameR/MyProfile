@@ -4,58 +4,29 @@
 #>
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
-Set-PSReadlineKeyHandler -Key Alt+h `
-                         -BriefDescription hf `
-                         -LongDescription "quick history invoke" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("hf")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
+Register-Shortcut "Alt+h" "hf" "History search"
+Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
+Register-Shortcut "Alt+k" "killf" "Kill process"
+Register-Shortcut "Alt+f" "codef" "Code to open file"
+Register-Shortcut "Alt+v" "codef -d" "Code to open directory"
+Register-Shortcut "Alt+d" "cdf -q" "Change directory"
 
-Set-PSReadlineKeyHandler -Key Alt+r `
-                         -BriefDescription rgf `
-                         -LongDescription "quick ripgrep" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("rgf")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-Set-PSReadlineKeyHandler -Key Alt+k `
-                         -BriefDescription killf `
-                         -LongDescription "quick process kil" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("killf")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-Set-PSReadlineKeyHandler -Key "Alt+f" `
-                         -BriefDescription codef_file `
-                         -LongDescription "quick file open" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("codef")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-Set-PSReadlineKeyHandler -Key "Alt+v" `
-                         -BriefDescription codef_file `
-                         -LongDescription "quick directory open in code" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("codef -d")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-Set-PSReadlineKeyHandler -Key "Alt+d" `
-                         -BriefDescription "cdf" `
-                         -LongDescription "quick directory change" `
-                         -ScriptBlock {
-    [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.Powershell.PSConsoleReadLine]::Insert("cdf -q")
-    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+function hlp($exe)
+{
+    begin
+    {
+        if( $exe )
+        {
+            & $exe --help | help
+            return
+        }
+        $accumulator = @()
+    }
+    process { $accumulator += $psitem }
+    end
+    {
+        $accumulator | bat -pl help --theme=
+    }
 }
 
 function codef
