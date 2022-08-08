@@ -226,10 +226,10 @@ function cdf( $Path, [switch] $Quick )
 function killf( $name )
 {
     $fzfArgs = @()
-    $fzfArgs += "--ansi"
-    $fzfArgs += "--header-lines=3"
-    $fzfArgs += "--height"
-    $fzfArgs += "99%"
+    $fzfArgs += "--header-lines=3"  # PS output table header
+    $fzfArgs += "--ansi"            # Use coloring from PS output
+    $fzfArgs += "--height"          # To see few lines of previous input in case we want to kill pwsh
+    $fzfArgs += "90%"               #   and we dumped $pid to the console just before the killf
 
     if( $name )
     {
