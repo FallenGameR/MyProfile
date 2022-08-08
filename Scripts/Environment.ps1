@@ -16,15 +16,17 @@ $options = @(
     "--tabstop=4",
     "--multi",
     "--cycle",
+    "--ansi",                       # Use Powershell colors
+    "--no-mouse",                   # We need terminal mouse behaviour, not custom one
     "--tiebreak='length,index'",
-    "--color=bg:#0C0C0C",             # Background (current line) = Black
-    "--color=bg+:#0C0C0C",            # Background (current line) = Black
-    "--color=fg+:#F2F2F2",            # Text (current line) = White
-    "--color=hl+:#13A10E",            # Highlighted substrings (current line) = DarkGreen
-    "--color=pointer:#3A96DD",        # Pointer to the current line = DarkCyan
-    "--color=preview-bg:#0C0C0C",     # Preview window background = Black
-    "--color=prompt:#CCCCCC",         # Prompt = Gray
-    "--info=hidden"
+    "--color=bg:#0C0C0C",           # Background (current line) = Black
+    "--color=bg+:#0C0C0C",          # Background (current line) = Black
+    "--color=fg+:#F2F2F2",          # Text (current line) = White
+    "--color=hl+:#13A10E",          # Highlighted substrings (current line) = DarkGreen
+    "--color=pointer:#3A96DD",      # Pointer to the current line = DarkCyan
+    "--color=preview-bg:#0C0C0C",   # Preview window background = Black
+    "--color=prompt:#CCCCCC",       # Prompt = Gray
+    "--info=hidden"`
 )
 
 <#
