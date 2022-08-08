@@ -25,6 +25,7 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 
 Import-Module PsReadLine
 
+
 function Register-Shortcut
 {
     param (
@@ -35,8 +36,6 @@ function Register-Shortcut
         $Description
     )
 
-    $SCRIPT:CommandCopy = $Command.ToString()
-
     Set-PSReadlineKeyHandler `
         -Key $Key `
         -BriefDescription $Command `
@@ -44,13 +43,13 @@ function Register-Shortcut
         -ScriptBlock `
         {
             [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-            [Microsoft.Powershell.PSConsoleReadLine]::Insert($SCRIPT:CommandCopy)
+            [Microsoft.Powershell.PSConsoleReadLine]::Insert($Command)
             [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-        }
+        }.GetNewClosure()
 }
 
 Register-Shortcut "Alt+g" "code" "Code open"
-Register-Shortcut "Alt+x" 'start cmd -ArgumentList "/c start /b wt" -Verb runas -WindowStyle Minimized' "Open elevated powershell in new window"
+Register-Shortcut "Alt+x" 'start cmd -ArgumentList "/c start /b wt" -Verb runas' "Open elevated powershell in new window"
 Register-Shortcut "Alt+c" "gite commit" "GitExtensions commit"
 Register-Shortcut "Alt+b" "gite" "GitExtensions browse"
 
