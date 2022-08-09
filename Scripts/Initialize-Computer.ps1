@@ -50,7 +50,12 @@ Set-EnvironmentVariable "ApGold" $apgold
 Set-EnvironmentVariable "PfGold" $pfgold
 Set-EnvironmentVariable "NTP" $ntp
 Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
-Set-EnvironmentVariable "Home" $env:USERPROFILE
+$homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
+if( -not (Test-Path $homeSimplified -ea Ignore) )
+{
+    $homeSimplified = $env:USERPROFILE
+}
+Set-EnvironmentVariable "Home" $homeSimplified
 tm "Environment setup"
 
 # Tools folder creation
