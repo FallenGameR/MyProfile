@@ -38,6 +38,9 @@ function prompt
         Add-Content $historyFile "# No history at this point of time"
     }
 
+    # Path to use
+    $path = $pwd -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+
     # Update title
     if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
     {
@@ -47,7 +50,7 @@ function prompt
         }
         else
         {
-            $title = $pwd
+            $title = $path
             if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }
             if( $env:inetroot )
             {
@@ -61,7 +64,6 @@ function prompt
     }
 
     # Update prompt
-    $path = $pwd -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
