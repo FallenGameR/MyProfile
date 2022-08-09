@@ -119,16 +119,36 @@ function codef
     Invoke-Expression $invoke
 }
 
-function rgf
+function test
 {
-    # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
     param
     (
-        [Parameter(Mandatory)] $Query
+        [Parameter(Mandatory)] $Query,
+        [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options
+    )
+
+    $query
+    $GLOBAL:a = $Remaining
+}
+
+function rgf
+{
+    # original: https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
+    # example: rgf regex -tps
+    param
+    (
+        [Parameter(Mandatory)] $Query,
+        [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options
     )
 
     $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
     $rg = "rg --column --line-number --no-heading --color=always --smart-case "
+
+    if( $options )
+    {
+        $rg += $options -join " "
+        $rg += " "
+    }
 
     try
     {
