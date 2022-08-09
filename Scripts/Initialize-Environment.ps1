@@ -1,6 +1,7 @@
 $addToPath =
     "C:\Program Files\Beyond Compare 4\",
     "C:\Program Files (x86)\WinDirStat\",
+    "C:\Program Files (x86)\Winamp\",
     "C:\Program Files (x86)\LINQPad5\"
 $env:Path += ";" + ($addToPath -join ";")
 

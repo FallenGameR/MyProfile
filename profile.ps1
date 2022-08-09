@@ -41,7 +41,7 @@ Set-Alias m Measure-Object
 tm alias
 
 # Environment setup
-. $PSScriptRoot\Scripts\Environment.ps1
+. $PSScriptRoot\Scripts\Initialize-Environment.ps1
 tm environment
 
 # Additional setup
