@@ -119,18 +119,6 @@ function codef
     Invoke-Expression $invoke
 }
 
-function test
-{
-    param
-    (
-        [Parameter(Mandatory)] $Query,
-        [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options
-    )
-
-    $query
-    $GLOBAL:a = $Remaining
-}
-
 function rgf
 {
     # original: https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
