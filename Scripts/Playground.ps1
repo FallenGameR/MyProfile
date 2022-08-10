@@ -126,7 +126,8 @@ function rgf
     param
     (
         [Parameter(Mandatory)] $Query,
-        [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options
+        [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options,
+        [switch] $NoEditor
     )
 
     $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
@@ -165,7 +166,10 @@ function rgf
         if( $paths )
         {
             $paths
-            codef $paths
+            if( -not $NoEditor )
+            {
+                codef $paths
+            }
         }
     }
     finally
