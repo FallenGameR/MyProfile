@@ -53,6 +53,65 @@ function startf
     }
 }
 
+function cdf( $Path, [switch] $Quick )
+{
+    function quick
+    {
+        "$env:HOME\Documents"
+        "$env:HOME\Downloads"
+        "$env:OneDriveConsumer"
+        "$env:OneDriveCommercial"
+        $GLOBAL:PROFILE_FastPaths
+    }
+
+    function pipe
+    {
+        if( $Quick )
+        {
+            quick | where{ Test-Path $psitem -ea Ignore } | foreach{ [System.IO.Path]::GetFullPath($psitem) }
+        }
+
+        Get-ChildItem -Directory -Recurse -ErrorAction Ignore | % FullName
+    }
+
+    $fzfArgs = @()
+    if( $path )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $path
+    }
+
+    $destination = pipe | fzf @fzfArgs
+    $destination
+    if( $destination )
+    {
+        cd $destination
+    }
+}
+
+function killf( $name )
+{
+    $fzfArgs = @()
+    $fzfArgs += "--header-lines=3"  # PS output table header
+    $fzfArgs += "--height"          # To see few lines of previous input in case we want to kill pwsh
+    $fzfArgs += "90%"               #   and we dumped $pid to the console just before the killf
+
+    if( $name )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $name
+    }
+
+    $lines = gps | fzf @fzfArgs
+    if( -not $lines ) {return}
+
+    $lines | foreach{
+        $split = $psitem -split "\s+" | where{ $psitem }
+        $id = $split[4]
+        Stop-Process -Id $id -Verbose
+    }
+}
+
 function codef
 {
     param
@@ -187,66 +246,6 @@ function hf
         $command = $result -join ";"
         $command
         Invoke-Expression $command
-    }
-}
-
-function cdf( $Path, [switch] $Quick )
-{
-    function quick
-    {
-        "$env:HOME\Documents"
-        "$env:HOME\Downloads"
-        "$env:OneDriveConsumer"
-        "$env:OneDriveCommercial"
-        $GLOBAL:PROFILE_FastPaths
-    }
-
-    function pipe
-    {
-        if( $Quick )
-        {
-            quick | where{ Test-Path $psitem -ea Ignore } | foreach{ [System.IO.Path]::GetFullPath($psitem) }
-        }
-
-        Get-ChildItem -Directory -Recurse -ErrorAction Ignore | % FullName
-    }
-
-    $fzfArgs = @()
-    if( $path )
-    {
-        $fzfArgs += "-q"
-        $fzfArgs += $path
-    }
-
-    $destination = pipe | fzf @fzfArgs
-    $destination
-    if( $destination )
-    {
-        cd $destination
-    }
-}
-
-function killf( $name )
-{
-    $fzfArgs = @()
-    $fzfArgs += "--header-lines=3"  # PS output table header
-    $fzfArgs += "--ansi"            # Use coloring from PS output
-    $fzfArgs += "--height"          # To see few lines of previous input in case we want to kill pwsh
-    $fzfArgs += "90%"               #   and we dumped $pid to the console just before the killf
-
-    if( $name )
-    {
-        $fzfArgs += "-q"
-        $fzfArgs += $name
-    }
-
-    $lines = gps | fzf --ansi @fzfArgs
-    if( -not $lines ) {return}
-
-    $lines | foreach{
-        $split = $psitem -split "\s+" | where{ $psitem }
-        $id = $split[4]
-        Stop-Process -Id $id -Verbose
     }
 }
 
