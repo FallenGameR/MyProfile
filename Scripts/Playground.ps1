@@ -4,6 +4,13 @@
 #>
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
+<#
+ANSI Escape sequences - https://duffney.io/usingansiescapesequencespowershell/
+
+"`e[2A" # mouse move
+"`e[1S" # viewport move
+#>
+
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
@@ -57,8 +64,8 @@ function cdf( $Path, [switch] $Quick )
 {
     function quick
     {
-        "$env:HOME\Documents"
         "$env:HOME\Downloads"
+        "$env:HOME\Documents"
         "$env:OneDriveConsumer"
         "$env:OneDriveCommercial"
         $GLOBAL:PROFILE_FastPaths

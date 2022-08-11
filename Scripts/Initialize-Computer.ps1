@@ -86,6 +86,9 @@ if( -not (Test-Elevated) )
 }
 tm "Elevation test"
 
+# Conhost should draw ANSI escape sequences
+Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
+
 # Shortcut creation
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
 Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
