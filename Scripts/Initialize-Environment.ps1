@@ -16,7 +16,7 @@ $options = @(
     "--height 60%",                 # Leave some space intact
     "--tabstop=4",                  # Standart tab size
     "--multi",                      # Multi select possible
-    "--bind",
+    "--bind",                       # Shortcuts:
         "alt-t:toggle-all",         # Alt+t toggles selection
     "--cycle",                      # Cycle the list
     "--ansi",                       # Use Powershell colors
@@ -31,6 +31,7 @@ $options = @(
     "--color=prompt:#CCCCCC",       # Prompt = Gray
     "--info=hidden"`                # Hide info pannel by default
 )
+$env:FZF_DEFAULT_OPTS = $options -join " "
 
 <#
 "--color=bg:#RRGGBB",             # Background
@@ -50,5 +51,3 @@ $options = @(
 "--color=prompt:#RRGGBB",         # Prompt
 "--color=spinner:#RRGGBB",        # Streaming input indicator
 #>
-
-$env:FZF_DEFAULT_OPTS = $options -join " "
