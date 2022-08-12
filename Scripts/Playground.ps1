@@ -192,11 +192,6 @@ function rgf
         [switch] $NoEditor
     )
 
-
-
-
-
-    $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
     $rg = "rg --column --line-number --no-heading --color=always --smart-case "
 
     if( $options )
@@ -205,12 +200,12 @@ function rgf
         $rg += " "
     }
 
-
+    $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = "$rg ""$Query"""
+    # .GetNewClosure()
 
     try
     {
-        $env:FZF_DEFAULT_COMMAND = "$rg ""$Query"""
-
         $result = fzf `
             --ansi `
             --height "99%" `
