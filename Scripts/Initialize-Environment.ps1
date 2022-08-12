@@ -13,7 +13,7 @@ $env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
 # FZF
 $options = @(
     "--layout=reverse",             # Grow list down, not upwards
-    "--height 60%",                 # Leave some space intact
+    #"--height 60%",                 # Leave some space intact - breaks cyrillic typing, bug created
     "--tabstop=4",                  # Standart tab size
     "--multi",                      # Multi select possible
     "--bind",                       # Shortcuts:
@@ -51,3 +51,4 @@ $env:FZF_DEFAULT_OPTS = $options -join " "
 "--color=prompt:#RRGGBB",         # Prompt
 "--color=spinner:#RRGGBB",        # Streaming input indicator
 #>
+

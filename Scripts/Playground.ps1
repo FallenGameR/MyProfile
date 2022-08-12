@@ -1,6 +1,11 @@
 <#
 .SYNOPSIS
     Experimental playground with unstable or hardcoded stuff.
+
+.NOTES
+    fzf cyrillic bugs:
+    - typing https://github.com/junegunn/fzf/issues/2921
+    - output https://github.com/junegunn/fzf/issues/2922
 #>
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
@@ -128,7 +133,6 @@ function codef
         # 2) path:line
         # 3) path:line:char
         #
-        # If there are many paths their line and char info is removed (VS code can't open several files each in specific places)
         # If not specified fzf with preview is used
         $Paths,
         [switch] $Directory
@@ -173,17 +177,34 @@ function codef
     # Prepare code args
     $editor = 'code'
     $editorOptions = ''
-    $paths = @($paths | foreach{'"{0}"' -f $psitem})
-    if( $paths.Length -gt 1 )
-    {
-        $paths = $paths -replace ":\d+(:\d+)?\""$", '"'
-    }
 
     # Invoke code
-    $invoke = "$editor $editorOptions --goto {0}" -f ($paths -join " ")
-    $invoke
-    Invoke-Expression $invoke
+    foreach( $path in $paths )
+    {
+        $invoke = "$editor $editorOptions --goto {0}" -f $path
+        $invoke
+        Invoke-Expression $invoke
+    }
 }
+
+<#
+
+
+# TODO:
+why rgf shows file header in the output?
+can it be configured not to show it?
+- defaults
+- parameters that rgf uses
+
+
+codef can open mutiple :line:col files at once via several commands
+codef - merge file and folder inout
+
+
+#>
+
+
+
 
 function rgf
 {
