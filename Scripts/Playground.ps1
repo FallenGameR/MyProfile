@@ -26,6 +26,24 @@ Register-Shortcut "Alt+f" "codef" "Code to open file"
 Register-Shortcut "Alt+v" "codef -d" "Code to open directory"
 Register-Shortcut "Alt+d" "cdf -q" "Change directory"
 
+# fzf by default can work with cyrillic files - so we want to preserve that until fixed
+# but we want custom behaviour on codef/cdf commands
+# and we want to be able to exit fzf fast before it finish reading input on large folders
+# so we need fzf to call in command to get input, not pipe it in (although that would be more convinient)
+function Invoke-ScriptedFzf( $scriptPath, $invokeFzf )
+{
+    $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $scriptPath"
+    try
+    {
+        $invokeFzf.Invoke()
+    }
+    finally
+    {
+        $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
+    }
+}
+
 function hlp($exe)
 {
     begin
@@ -67,19 +85,6 @@ function startf
     }
 }
 
-function Invoke-ScriptedFzf( $scriptPath, $invokeFzf )
-{
-    $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
-    $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $scriptPath"
-    try
-    {
-        $invokeFzf.Invoke()
-    }
-    finally
-    {
-        $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
-    }
-}
 
 function cdf( $Path, [switch] $Quick )
 {
@@ -140,10 +145,7 @@ function codef
     # Select paths
     if( -not $paths )
     {
-        $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
-        $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1"
-        $paths = try
-        {
+        $paths = Invoke-ScriptedFzf "$PSScriptRoot\..\FZF\Invoke-Codef.ps1" {
             fzf `
                 --margin "1%" `
                 --padding "1%" `
@@ -151,10 +153,6 @@ function codef
                 --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}" `
                 --color "preview-bg:#222222" `
                 --preview-window=55%
-        }
-        finally
-        {
-            $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
         }
     }
 
