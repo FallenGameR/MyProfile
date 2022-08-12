@@ -3,18 +3,20 @@
     Experimental playground with unstable or hardcoded stuff.
 
 .NOTES
-    fzf cyrillic bugs:
-    - typing https://github.com/junegunn/fzf/issues/2921
-    - output https://github.com/junegunn/fzf/issues/2922
+    fzf issues:
+    - bug in cyrillic typing https://github.com/junegunn/fzf/issues/2921
+    - bug in cyrillic output https://github.com/junegunn/fzf/issues/2922
+    - bug in cyrillic FZF_DEFAULT_COMMAND https://github.com/junegunn/fzf/issues/2923
+    - fzf can't exit until piped input will be handled
+
+    find "C:\Program Files\Git\usr\bin\find.exe" issues:
+    - downloads all that it finds in OneDrive
+
+    ANSI Escape sequences - https://duffney.io/usingansiescapesequencespowershell/
+    -"`e[2A" + "test" # mouse move
+    -"`e[2S" + "test" # viewport move
 #>
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
-
-<#
-ANSI Escape sequences - https://duffney.io/usingansiescapesequencespowershell/
-
-"`e[2A" # mouse move
-"`e[1S" # viewport move
-#>
 
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
@@ -38,7 +40,7 @@ function hlp($exe)
     process { $accumulator += $psitem }
     end
     {
-        $accumulator | bat -pl help --theme=
+        $accumulator | bat -pl help
     }
 }
 
@@ -65,26 +67,23 @@ function startf
     }
 }
 
+function Invoke-ScriptedFzf( $scriptPath, $invokeFzf )
+{
+    $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $scriptPath"
+    try
+    {
+        $invokeFzf.Invoke()
+    }
+    finally
+    {
+        $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
+    }
+}
+
 function cdf( $Path, [switch] $Quick )
 {
-    function quick
-    {
-        "$env:HOME\Downloads"
-        "$env:HOME\Documents"
-        "$env:OneDriveConsumer"
-        "$env:OneDriveCommercial"
-        $GLOBAL:PROFILE_FastPaths
-    }
-
-    function pipe
-    {
-        if( $Quick )
-        {
-            quick | where{ Test-Path $psitem -ea Ignore } | foreach{ [System.IO.Path]::GetFullPath($psitem) }
-        }
-
-        Get-ChildItem -Directory -Recurse -ErrorAction Ignore | % FullName
-    }
+    $env:FZF_IS_QUICK = if( $Quick ) {$true} else {$null}
 
     $fzfArgs = @()
     if( $path )
@@ -93,7 +92,8 @@ function cdf( $Path, [switch] $Quick )
         $fzfArgs += $path
     }
 
-    $destination = pipe | fzf @fzfArgs
+    $destination = Invoke-ScriptedFzf "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1" { fzf @fzfArgs }
+
     $destination
     if( $destination )
     {
@@ -134,61 +134,28 @@ function codef
         # 3) path:line:char
         #
         # If not specified fzf with preview is used
-        $Paths,
-        [switch] $Directory
+        $Paths
     )
 
     # Select paths
     if( -not $paths )
     {
-        function list
+        $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
+        $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1"
+        $paths = try
         {
-            & "C:\Program Files\Git\usr\bin\find.exe" `
-                .  `
-                -not -iwholename '*\.vs\*' `
-                -not -iwholename '*\.git\*' `
-                -not -iwholename '*\.pkgrefgen\*' `
-                -not -iwholename '*\bin\*' `
-        }
-
-        list | %{ $_ -replace "\./" } |
             fzf `
-            --margin "1%" `
-            --padding "1%" `
-            --border `
-            --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}" `
-            --color "preview-bg:#222222" `
-            --preview-window=55%
-
-        <#
-        if( $Directory )
-        {
-            function list
-            {
-                $pwd | gi
-                Get-ChildItem -Directory -Recurse -ErrorAction Ignore
-            }
-
-            $paths =
-            list |
-            foreach fullname |
-            fzf `
-            --margin "1%" `
-            --padding "1%" `
-            --border `
-            --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}"
+                --margin "1%" `
+                --padding "1%" `
+                --border `
+                --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}" `
+                --color "preview-bg:#222222" `
+                --preview-window=55%
         }
-        else
+        finally
         {
-            $paths = fzf `
-            --margin "1%" `
-            --padding "1%" `
-            --border `
-            --preview "bat {} --color=always --plain" `
-            --color "preview-bg:#222222" `
-            --preview-window=55%
+            $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
         }
-        #>
     }
 
     if( -not $paths )
@@ -218,14 +185,7 @@ can it be configured not to show it?
 - defaults
 - parameters that rgf uses
 
-codef - merge file and folder inout
-
-& "C:\Program Files\Git\usr\bin\find.exe" .  -not -iwholename '*\.vs\*'  -not -iwholename '*\bin\*'| select -f 100
-
-
 #>
-
-
 
 
 function rgf
