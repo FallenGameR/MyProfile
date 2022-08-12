@@ -146,10 +146,12 @@ function codef
             & "C:\Program Files\Git\usr\bin\find.exe" `
                 .  `
                 -not -iwholename '*\.vs\*' `
+                -not -iwholename '*\.git\*' `
+                -not -iwholename '*\.pkgrefgen\*' `
                 -not -iwholename '*\bin\*' `
         }
 
-        list |
+        list | %{ $_ -replace "\./" } |
             fzf `
             --margin "1%" `
             --padding "1%" `
