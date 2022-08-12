@@ -141,6 +141,24 @@ function codef
     # Select paths
     if( -not $paths )
     {
+        function list
+        {
+            & "C:\Program Files\Git\usr\bin\find.exe" `
+                .  `
+                -not -iwholename '*\.vs\*' `
+                -not -iwholename '*\bin\*' `
+        }
+
+        list |
+            fzf `
+            --margin "1%" `
+            --padding "1%" `
+            --border `
+            --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}" `
+            --color "preview-bg:#222222" `
+            --preview-window=55%
+
+        <#
         if( $Directory )
         {
             function list
@@ -150,23 +168,25 @@ function codef
             }
 
             $paths =
-                list |
-                foreach fullname |
-                fzf `
-                    --margin "1%" `
-                    --padding "1%" `
-                    --border
+            list |
+            foreach fullname |
+            fzf `
+            --margin "1%" `
+            --padding "1%" `
+            --border `
+            --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}"
         }
         else
         {
             $paths = fzf `
-                --margin "1%" `
-                --padding "1%" `
-                --border `
-                --preview "bat {} --color=always --plain" `
-                --color "preview-bg:#222222" `
-                --preview-window=55%
+            --margin "1%" `
+            --padding "1%" `
+            --border `
+            --preview "bat {} --color=always --plain" `
+            --color "preview-bg:#222222" `
+            --preview-window=55%
         }
+        #>
     }
 
     if( -not $paths )
@@ -196,9 +216,9 @@ can it be configured not to show it?
 - defaults
 - parameters that rgf uses
 
-
-codef can open mutiple :line:col files at once via several commands
 codef - merge file and folder inout
+
+& "C:\Program Files\Git\usr\bin\find.exe" .  -not -iwholename '*\.vs\*'  -not -iwholename '*\bin\*'| select -f 100
 
 
 #>
