@@ -200,13 +200,12 @@ function rgf
         $rg += " "
     }
 
-    $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
+    $oldFzfCommand = $env:FZF_DEFAULT_COMMAND
     $env:FZF_DEFAULT_COMMAND = "$rg ""$Query"""
-    # .GetNewClosure()
 
-    try
+    $result = try
     {
-        $result = fzf `
+        fzf `
             --ansi `
             --height "99%" `
             --color "hl:-1:bold,hl+:-1:bold:reverse" `
@@ -221,23 +220,22 @@ function rgf
             --header '<ALT-R: rg> <ALT-F: fzf>' `
             --preview 'bat --plain --color=always {1} --highlight-line {2}' `
             --preview-window 'up,72%,border-bottom,+{2}+3/3,~3'
-
-        $paths = $result |
-            foreach{ ($psitem -split ":" | select -f 3) -join ":" } |
-            foreach{ $psitem -replace '\x1b\[[0-9;]*[a-z]' }
-
-        if( $paths )
-        {
-            $paths
-            if( -not $NoEditor )
-            {
-                codef $paths
-            }
-        }
     }
     finally
     {
-        $env:FZF_DEFAULT_COMMAND = $preservedFzfCommand
+        $env:FZF_DEFAULT_COMMAND = $oldFzfCommand
+    }
+
+    $paths = $result |
+        foreach{ ($psitem -split ":" | select -f 3) -join ":" } |
+        foreach{ $psitem -replace '\x1b\[[0-9;]*[a-z]' }
+
+    if( -not $paths ) { return }
+    $paths
+
+    if( -not $NoEditor )
+    {
+        codef $paths
     }
 }
 
