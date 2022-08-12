@@ -22,25 +22,25 @@ Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
 Register-Shortcut "Alt+k" "killf" "Kill process"
-Register-Shortcut "Alt+f" "codef" "Code to open file"
-Register-Shortcut "Alt+v" "codef -d" "Code to open directory"
+Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
+Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+d" "cdf -q" "Change directory"
 
 # fzf by default can work with cyrillic files - so we want to preserve that until fixed
 # but we want custom behaviour on codef/cdf commands
 # and we want to be able to exit fzf fast before it finish reading input on large folders
 # so we need fzf to call in command to get input, not pipe it in (although that would be more convinient)
-function Invoke-ScriptedFzf( $scriptPath, $invokeFzf )
+function Invoke-ScriptedFzf( $newCommand, $invokeFzf )
 {
-    $original_FZF_DEFAULT_COMMAND = $env:FZF_DEFAULT_COMMAND
-    $env:FZF_DEFAULT_COMMAND = "pwsh.exe -nop -f $scriptPath"
+    $oldCommand = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = $newCommand
     try
     {
         $invokeFzf.Invoke()
     }
     finally
     {
-        $env:FZF_DEFAULT_COMMAND = $original_FZF_DEFAULT_COMMAND
+        $env:FZF_DEFAULT_COMMAND = $oldCommand
     }
 }
 
@@ -62,13 +62,8 @@ function hlp($exe)
     }
 }
 
-function startf
+function startf($path)
 {
-    param
-    (
-        $Path
-    )
-
     $fzfArgs = @()
     if( $path )
     {
@@ -77,8 +72,8 @@ function startf
     }
 
     $destination = fzf @fzfArgs
-    $destination
 
+    $destination
     if( $destination )
     {
         start $destination
@@ -97,7 +92,7 @@ function cdf( $Path, [switch] $Quick )
         $fzfArgs += $path
     }
 
-    $destination = Invoke-ScriptedFzf "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1" { fzf @fzfArgs }
+    $destination = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Cdf.ps1" { fzf @fzfArgs }
 
     $destination
     if( $destination )
@@ -145,7 +140,7 @@ function codef
     # Select paths
     if( -not $paths )
     {
-        $paths = Invoke-ScriptedFzf "$PSScriptRoot\..\FZF\Invoke-Codef.ps1" {
+        $paths = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1" {
             fzf `
                 --margin "1%" `
                 --padding "1%" `
@@ -197,6 +192,10 @@ function rgf
         [switch] $NoEditor
     )
 
+
+
+
+
     $preservedFzfCommand = $env:FZF_DEFAULT_COMMAND
     $rg = "rg --column --line-number --no-heading --color=always --smart-case "
 
@@ -205,6 +204,8 @@ function rgf
         $rg += $options -join " "
         $rg += " "
     }
+
+
 
     try
     {
