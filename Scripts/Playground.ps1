@@ -186,8 +186,11 @@ function rgf
         "--line-number",
         "--no-heading",
         "--color=always",
-        "--colors",
-            """match:fg:255,0,0""",
+        "--colors ""path:fg:0x3A,0x96,0xDD""",
+        "--colors ""line:fg:0x13,0xA1,0x0E""",
+        "--colors ""column:fg:0xF9,0xF1,0xA5""",
+        "--colors ""match:fg:0xE7,0x48,0x56""",
+        "--colors ""match:style:underline""",
         "--smart-case"
 
     $rg = ($rgArgs -join " ") + " "
