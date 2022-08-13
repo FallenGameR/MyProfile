@@ -13,7 +13,7 @@ if( -not $resolved )
 
 if( $resolved -is [System.IO.DirectoryInfo] )
 {
-    ls $path | ft -auto
+    ls -LiteralPath $path | ft -auto
 }
 else
 {
