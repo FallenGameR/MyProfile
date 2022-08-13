@@ -186,10 +186,10 @@ function rgf
         "--line-number",
         "--no-heading",
         "--color=always",
-        "--colors ""path:fg:0x3A,0x96,0xDD""",
-        "--colors ""line:fg:0x13,0xA1,0x0E""",
-        "--colors ""column:fg:0xF9,0xF1,0xA5""",
-        "--colors ""match:fg:0xE7,0x48,0x56""",
+        "--colors ""path:fg:0x3A,0x96,0xDD""",      # cyan
+        "--colors ""line:fg:0x13,0xA1,0x0E""",      # green
+        "--colors ""column:fg:0xF9,0xF1,0xA5""",    # bright yellow
+        "--colors ""match:fg:0xE7,0x48,0x56""",     # bright red
         "--colors ""match:style:underline""",
         "--smart-case"
 
@@ -197,8 +197,7 @@ function rgf
 
     if( $options )
     {
-        $rg += $options -join " "
-        $rg += " "
+        $rg += ($options -join " ") + " "
     }
 
     $oldFzfCommand = $env:FZF_DEFAULT_COMMAND
