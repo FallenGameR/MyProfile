@@ -156,13 +156,10 @@ function codef
         return
     }
 
-    # Prepare code args
-    $editor = 'code'
-
     # Invoke code
     foreach( $path in $paths )
     {
-        $invoke = "$editor --goto {0}" -f $path
+        $invoke = "code --goto ""{0}""" -f $path
         $invoke
         Invoke-Expression $invoke
     }
