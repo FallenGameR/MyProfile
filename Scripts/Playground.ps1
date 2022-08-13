@@ -76,7 +76,7 @@ function startf($path)
     $destination
     if( $destination )
     {
-        start $destination
+        start """$destination"""
     }
 }
 
@@ -97,7 +97,7 @@ function cdf( $Path, [switch] $Quick )
     $destination
     if( $destination )
     {
-        cd $destination
+        cd """$destination"""
     }
 }
 
@@ -162,7 +162,7 @@ function codef
     # Invoke code
     foreach( $path in $paths )
     {
-        $invoke = "$editor --goto {0}" -f $path
+        $invoke = "$editor --goto ""{0}""" -f $path
         $invoke
         Invoke-Expression $invoke
     }
