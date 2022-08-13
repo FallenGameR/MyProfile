@@ -76,7 +76,7 @@ function startf($path)
     $destination
     if( $destination )
     {
-        start """$destination"""
+        start $destination
     }
 }
 
@@ -97,7 +97,7 @@ function cdf( $Path, [switch] $Quick )
     $destination
     if( $destination )
     {
-        cd """$destination"""
+        cd $destination
     }
 }
 
