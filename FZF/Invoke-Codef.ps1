@@ -26,11 +26,12 @@ function normalize($path)
 
 function find_recursive($root)
 {
-    # Current level
+    # Read current level
     $files = find_files $root | %{ normalize $psitem }
     $folders = find_folders $root
-    $foldersNormalized = $folders | %{ (normalize $psitem) + [io.path]::DirectorySeparatorChar }
-    $foldersNormalized
+
+    # Output current level
+    $folders | %{ (normalize $psitem) + [io.path]::DirectorySeparatorChar }
     $files
 
     # Then recurse into every folder if it is not excluded

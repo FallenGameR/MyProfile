@@ -23,8 +23,7 @@ function find_recursive($root)
 {
     # Current level
     $folders = find_folders $root
-    $foldersNormalized = $folders | %{ normalize $psitem }
-    $foldersNormalized
+    $folders | %{ normalize $psitem }
 
     # Then recurse into every folder if it is not excluded
     foreach( $folder in $folders | where Name -notin $excludedFolders )
