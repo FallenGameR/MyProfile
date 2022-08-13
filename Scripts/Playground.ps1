@@ -120,7 +120,7 @@ function killf( $name )
     $lines | foreach{
         $split = $psitem -split "\s+" | where{ $psitem }
         $id = $split[4]
-        Stop-Process -Id $id -Verbose
+        Stop-Process -Id $id -Verbose -ea Ignore
     }
 }
 
