@@ -169,18 +169,6 @@ function codef
     }
 }
 
-<#
-
-
-# TODO:
-why rgf shows file header in the output?
-can it be configured not to show it?
-- defaults
-- parameters that rgf uses
-
-#>
-
-
 function rgf
 {
     # original: https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
@@ -192,7 +180,17 @@ function rgf
         [switch] $NoEditor
     )
 
-    $rg = "rg --column --line-number --no-heading --color=always --smart-case "
+    $rgArgs =
+        "rg",
+        "--column",
+        "--line-number",
+        "--no-heading",
+        "--color=always",
+        "--colors",
+            """match:fg:255,0,0""",
+        "--smart-case"
+
+    $rg = ($rgArgs -join " ") + " "
 
     if( $options )
     {
@@ -205,21 +203,28 @@ function rgf
 
     $result = try
     {
+        # 'command || cd .' is used as analog of 'command || true' in linux samples
+        # it makes sure that on rg find failure the command  would still return non error exit code
+        # and thus would not terminate fzf
+        #--height "99%" `
         fzf `
             --ansi `
-            --height "99%" `
             --color "hl:-1:bold,hl+:-1:bold:reverse" `
-            --disabled --query "$Query" `
+            --disabled `
+            --query $Query `
             --bind "change:reload: $rg {q} || cd ." `
             --bind "alt-f:unbind(change,alt-f)+change-prompt(fzf> )+enable-search+clear-query+rebind(alt-r)" `
             --bind "alt-r:unbind(alt-r)+change-prompt(rg> )+disable-search+reload($rg {q} || cd .)+rebind(change,alt-f)" `
             --prompt "rg> " `
             --delimiter ":" `
-            "--info=default" `
+            --info=default `
             --tiebreak "begin,length" `
             --header '<ALT-R: rg> <ALT-F: fzf>' `
-            --preview 'bat --plain --color=always {1} --highlight-line {2}' `
-            --preview-window 'up,72%,border-bottom,+{2}+3/3,~3'
+            --preview 'bat --color=always {1} --highlight-line {2}' `
+            --preview-window 'up,72%,border-bottom,+{2}/3,~3'
+            # +{2} - place in bat output, base offset to use for scrolling bat output to the highlighted line, from {2} token
+            # /3   - place in viewport to place the highlighted line, in fraction of the preview window height - near the middle of the screen but a bit higher
+            # ,~3  - pin top 3 lines from the bat output as the header, it would show the name of the file
     }
     finally
     {
