@@ -80,7 +80,6 @@ function startf($path)
     }
 }
 
-
 function cdf( $Path, [switch] $Quick )
 {
     $env:FZF_IS_QUICK = if( $Quick ) {$true} else {$null}
@@ -140,15 +139,21 @@ function codef
     # Select paths
     if( -not $paths )
     {
-        $paths = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1" {
-            fzf `
-                --margin "1%" `
-                --padding "1%" `
-                --border `
-                --preview "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}" `
-                --color "preview-bg:#222222" `
-                --preview-window=55%
+        $fzfArgs =
+            "--margin", "1%",
+            "--padding", "1%",
+            "--border",
+            "--preview", "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}",
+            "--preview-window=55%"
+
+        $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
+        if( -not $executedFromCode )
+        {
+            # For some reason in VS code terminal background color remains
+            $fzfArgs += "--color", "preview-bg:#222222"
         }
+
+        $paths = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1" { fzf @fzfArgs }
     }
 
     if( -not $paths )
