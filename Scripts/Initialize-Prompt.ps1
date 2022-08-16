@@ -58,6 +58,8 @@ function prompt
                 if( -not $title ) { $title = "\" }
                 $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
                 if( -not $title ) { $title = "NTP\" }
+                $title = $title -replace [regex]::Escape("NTP\managed\Clockwork"), "Clockwork"
+                if( -not $title ) { $title = "Clockwork\" }
             }
             $host.UI.RawUI.WindowTitle = $title
         }
