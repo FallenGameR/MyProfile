@@ -52,7 +52,7 @@ Register-Shortcut "Alt+g" "code" "Code open"
 Register-Shortcut "Alt+x" 'start cmd -ArgumentList "/c start /b wt" -Verb runas' "Open elevated powershell in new window"
 Register-Shortcut "Alt+c" "gite commit" "GitExtensions commit"
 Register-Shortcut "Alt+b" "gite" "GitExtensions browse"
-
+Register-Shortcut "Alt+u" "cd .." "Go up"
 
 # Added only in 7.2
 if( $PSVersionTable.PSVersion -ge 7.2 )
