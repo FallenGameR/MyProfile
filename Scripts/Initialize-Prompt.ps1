@@ -50,16 +50,20 @@ function prompt
         }
         else
         {
+            function replace($all, $part, $short)
+            {
+                $all = $all -replace [regex]::Escape($part), $short
+                if( $all ) { $all } else { $short + "\" }
+            }
+
             $title = $path
-            if( $env:home ) { $title = $title -replace [regex]::Escape($env:home), "~" }
+            if( $env:home ) { $title = replace $title $env:home "~" }
             if( $env:inetroot )
             {
-                $title = $title -replace [regex]::Escape($env:inetroot)
-                if( -not $title ) { $title = "\" }
-                $title = $title -replace [regex]::Escape("\src\Client\NTP"), "NTP"
-                if( -not $title ) { $title = "NTP\" }
-                $title = $title -replace [regex]::Escape("NTP\managed\Clockwork"), "Clockwork"
-                if( -not $title ) { $title = "Clockwork\" }
+                $title = replace $title $env:inetroot ""
+                $title = replace $title "\src\Client\NTP" "NTP"
+                $title = replace $title "NTP\managed\Clockwork" "Clockwork"
+                $title = replace $title "\data\Autopilot\NtpReferenceClock\Firmware" "Firmware"
             }
             $host.UI.RawUI.WindowTitle = $title
         }
