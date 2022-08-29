@@ -28,8 +28,8 @@ $options = @(
     "--color=hl+:#13A10E",          # Highlighted substrings (current line) = DarkGreen
     "--color=pointer:#3A96DD",      # Pointer to the current line = DarkCyan
     "--color=preview-bg:#0C0C0C",   # Preview window background = Black
-    "--color=prompt:#CCCCCC",       # Prompt = Gray
-    "--info=hidden"`                # Hide info pannel by default
+    "--color=prompt:#CCCCCC"        # Prompt = Gray
+    #"--info=hidden"`                # Hide info pannel by default
 )
 $env:FZF_DEFAULT_OPTS = $options -join " "
 
