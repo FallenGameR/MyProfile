@@ -129,6 +129,7 @@ function Get-PreviewFzfArgs
         "--margin", "1%",
         "--padding", "1%",
         "--border",
+        "--keep-right",
         "--preview", "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}",
         "--preview-window=55%"
 
