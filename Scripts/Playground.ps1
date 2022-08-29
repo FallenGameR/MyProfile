@@ -215,9 +215,9 @@ function rgf
             --color "hl:-1:bold,hl+:-1:bold:reverse" `
             --disabled `
             --query $Query `
-            --bind "change:reload: $rg {q} || cd ." `
+            --bind "change:reload: $rg ""{q}"" || cd ." `
             --bind "alt-f:unbind(change,alt-f)+change-prompt(fzf> )+enable-search+clear-query+rebind(alt-r)" `
-            --bind "alt-r:unbind(alt-r)+change-prompt(rg> )+disable-search+reload($rg {q} || cd .)+rebind(change,alt-f)" `
+            --bind "alt-r:unbind(alt-r)+change-prompt(rg> )+disable-search+reload($rg ""{q}"" || cd .)+rebind(change,alt-f)" `
             --prompt "rg> " `
             --delimiter ":" `
             --info=default `
