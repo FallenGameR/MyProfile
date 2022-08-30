@@ -4,7 +4,7 @@ param
 )
 
 $resolved = Get-Item $path -Force -ea Ignore
-$pictures = ".jpg", ".jpeg", ".bmp", ".gif"
+$pictures = ".jpg", ".jpeg", ".bmp", ".gif", ".png", ".webp"
 
 if( -not $resolved )
 {
