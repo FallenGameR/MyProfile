@@ -25,6 +25,9 @@ Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+d" "cdf -q" "Change directory"
+#Register-Shortcut "Alt+u" "cd .." "Go up"
+Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
+
 
 # fzf by default can work with cyrillic files - so we want to preserve that until fixed
 # but we want custom behaviour on codef/cdf commands
@@ -120,6 +123,27 @@ function killf( $name )
         $split = $psitem -split "\s+" | where{ $psitem }
         $id = $split[4]
         Stop-Process -Id $id -Verbose -ea Ignore
+    }
+}
+
+function Get-DirectoryStack
+{
+    $parts = $pwd -split "\\"
+    $path = $parts | select -f 1
+    $paths = @()
+    foreach( $part in $parts[1..($parts.Length-2)] )
+    {
+        $path += "\" + $part
+        $path
+    }
+}
+
+function pushf
+{
+    $path = Get-DirectoryStack | sort -desc | pf
+    if( $path )
+    {
+        pushd $path
     }
 }
 
