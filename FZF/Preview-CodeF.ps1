@@ -4,6 +4,7 @@ param
 )
 
 $resolved = Get-Item $path -Force -ea Ignore
+$pictures = ".jpg", ".jpeg", ".bmp", ".gif"
 
 if( -not $resolved )
 {
@@ -17,5 +18,12 @@ if( $resolved -is [System.IO.DirectoryInfo] )
 }
 else
 {
-    bat $path --color=always --plain
+    if( $resolved.Extension -in $pictures )
+    {
+        chafa $path
+    }
+    else
+    {
+        bat $path --color=always --plain
+    }
 }
