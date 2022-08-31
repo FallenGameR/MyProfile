@@ -7,7 +7,8 @@
     - bug in cyrillic typing https://github.com/junegunn/fzf/issues/2921
     - bug in cyrillic output https://github.com/junegunn/fzf/issues/2922
     - bug in cyrillic FZF_DEFAULT_COMMAND https://github.com/junegunn/fzf/issues/2923
-    - fzf can't exit until piped input will be handled
+    - bug in passing escaped query to rg https://github.com/junegunn/fzf/issues/2947
+    - fzf can't exit until piped input will be handled (by design)
 
     find "C:\Program Files\Git\usr\bin\find.exe" issues:
     - downloads all that it finds in OneDrive
@@ -25,14 +26,13 @@ Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+d" "cdf -q" "Change directory"
-#Register-Shortcut "Alt+u" "cd .." "Go up"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
 
 # fzf by default can work with cyrillic files - so we want to preserve that until fixed
 # but we want custom behaviour on codef/cdf commands
 # and we want to be able to exit fzf fast before it finish reading input on large folders
-# so we need fzf to call in command to get input, not pipe it in (although that would be more convinient)
+# so we need fzf to call a command to get input, not pipe it in (although that would be more convinient)
 function Invoke-ScriptedFzf( $newCommand, $invokeFzf )
 {
     $oldCommand = $env:FZF_DEFAULT_COMMAND
