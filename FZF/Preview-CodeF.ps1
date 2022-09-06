@@ -27,7 +27,7 @@ if( $resolved.Extension -in $pictures )
 
 if( $resolved.Extension -in $markdown )
 {
-    glow $path
+    glow -s dark $path
     return
 }
 
