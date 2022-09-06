@@ -5,6 +5,7 @@ param
 
 $resolved = Get-Item $path -Force -ea Ignore
 $pictures = ".jpg", ".jpeg", ".bmp", ".gif", ".png", ".webp"
+$markdown = ".md"
 
 if( -not $resolved )
 {
@@ -15,15 +16,19 @@ if( -not $resolved )
 if( $resolved -is [System.IO.DirectoryInfo] )
 {
     ls -LiteralPath $path | ft -auto
+    return
 }
-else
+
+if( $resolved.Extension -in $pictures )
 {
-    if( $resolved.Extension -in $pictures )
-    {
-        chafa $path
-    }
-    else
-    {
-        bat $path --color=always --plain
-    }
+    chafa $path
+    return
 }
+
+if( $resolved.Extension -in $markdown )
+{
+    glow $path
+    return
+}
+
+bat $path --color=always --plain

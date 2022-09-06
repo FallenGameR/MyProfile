@@ -36,8 +36,8 @@ function quick_access
 {
     "$env:HOME\Downloads"
     "$env:HOME\Documents"
-    "$env:OneDriveConsumer"
-    "$env:OneDriveCommercial"
+    #"$env:OneDriveConsumer"
+    #"$env:OneDriveCommercial"
     $env:FZF_QUICK_PATHS -split ";"
 }
 
