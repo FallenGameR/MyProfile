@@ -8,9 +8,31 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 # C:\ProgramData\chocolatey\lib, C:\src as well
 
 # Tools instalation
-choco install -s=chocolatey powershell-core googlechrome firacode less microsoft-windows-terminal vscode git gitextensions kdiff3 windirstat beyondcompare gimp ilspy dnspy sysinternals mp3tag far mls-software-openssh openhardwaremonitor -y
+$tools =
+    "bat",
+    "beyondcompare",
+    "dnspy",
+    "firacode",
+    "fzf",
+    "gimp",
+    "git",
+    "gitextensions",
+    "glow",
+    "googlechrome",
+    "hyperfine",
+    "kdiff3",
+    "less",
+    "microsoft-windows-terminal",
+    "mls-software-openssh",
+    "mp3tag",
+    "openhardwaremonitor",
+    "powershell-core",
+    "ripgrep",
+    "sysinternals",
+    "vscode",
+    "windirstat"
+choco install -s=chocolatey @tools -y
 
-choco install -s=chocolatey bat hyperfine fzf ripgrep -y
 #choco install -s=chocolatey pandoc -y
 #pandoc book.fb2 -o book.md
 #pip install pdfminer
