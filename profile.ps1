@@ -65,10 +65,13 @@ $host.privatedata.ProgressForegroundColor = "White"
 . $PSScriptRoot\Scripts\Playground.ps1
 tm playground
 
-# That's hacky... but it can dot script other script here
-if( -not (Test-Path "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1") )
+# Conditional dot sourcing
+function Import-ProtectedPlayground
 {
-    return
+    $path = "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1"
+    if( -not (Test-Path $path) ) { return }
+    . $path
 }
-. "$env:OneDriveCommercial\Projects\ProtectedPlayground.ps1"
+
+. Import-ProtectedPlayground
 tm ProtectedPlayground
