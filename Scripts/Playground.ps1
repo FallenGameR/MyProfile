@@ -10,6 +10,9 @@
     - bug in passing escaped query to rg https://github.com/junegunn/fzf/issues/2947
     - fzf can't exit until piped input will be handled (by design)
 
+    fzf unused features:
+    - it can use SHELL env variable to call different commands using -command switch for pwsh
+
     find "C:\Program Files\Git\usr\bin\find.exe" issues:
     - downloads all that it finds in OneDrive
 
