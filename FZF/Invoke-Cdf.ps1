@@ -5,18 +5,7 @@
 # - allow fzf to terminate output early (piped in input blocks fzf from exit)
 #
 # BUG: doesn't work with Cyrillic folders
-<#
-rust analon requirements:
-- work with cyrillic folders
-- work with OneDrive folders
-- support excluded folders (env vars / settings file)
-- support both folder (cdf) and file and folder (codef) scenarios
-- be fast
-- work on relative paths (normalization)
-- traverse files first then drill into folders
-- support quick access (env vars) - add it to the end of list???
 
-#>
 
 $excludedFolders = ".git", ".pkgrefgen", "bin", "obj", "objd", "TestResults"
 $commonPathPrefixLength = $pwd.ToString().Length + 1

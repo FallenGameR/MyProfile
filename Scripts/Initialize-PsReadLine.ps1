@@ -23,8 +23,10 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 #
 #>
 
-Import-Module PsReadLine
-
+if( -not (Get-Module PsReadLine) )
+{
+    Import-Module PsReadLine
+}
 
 function Register-Shortcut
 {
