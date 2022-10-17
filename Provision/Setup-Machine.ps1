@@ -35,7 +35,9 @@ $tools =
     "windirstat"
 choco install -s=chocolatey @tools -y
 
-#choco install -s=chocolatey pandoc -y
+# Candidates
+# digiKam | fsviewer # image organizer
+# pandoc | # text converter
 #pandoc book.fb2 -o book.md
 #pip install pdfminer
 #python C:\tools\miniconda3\Scripts\pdf2txt.py book.pdf
