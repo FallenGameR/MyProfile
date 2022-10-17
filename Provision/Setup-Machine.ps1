@@ -1,4 +1,5 @@
 #Requires -RunAsAdministrator
+# SpellChecker: disable
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -20,6 +21,7 @@ $tools =
     "glow",
     "googlechrome",
     "hyperfine",
+    "irfanview",
     "kdiff3",
     "less",
     "microsoft-windows-terminal",
