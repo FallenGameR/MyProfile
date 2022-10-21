@@ -1,4 +1,5 @@
 #Requires -RunAsAdministrator
+# SpellChecker: disable
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -20,6 +21,7 @@ $tools =
     "glow",
     "googlechrome",
     "hyperfine",
+    "irfanview",
     "kdiff3",
     "less",
     "microsoft-windows-terminal",
@@ -33,7 +35,9 @@ $tools =
     "windirstat"
 choco install -s=chocolatey @tools -y
 
-#choco install -s=chocolatey pandoc -y
+# Candidates
+# digiKam | fsviewer # image organizer
+# pandoc | # text converter
 #pandoc book.fb2 -o book.md
 #pip install pdfminer
 #python C:\tools\miniconda3\Scripts\pdf2txt.py book.pdf
