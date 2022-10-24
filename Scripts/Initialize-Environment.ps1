@@ -6,7 +6,6 @@ $addToPath =
     "C:\tools\chafa"
 $env:Path += ";" + ($addToPath -join ";")
 
-$env:SDFORMEDITOR="C:\Program Files\Microsoft VS Code\code.exe"
 $env:LESS = "-IeFRX"
 $env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\..\rg.config"
 $env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
