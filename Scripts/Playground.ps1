@@ -28,7 +28,7 @@ Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
 Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
-Register-Shortcut "Alt+d" "cdf -q" "Change directory"
+Register-Shortcut "Alt+d" "cdf" "Change directory"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
 
@@ -86,19 +86,10 @@ function startf($path)
     }
 }
 
-function cdf( $Path, [switch] $Quick )
+function cdf( $Path )
 {
-    $env:FZF_IS_QUICK = if( $Quick ) {$true} else {$null}
-
-    $fzfArgs = @()
-    if( $path )
-    {
-        $fzfArgs += "-q"
-        $fzfArgs += $path
-    }
-
-    $destination = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Cdf.ps1" { fzf @fzfArgs }
-
+    $cdf = "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1"
+    $destination = & $cdf | pf
     $destination
     if( $destination )
     {

@@ -1,39 +1,21 @@
 # This allows us to control
 # - what folders are excluded (hidden folders and files and folders that start with dot like .git)
-# - in what order do we see the output (simialar to ls order)
+# - in what order do we see the output (similar to ls order)
 # - make sure that we use command that is OneDrive friendly (Linux find downloads everything while enumerating)
 # - allow fzf to terminate output early (piped in input blocks fzf from exit)
-#
-# BUG: doesn't work with Cyrillic folders
 
-
-$excludedFolders = ".git", ".pkgrefgen", "bin", "obj", "objd", "TestResults"
-$commonPathPrefixLength = $pwd.ToString().Length + 1
-
-function find_folders($root)
+function excluded_folders
 {
-    Get-ChildItem $root -Directory -ea Ignore
+    ".git"
+    "target"
+    "bin"
+    "obj"
+    "objd"
+    "TestResults"
+    ".pkgrefgen"
 }
 
-function normalize($path)
-{
-    $path.FullName.Substring($commonPathPrefixLength)
-}
-
-function find_recursive($root)
-{
-    # Current level
-    $folders = find_folders $root
-    $folders | %{ normalize $psitem }
-
-    # Then recurse into every folder if it is not excluded
-    foreach( $folder in $folders | where Name -notin $excludedFolders )
-    {
-        find_recursive $folder
-    }
-}
-
-function quick_access
+function included_folders
 {
     "$env:HOME\Downloads"
     "$env:HOME\Documents"
@@ -42,14 +24,21 @@ function quick_access
     $env:FZF_QUICK_PATHS -split ";"
 }
 
-filter normalize_quick_access
+$param = @()
+$param += $pwd
+$param += "-f"
+
+foreach( $excluded in excluded_folders )
 {
-    $psitem | where{ Test-Path $psitem -ea Ignore } | foreach{ [System.IO.Path]::GetFullPath($psitem) }
+    $param += "-e"
+    $param += $excluded
 }
 
-if( $env:FZF_IS_QUICK )
+foreach( $included in included_folders )
 {
-    quick_access | normalize_quick_access
+    $param += "-I"
+    $param += $included
 }
 
-find_recursive "."
+$walker = "$PsScriptRoot\..\Bin\Walker\walker.exe"
+& $walker @param
