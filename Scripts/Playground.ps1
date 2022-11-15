@@ -88,8 +88,10 @@ function startf($path)
 
 function cdf( $Path )
 {
+    $fzfArgs = Get-PreviewFzfArgs
     $cdf = "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1"
-    $destination = & $cdf | pf
+    $destination = & $cdf | fzf @fzfArgs
+
     $destination
     if( $destination )
     {
@@ -164,9 +166,8 @@ function Get-PreviewFzfArgs
 # Preview with fzf
 function pf
 {
-    $paths = @($input)
     $fzfArgs = Get-PreviewFzfArgs
-    $paths | fzf @fzfArgs
+    $input | fzf @fzfArgs
 }
 
 function codef
