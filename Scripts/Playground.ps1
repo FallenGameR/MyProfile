@@ -164,6 +164,8 @@ function Get-PreviewFzfArgs
 }
 
 # Preview with fzf
+# Note that it will not pipe in input to fzf until all the input will be collected
+# If you want to call fzf immediately call it directly
 function pf
 {
     $fzfArgs = Get-PreviewFzfArgs

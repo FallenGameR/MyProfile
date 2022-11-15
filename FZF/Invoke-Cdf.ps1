@@ -7,12 +7,14 @@
 function excluded_folders
 {
     ".git"
-    "target"
+    ".pkgrefgen"
     "bin"
+    "cache"
     "obj"
     "objd"
+    "out"
+    "target"
     "TestResults"
-    ".pkgrefgen"
 }
 
 function included_folders
@@ -26,7 +28,8 @@ function included_folders
 
 $param = @()
 $param += $pwd
-$param += "-f"
+$param += "-f" # don't show files, only directories
+$param += "-D" # traverse into .directories
 
 foreach( $excluded in excluded_folders )
 {
