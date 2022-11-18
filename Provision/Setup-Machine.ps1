@@ -35,6 +35,9 @@ $tools =
     "windirstat"
 choco install -s=chocolatey @tools -y
 
+# Trying out
+choco install -s=chocolatey netcat nmap iperf3 -y
+
 # Candidates
 # digiKam | fsviewer # image organizer
 # pandoc | # text converter
