@@ -1,6 +1,27 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
 param()
 
+# Modules
+Complete-Once Modules {
+    pushd $PsScriptRoot
+    git clone https://github.com/microsoft/PSToolset.git
+    popd
+}
+tm Modules
+
+# Default classic Powershell setup
+Complete-Once "Classic Powershell" {
+    $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
+    $modern = "$env:USERPROFILE\Documents\Powershell"
+    mkdir $classic | Out-Null
+    ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
+
+    pushd $classic
+    New-Item -Type Junction -Name Modules -Value "$modern\Modules"
+    popd
+}
+tm ClassicPowershell
+
 # Default console color setup
 Complete-Once "Fonts" {
     Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
