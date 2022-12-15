@@ -88,7 +88,7 @@ function startf($path)
 
 function cdf( $Path )
 {
-    $fzfArgs = Get-PreviewFzfArgs
+    $fzfArgs = Get-PreviewFzfArgs $path
     $cdf = "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1"
     $destination = @(& $cdf | fzf @fzfArgs)
 
@@ -143,7 +143,7 @@ function pushf
     }
 }
 
-function Get-PreviewFzfArgs
+function Get-PreviewFzfArgs( $path )
 {
     $fzfArgs =
         "--margin", "1%",
@@ -153,12 +153,18 @@ function Get-PreviewFzfArgs
         "--preview", "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}",
         "--preview-window=55%"
 
-        $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
-        if( -not $executedFromCode )
-        {
-            # For some reason in VS code terminal background color remains
-            $fzfArgs += "--color", "preview-bg:#222222"
-        }
+    $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
+    if( -not $executedFromCode )
+    {
+        # For some reason in VS code terminal background color remains
+        $fzfArgs += "--color", "preview-bg:#222222"
+    }
+
+    if( $path )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $path
+    }
 
     $fzfArgs
 }
