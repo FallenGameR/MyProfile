@@ -93,9 +93,10 @@ function cdf( $Path )
     $destination = @(& $cdf | fzf @fzfArgs)
 
     $destination
+
     if( $destination.Length -eq 1 )
     {
-        cd $destination
+        cd $destination[0]
     }
 }
 
