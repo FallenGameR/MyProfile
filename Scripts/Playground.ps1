@@ -90,10 +90,10 @@ function cdf( $Path )
 {
     $fzfArgs = Get-PreviewFzfArgs
     $cdf = "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1"
-    $destination = & $cdf | fzf @fzfArgs
+    $destination = @(& $cdf | fzf @fzfArgs)
 
     $destination
-    if( $destination )
+    if( $destination.Length -eq 1 )
     {
         cd $destination
     }
