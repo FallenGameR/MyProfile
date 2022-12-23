@@ -1,0 +1,1 @@
+Set-Alias ls Get-ChildItem
