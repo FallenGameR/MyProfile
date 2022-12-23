@@ -8,7 +8,7 @@ $SCRIPT:ProfilingCounter = 1
 function SCRIPT:Complete-Once( $name, $script )
 {
     # Skip if one time setup was already done
-    $flag = "$PSScriptRoot\OneTime\$name"
+    $flag = "$PSScriptRoot/OneTime/$name"
     if( Test-Path $flag )
     {
         return
@@ -17,7 +17,7 @@ function SCRIPT:Complete-Once( $name, $script )
     # Do one time setup
     Write-Host "Setting up $name"
     & $script
-    mkdir $flag | Out-Null
+    touch $flag | Out-Null
 }
 
 function SCRIPT:Get-Elapsed
@@ -31,11 +31,13 @@ function SCRIPT:Get-Elapsed
 
 function SCRIPT:New-Junction( $from, $to )
 {
-    # Set-junction is needed instead
-    if( -not (Test-Path $to) )
-    {
-        cmd /c "mklink /J ""$To"" ""$From"""
-    }
+    if( Test-Path $to ) { return }
+
+    $parent = Split-Path $to
+    $name = Split-Path $to -Leaf
+    Push-Location $parent
+    New-Item -Type Junction -Name $name -Value $from
+    Pop-Location
 }
 
 filter SCRIPT:Set-Visible( [bool] $makeVisible )
