@@ -32,6 +32,7 @@ tm defaults
 
 # Aliases
 Set-Alias m Measure-Object
+Set-Alias ls Get-ChildItem
 tm alias
 
 # Environment setup

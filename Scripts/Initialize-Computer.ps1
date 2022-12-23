@@ -23,12 +23,6 @@ Complete-Once "Classic Powershell" {
 tm ClassicPowershell
 
 # Default console color setup
-Complete-Once "Fonts" {
-    Set-DefaultPowershellColors ".\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
-    Set-DefaultPowershellColors ".\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
-}
-tm fonts
-
 Complete-Once "ColorTool" {
     Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
