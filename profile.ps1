@@ -16,13 +16,13 @@ function tm($info = "=>")
 
 # Powershell behavior setup
 $global:Profile = $PSCommandPath
-$global:MaximumHistoryCount = 1024
 
-# Make sure modules path is not lost (it should be present but some times it is not)
+# Modules path as profile subfolder
 $modules = Join-Path (Split-Path $profile) Modules
 if( -not $env:PSModulePath.Contains($modules) )
 {
-    $env:PSModulePath += ";$modules"
+    $separator = if( $PSVersionTable.Platform -eq "Unix" ) {":"} else {";"}
+    $env:PSModulePath += $separator + $modules
 }
 tm init
 
@@ -30,13 +30,7 @@ tm init
 $PSDefaultParameterValues["Get-Command:All"] = $true
 tm defaults
 
-# Was fixed in Windows 10
-if( [Environment]::OSVersion.Version.Major -lt 10 )
-{
-    Update-FormatData -PrependPath "$PSScriptRoot\Format.Custom.ps1xml"
-}
-
-Set-Alias new New-Object
+# Aliases
 Set-Alias m Measure-Object
 tm alias
 
