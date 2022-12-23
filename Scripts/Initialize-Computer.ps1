@@ -2,121 +2,124 @@
 param()
 
 # Modules
-Complete-Once Modules {
-    pushd $PsScriptRoot
+Complete-Once PSToolset {
+    pushd $PsScriptRoot/../Modules
     git clone https://github.com/microsoft/PSToolset.git
     popd
 }
 tm Modules
 
-# Default classic Powershell setup
-Complete-Once "Classic Powershell" {
-    $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
-    $modern = "$env:USERPROFILE\Documents\Powershell"
-    mkdir $classic | Out-Null
-    ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
-
-    pushd $classic
-    New-Item -Type Junction -Name Modules -Value "$modern\Modules"
-    popd
-}
-tm ClassicPowershell
-
-# Default console color setup
-Complete-Once "ColorTool" {
-    Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
-    .\ColorTool.exe -b -q campbell | Out-Null
-    Pop-Location
-}
-tm ColorTool
-
-# Cloud folders setup
-switch ($env:ComputerName)
+if( $PSVersionTable.Platform -eq "Windows" )
 {
-    "ALEXKO-LS"
-    {
-        $azcompute = "D:\src\mv\"
-        $apgold = "D:\src\golds\ap\"
-        $pfgold = "D:\src\golds\pf\"
-        $ntp = "D:\src\ntp\"
+    # Default classic Powershell setup
+    Complete-Once "Classic Powershell" {
+        $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
+        $modern = "$env:USERPROFILE\Documents\Powershell"
+        mkdir $classic | Out-Null
+        ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
+
+        pushd $classic
+        New-Item -Type Junction -Name Modules -Value "$modern\Modules"
+        popd
     }
-    "ALEXKO-SB2"
-    {
-        $azcompute = "c:\src\mv\"
-        $apgold = "c:\src\gold\ap\"
-        $pfgold = "c:\src\gold\pf\"
-        $ntp = "C:\src\ntp\"
+    tm ClassicPowershell
+
+    # Default console color setup
+    Complete-Once "ColorTool" {
+        Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
+        .\ColorTool.exe -b -q campbell | Out-Null
+        Pop-Location
     }
-    "ALEXKO-11"
+    tm ColorTool
+
+    # Cloud folders setup
+    switch ($env:ComputerName)
     {
-        $azcompute = "d:\src\mv\"
-        $apgold = "d:\src\golds\ap\"
-        $pfgold = "d:\src\golds\pf\"
-        $ntp = "d:\src\ntp\"
+        "ALEXKO-LS"
+        {
+            $azcompute = "D:\src\mv\"
+            $apgold = "D:\src\golds\ap\"
+            $pfgold = "D:\src\golds\pf\"
+            $ntp = "D:\src\ntp\"
+        }
+        "ALEXKO-SB2"
+        {
+            $azcompute = "c:\src\mv\"
+            $apgold = "c:\src\gold\ap\"
+            $pfgold = "c:\src\gold\pf\"
+            $ntp = "C:\src\ntp\"
+        }
+        "ALEXKO-11"
+        {
+            $azcompute = "d:\src\mv\"
+            $apgold = "d:\src\golds\ap\"
+            $pfgold = "d:\src\golds\pf\"
+            $ntp = "d:\src\ntp\"
+        }
     }
+    $oneDrive = $env:OneDriveConsumer
+    $oneDriveMicrosoft = $env:OneDriveCommercial
+    tm "Variables setup"
+
+    # Set up environment variables
+    Set-EnvironmentVariable "AzCompute" $azcompute
+    Set-EnvironmentVariable "ApGold" $apgold
+    Set-EnvironmentVariable "PfGold" $pfgold
+    Set-EnvironmentVariable "NTP" $ntp
+    Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+    $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
+    if( -not (Test-Path $homeSimplified -ea Ignore) )
+    {
+        $homeSimplified = $env:USERPROFILE
+    }
+    Set-EnvironmentVariable "Home" $homeSimplified
+    tm "Windows environment setup"
+
+    # Tools folder creation on windows
+    if( -not (Test-Path "c:\tools") )
+    {
+        # Do we need to test that we have admin rights / that current user can do anything to drive c:\ ?
+        mkdir "c:\tools" -ea Stop | Out-Null
+    }
+    tm "Tools root setup"
+
+    # Tools junction creation
+    foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+    {
+        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+    }
+    tm "Tool junctions creation"
+
+    foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
+    {
+        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+    }
+    tm "Microsoft specific tool junctions creation"
+
+    # The rest of the commands are possible only from an elevated prompt
+    if( -not (Test-Elevated) )
+    {
+        return
+    }
+    tm "Elevation test"
+
+    # Conhost should draw ANSI escape sequences
+    Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
+
+    # Shortcut creation
+    Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
+    Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
+    Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
+    tm "Shortcut creation"
+
+    # Common root junctions
+    New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
+    New-Junction "c:\Program Files (x86)" "c:\programs"
+    New-Junction $home "c:\home"
+    tm "Common junctions setup"
+
+    # Folder hide
+    "c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | where{gi $psitem -ea ignore} | Set-Visible $false
+    "$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | where{gi $psitem -ea ignore} | Set-Visible $false
+    tm "Folder hiding junctions setup"
 }
-$oneDrive = $env:OneDriveConsumer
-$oneDriveMicrosoft = $env:OneDriveCommercial
-tm "Variables setup"
-
-# Set up environment variables
-Set-EnvironmentVariable "AzCompute" $azcompute
-Set-EnvironmentVariable "ApGold" $apgold
-Set-EnvironmentVariable "PfGold" $pfgold
-Set-EnvironmentVariable "NTP" $ntp
-Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
-$homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
-if( -not (Test-Path $homeSimplified -ea Ignore) )
-{
-    $homeSimplified = $env:USERPROFILE
-}
-Set-EnvironmentVariable "Home" $homeSimplified
-tm "Environment setup"
-
-# Tools folder creation
-if( -not (Test-Path "c:\tools") )
-{
-    # Do we need to test that we have admin rights / that current user can do anything to drive c:\ ?
-    mkdir "c:\tools" -ea Stop | Out-Null
-}
-tm "Tools root setup"
-
-# Tools junction creation
-foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-{
-    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
-}
-tm "Tool junctions creation"
-
-foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-{
-    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
-}
-tm "Microsoft specific tool junctions creation"
-
-# The rest of the commands are possible only from an elevated prompt
-if( -not (Test-Elevated) )
-{
-    return
-}
-tm "Elevation test"
-
-# Conhost should draw ANSI escape sequences
-Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
-
-# Shortcut creation
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Windows PowerShell.lnk"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\Windows PowerShell.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
-Copy-UpdatedFile "$PsScriptRoot\..\Shortcuts\LINQPad.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\LINQPad.lnk"
-tm "Shortcut creation"
-
-# Common root junctions
-New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
-New-Junction "c:\Program Files (x86)" "c:\programs"
-New-Junction $home "c:\home"
-tm "Common junctions setup"
-
-# Folder hide
-"c:\Intel", "c:\PerfLogs", "c:\Program Files", "c:\Program Files (x86)", "c:\Users", "c:\Windows", "c:\inetpub" | where{gi $psitem -ea ignore} | Set-Visible $false
-"$home\3D Objects", "$home\Contacts", "$home\Favorites", "$home\Links", "$home\Pictures", "$home\Saved Games", "$home\Searches" , "$home\Videos" | where{gi $psitem -ea ignore} | Set-Visible $false
-tm "Folder hiding junctions setup"

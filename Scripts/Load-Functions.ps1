@@ -58,6 +58,8 @@ filter SCRIPT:Set-Visible( [bool] $makeVisible )
 
 function SCRIPT:Set-EnvironmentVariable( $name, $value )
 {
+    if( -not $value ) { return }
+
     if( (Get-Item env:$name -ea Ignore).Value -ne $value )
     {
         [Environment]::SetEnvironmentVariable( $name, $value, "User" )
