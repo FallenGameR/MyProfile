@@ -51,7 +51,6 @@ function Register-Shortcut
 }
 
 Register-Shortcut "Alt+g" "code" "Code open"
-Register-Shortcut "Alt+x" 'start cmd -ArgumentList "/c start /b wt" -Verb runas' "Open elevated powershell in new window"
 Register-Shortcut "Alt+c" "gite commit" "GitExtensions commit"
 Register-Shortcut "Alt+b" "gite" "GitExtensions browse"
 
