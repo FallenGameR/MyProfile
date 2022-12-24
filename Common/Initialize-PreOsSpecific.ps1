@@ -1,22 +1,23 @@
-# Path setup
-if( $PSVersionTable.Platform -eq "Windows" )
+# Modules in profile subfolder
+$modules = Join-Path (Split-Path $profile) Modules
+if( -not $env:PSModulePath.Contains($modules) )
 {
-    $addToPath =
-        "C:\Program Files\Beyond Compare 4\",
-        "C:\Program Files (x86)\WinDirStat\",
-        "C:\Program Files (x86)\Winamp\",
-        "C:\Program Files (x86)\LINQPad5\",
-        "C:\tools\chafa"
-    $env:Path += ";" + ($addToPath -join ";")
+    $env:PSModulePath += [io.path]::PathSeparator + $modules
 }
+
+# Default command arguments
+$PSDefaultParameterValues["Get-Command:All"] = $true
+
+# Aliases
+Set-Alias m Measure-Object
+Set-Alias ls Get-ChildItem
+
 
 # Common tools setup
 $env:LESS = "-IeFRX"
 $env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\..\rg.config"
 $env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
-
-# FZF setup
-$options = @(
+$fzfOptions = @(
     "--layout=reverse",             # Grow list down, not upwards
     "--tabstop=4",                  # Standard tab size
     "--multi",                      # Multi select possible
@@ -52,4 +53,9 @@ $options = @(
     #"--color=prompt:#RRGGBB",      # Prompt
     #"--color=spinner:#RRGGBB",     # Streaming input indicator
 )
-$env:FZF_DEFAULT_OPTS = $options -join " "
+$env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
+
+
+
+
+tm (Split-Path $PSCommandPath -Leaf)

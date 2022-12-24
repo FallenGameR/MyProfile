@@ -2,38 +2,18 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
 param()
 
-$stopwatch = [system.diagnostics.stopwatch]::StartNew()
-$enableTiming = $false
-
-function tm($info = "=>")
-{
-    if( $enableTiming )
-    {
-        Write-Host "$($stopwatch.ElapsedMilliseconds / 1000) $info"
-        $stopwatch.Restart()
-    }
-}
-
-# Powershell behavior setup
 $global:Profile = $PSCommandPath
 
-# Modules path as profile subfolder
-$modules = Join-Path (Split-Path $profile) Modules
-if( -not $env:PSModulePath.Contains($modules) )
-{
-    $separator = if( $PSVersionTable.Platform -eq "Unix" ) {":"} else {";"}
-    $env:PSModulePath += $separator + $modules
-}
-tm init
+. $PSScriptRoot/Common/Initialize-Helpers.ps1
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PreOsSpecific.ps1"
+Import-AsInvoke "$PSScriptRoot/Windows/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
+Import-AsInvoke "$PSScriptRoot/Unix/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOsSpecific.ps1"
 
-# Default command arguments
-$PSDefaultParameterValues["Get-Command:All"] = $true
-tm defaults
 
-# Aliases
-Set-Alias m Measure-Object
-Set-Alias ls Get-ChildItem
-tm alias
+
+
+
 
 # Environment setup
 . $PSScriptRoot\Scripts\Initialize-Environment.ps1
@@ -54,8 +34,8 @@ tm psreadline
 tm prompt
 
 # For some reason they changed progress color in PS 7.1.1
-$host.privatedata.ProgressBackgroundColor = "DarkCyan"
 $host.privatedata.ProgressForegroundColor = "White"
+$host.privatedata.ProgressBackgroundColor = "DarkCyan"
 
 . $PSScriptRoot\Scripts\Playground.ps1
 tm playground
