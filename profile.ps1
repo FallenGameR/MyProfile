@@ -5,24 +5,16 @@ param()
 $global:Profile = $PSCommandPath
 
 . $PSScriptRoot/Common/Initialize-Helpers.ps1
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PreOsSpecific.ps1"
-Import-AsInvoke "$PSScriptRoot/Windows/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
-Import-AsInvoke "$PSScriptRoot/Unix/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOsSpecific.ps1"
+. Import-AsDotSource "$PSScriptRoot/Common/Import-ComputerVars.ps1"
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PreOs.ps1"
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and Test-Elevated)
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOs.ps1"
 
 
-
-
-
-
-# Environment setup
-. $PSScriptRoot\Scripts\Initialize-Environment.ps1
-tm environment
-
-# Additional setup
-. $PSScriptRoot\Scripts\Load-Functions.ps1
-Remove-Variable proc -ea Ignore # hides pro<tab> = profile
-tm func
+# Unclear if still needed
+# Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 
 . $PSScriptRoot\Scripts\Initialize-Computer.ps1
 tm comp

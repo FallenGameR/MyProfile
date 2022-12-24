@@ -5,13 +5,19 @@ if( -not $env:PSModulePath.Contains($modules) )
     $env:PSModulePath += [io.path]::PathSeparator + $modules
 }
 
+# PSToolset module
+Complete-Once PSToolset {
+    pushd $PsScriptRoot/../Modules
+    git clone https://github.com/microsoft/PSToolset.git
+    popd
+}
+
 # Default command arguments
 $PSDefaultParameterValues["Get-Command:All"] = $true
 
 # Aliases
 Set-Alias m Measure-Object
 Set-Alias ls Get-ChildItem
-
 
 # Common tools setup
 $env:LESS = "-IeFRX"
