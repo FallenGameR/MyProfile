@@ -13,24 +13,24 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Import-AsDotSource($path, $condition = $true)
 {
-    if( $SCRIPT:Verbose ) { Write-Host "Import-AsDotSource $path $condition" }
-    if( -not $condition ) { return }
-    if( -not (Test-Path $path) ) { return }
+    $exists = Test-Path $path
+    if( $SCRIPT:Verbose ) { Write-Host "Import-AsDotSource $path $exists $condition" }
+    if( -not ($exists -and $condition) ) { return }
     . $path
 }
 
 function SCRIPT:Import-AsInvoke($path, $condition = $true)
 {
-    if( $SCRIPT:Verbose ) { Write-Host "Import-AsInvoke $path $condition" }
-    if( -not $condition ) { return }
-    if( -not (Test-Path $path) ) { return }
+    $exists = Test-Path $path
+    if( $SCRIPT:Verbose ) { Write-Host "Import-AsInvoke $path $exists $condition" }
+    if( -not ($exists -and $condition) ) { return }
     & $path
 }
 
 function SCRIPT:Complete-Once( $name, $script )
 {
     # Skip if one time setup was already done
-    $flag = "$PSScriptRoot/OneTime/$name"
+    $flag = "$PSScriptRoot/../OneTime/$name"
     if( Test-Path $flag )
     {
         return

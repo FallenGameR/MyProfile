@@ -11,7 +11,7 @@ Import-AsInvoke "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.P
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and (Test-Elevated))
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOs.ps1"
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadline.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 
 if( $PSVersionTable.Platform -eq "Unix" )
 {
