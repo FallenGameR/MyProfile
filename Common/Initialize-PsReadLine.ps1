@@ -1,10 +1,7 @@
-# Workaround for Build that loads Powershell with profile and PsReadline
-# fails it with https://github.com/lzybkr/PSReadLine/issues/182
-#00:00:00.0550417
-if( Test-ProcessRedirected (Get-Process -Id $pid) )
-{
-    return
-}
+# Make sure to call only for interactive Powershell sessions.
+# Build scripts may open bunch of powershell short lived processes
+# that import profile and Set-PSReadlineKeyHandler can randomly fail
+# https://github.com/lzybkr/PSReadLine/issues/182
 
 <#
 #
@@ -26,28 +23,6 @@ if( Test-ProcessRedirected (Get-Process -Id $pid) )
 if( -not (Get-Module PsReadLine) )
 {
     Import-Module PsReadLine
-}
-
-function Register-Shortcut
-{
-    param (
-        [Parameter(Mandatory)]
-        $Key,
-        [Parameter(Mandatory)]
-        $Command,
-        $Description
-    )
-
-    Set-PSReadlineKeyHandler `
-        -Key $Key `
-        -BriefDescription $Command `
-        -LongDescription $Description `
-        -ScriptBlock `
-        {
-            [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-            [Microsoft.Powershell.PSConsoleReadLine]::Insert($Command)
-            [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-        }.GetNewClosure()
 }
 
 Register-Shortcut "Alt+g" "code" "Code open"

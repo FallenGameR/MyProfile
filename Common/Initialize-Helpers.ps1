@@ -124,4 +124,27 @@ function SCRIPT:Test-ProcessRedirected( $process )
     $process.StartInfo.RedirectStandardError
 }
 
+function SCRIPT:Register-Shortcut
+{
+    param
+    (
+        [Parameter(Mandatory)]
+        $Key,
+        [Parameter(Mandatory)]
+        $Command,
+        $Description
+    )
+
+    Set-PSReadlineKeyHandler `
+        -Key $Key `
+        -BriefDescription $Command `
+        -LongDescription $Description `
+        -ScriptBlock `
+        {
+            [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+            [Microsoft.Powershell.PSConsoleReadLine]::Insert($Command)
+            [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+        }.GetNewClosure()
+}
+
 tm (Split-Path $PSCommandPath -Leaf)

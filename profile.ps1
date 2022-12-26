@@ -11,13 +11,11 @@ Import-AsInvoke "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.P
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and Test-Elevated)
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOs.ps1"
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadline.ps1" (-not Test-ProcessRedirected (Get-Process -Id $pid)))
 
 
 # Unclear if still needed
 # Remove-Variable proc -ea Ignore # hides pro<tab> = profile
-
-. $PSScriptRoot\Scripts\Initialize-Computer.ps1
-tm comp
 
 . $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
 tm psreadline
