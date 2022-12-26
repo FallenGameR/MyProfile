@@ -8,26 +8,27 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Common/Import-ComputerVars.ps1"
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-PreOs.ps1"
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and Test-Elevated)
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and (Test-Elevated))
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
 Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOs.ps1"
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadline.ps1" (-not Test-ProcessRedirected (Get-Process -Id $pid)))
+Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadline.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 
+if( $PSVersionTable.Platform -eq "Unix" )
+{
+    return
+}
 
 # Unclear if still needed
 # Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 
-. $PSScriptRoot\Scripts\Initialize-PsReadLine.ps1
-tm psreadline
-
-. $PSScriptRoot\Scripts\Initialize-Prompt.ps1
+. Import-AsDotSource "$PSScriptRoot\Scripts\Initialize-Prompt.ps1"
 tm prompt
 
 # For some reason they changed progress color in PS 7.1.1
 $host.privatedata.ProgressForegroundColor = "White"
 $host.privatedata.ProgressBackgroundColor = "DarkCyan"
 
-. $PSScriptRoot\Scripts\Playground.ps1
+. Import-AsDotSource "$PSScriptRoot\Scripts\Playground.ps1"
 tm playground
 
 # Conditional dot sourcing

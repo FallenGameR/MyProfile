@@ -1,5 +1,6 @@
 $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $SCRIPT:enableTiming = $true
+$SCRIPT:verbose = $true
 
 function SCRIPT:tm($info = "=>")
 {
@@ -12,6 +13,7 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Import-AsDotSource($path, $condition = $true)
 {
+    if( $SCRIPT:Verbose ) { Write-Host "Import-AsDotSource $path $condition" }
     if( -not $condition ) { return }
     if( -not (Test-Path $path) ) { return }
     . $path
@@ -19,6 +21,7 @@ function SCRIPT:Import-AsDotSource($path, $condition = $true)
 
 function SCRIPT:Import-AsInvoke($path, $condition = $true)
 {
+    if( $SCRIPT:Verbose ) { Write-Host "Import-AsInvoke $path $condition" }
     if( -not $condition ) { return }
     if( -not (Test-Path $path) ) { return }
     & $path

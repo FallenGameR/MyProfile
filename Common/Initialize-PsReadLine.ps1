@@ -20,6 +20,8 @@
 #
 #>
 
+"!!!"
+
 if( -not (Get-Module PsReadLine) )
 {
     Import-Module PsReadLine
@@ -68,32 +70,23 @@ Set-PSReadlineOption -Colors $colors
 #
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
-Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen
 Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behavior
 
-#
-# Search
-#
-Remove-PSReadlineKeyHandler -Chord "Ctrl+r"
-Remove-PSReadlineKeyHandler -Chord "Ctrl+s"
-
-#
-# Navigation
-#
-Set-PSReadlineKeyHandler -Chord "Ctrl+UpArrow" -Function ScrollDisplayUpLine
-Set-PSReadlineKeyHandler -Chord "Ctrl+DownArrow" -Function ScrollDisplayDownLine
+# Command edits
 Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function BackwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+LeftArrow" -Function SelectBackwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardWord
-
-#
-# Deletion
-#
-Set-PSReadlineKeyHandler -Chord "Alt+Shift+a" -Function SelectShellBackwardWord
-Set-PSReadlineKeyHandler -Chord "Alt+Shift+d" -Function SelectShellForwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
+
+if( $PSVersionTable.Platform -ne "Unix" )
+{
+    # Doesn't work in unix terminals
+    Set-PSReadlineKeyHandler -Chord "Ctrl+UpArrow" -Function ScrollDisplayUpLine
+    Set-PSReadlineKeyHandler -Chord "Ctrl+DownArrow" -Function ScrollDisplayDownLine
+}
+
 
 #
 # Ctrl+X that either:
@@ -121,9 +114,21 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
     [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
     if( $string )
     {
-        Add-Type -AssemblyName PresentationCore
-        [System.Windows.Clipboard]::SetText($string)
-        [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+        switch( $PSVersionTable.Platform )
+        {
+            "Windows"
+            {
+                $string | clip
+                [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+            }
+            "Unix"
+            {
+                $string | xsel --input -b
+            }
+            default
+            {
+            }
+        }
         return
     }
 
@@ -131,6 +136,13 @@ Set-PSReadlineKeyHandler -Key Ctrl+x `
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+if( $PSVersionTable.Platform -ne "Windows" )
+{
+    # Looks like this messes up with the terminal shortcuts
+    # and terminal shortcuts are terminal app dependent to boot
+    return
 }
 
 # Sometimes you enter a command but realize you forgot to do something else first.
@@ -148,119 +160,6 @@ Set-PSReadlineKeyHandler -Key Alt+w `
     [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     [Microsoft.Powershell.PSConsoleReadLine]::AddToHistory($line)
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-}
-
-# Insert text from the clipboard as a here string
-Set-PSReadlineKeyHandler -Key Ctrl+Shift+v `
-                         -BriefDescription PasteAsHereString `
-                         -LongDescription "Paste the clipboard text as a here string" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    Add-Type -Assembly PresentationCore
-    if ([System.Windows.Clipboard]::ContainsText())
-    {
-        # Get clipboard text - remove trailing spaces, convert \r\n to \n, and remove the final \n.
-        $text = ([System.Windows.Clipboard]::GetText() -replace "\p{Zs}*`r?`n","`n").TrimEnd()
-        [Microsoft.Powershell.PSConsoleReadLine]::Insert("@'`n$text`n'@")
-    }
-    else
-    {
-        [Microsoft.Powershell.PSConsoleReadLine]::Ding()
-    }
-}
-
-# Sometimes you want to get a property of invoke a member on what you've entered so far
-# but you need parents to do that.  This binding will help by putting parents around the current selection,
-# or if nothing is selected, the whole line.
-# Alt+(
-Set-PSReadlineKeyHandler -Key 'Alt+9' `
-                         -BriefDescription ParenthesizeSelection `
-                         -LongDescription "Put parenthesis around the selection or entire line and move the cursor to after the closing parenthesis" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $selectionStart = $null
-    $selectionLength = $null
-    [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref]$selectionStart, [ref]$selectionLength)
-
-    $line = $null
-    $cursor = $null
-    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-    if ($selectionStart -ne -1)
-    {
-        [Microsoft.Powershell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, '(' + $line.SubString($selectionStart, $selectionLength) + ')')
-        [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition($selectionStart + $selectionLength + 2)
-    }
-    else
-    {
-        [Microsoft.Powershell.PSConsoleReadLine]::Replace(0, $line.Length, '(' + $line + ')')
-        [Microsoft.Powershell.PSConsoleReadLine]::EndOfLine()
-    }
-}
-
-# Each time you press Alt+', this key handler will change the token
-# under or before the cursor.  It will cycle through single quotes, double quotes, or
-# no quotes each time it is invoked.
-Set-PSReadlineKeyHandler -Key "Alt+'" `
-                         -BriefDescription ToggleQuoteArgument `
-                         -LongDescription "Toggle quotes on the argument under the cursor" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $ast = $null
-    $tokens = $null
-    $errors = $null
-    $cursor = $null
-    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
-
-    $tokenToChange = $null
-    foreach ($token in $tokens)
-    {
-        $extent = $token.Extent
-        if ($extent.StartOffset -le $cursor -and $extent.EndOffset -ge $cursor)
-        {
-            $tokenToChange = $token
-
-            # If the cursor is at the end (it's really 1 past the end) of the previous token,
-            # we only want to change the previous token if there is no token under the cursor
-            if ($extent.EndOffset -eq $cursor -and $foreach.MoveNext())
-            {
-                $nextToken = $foreach.Current
-                if ($nextToken.Extent.StartOffset -eq $cursor)
-                {
-                    $tokenToChange = $nextToken
-                }
-            }
-            break
-        }
-    }
-
-    if ($tokenToChange -ne $null)
-    {
-        $extent = $tokenToChange.Extent
-        $tokenText = $extent.Text
-        if ($tokenText[0] -eq '"' -and $tokenText[-1] -eq '"')
-        {
-            # Switch to no quotes
-            $replacement = $tokenText.Substring(1, $tokenText.Length - 2)
-        }
-        elseif ($tokenText[0] -eq "'" -and $tokenText[-1] -eq "'")
-        {
-            # Switch to double quotes
-            $replacement = '"' + $tokenText.Substring(1, $tokenText.Length - 2) + '"'
-        }
-        else
-        {
-            # Add single quotes
-            $replacement = "'" + $tokenText + "'"
-        }
-
-        [Microsoft.Powershell.PSConsoleReadLine]::Replace(
-            $extent.StartOffset,
-            $tokenText.Length,
-            $replacement)
-    }
 }
 
 # Will normalize command with the resolved commands.
@@ -319,53 +218,6 @@ Set-PSReadlineKeyHandler -Key "Alt+n" `
                 # Our copy of the tokens won't have been updated, so we need to
                 # adjust by the difference in length
                 $startAdjustment += ($resolvedCommand.Length - $length)
-            }
-        }
-    }
-}
-
-# F1 for help on the command line - naturally
-Set-PSReadlineKeyHandler -Key F1 `
-                         -BriefDescription CommandHelp `
-                         -LongDescription "Open the help window for the current command" `
-                         -ScriptBlock {
-    param($key, $arg)
-
-    $ast = $null
-    $tokens = $null
-    $errors = $null
-    $cursor = $null
-    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
-
-    if( ($tokens.Count -eq 1) -and ($tokens.Kind -eq "EndOfInput") )
-    {
-        [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-        [Microsoft.Powershell.PSConsoleReadLine]::Insert("Measure-LastCommand")
-        [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-        return
-    }
-
-    $commandAst = $ast.FindAll( {
-        $node = $args[0]
-        $node -is [System.Management.Automation.Language.CommandAst] -and
-            $node.Extent.StartOffset -le $cursor -and
-            $node.Extent.EndOffset -ge $cursor
-        }, $true) | Select-Object -Last 1
-
-    if ($commandAst -ne $null)
-    {
-        $commandName = $commandAst.GetCommandName()
-        if ($commandName -ne $null)
-        {
-            $command = $ExecutionContext.InvokeCommand.GetCommand($commandName, 'All')
-            if ($command -is [System.Management.Automation.AliasInfo])
-            {
-                $commandName = $command.ResolvedCommandName
-            }
-
-            if ($commandName -ne $null)
-            {
-                Get-Help $commandName -ShowWindow
             }
         }
     }
