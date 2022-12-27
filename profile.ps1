@@ -6,12 +6,13 @@ $global:Profile = $PSCommandPath
 
 . $PSScriptRoot/Common/Initialize-Helpers.ps1
 . Import-AsDotSource "$PSScriptRoot/Common/Import-ComputerVars.ps1"
-. Import-AsDotSource "$PSScriptRoot/Common/Initialize-PreOs.ps1"
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-Common.ps1"
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Windows.ps1" (Test-Windows)
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" ((Test-Windows) -and (Test-Elevated))
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Unix.ps1" (Test-Windows)
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Prompt.ps1"
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-Fzf.ps1"
 
 if( $PSVersionTable.Platform -eq "Unix" )
 {
@@ -23,9 +24,6 @@ if( $PSVersionTable.Platform -eq "Unix" )
 
 tm prompt
 
-# For some reason they changed progress color in PS 7.1.1
-$host.privatedata.ProgressForegroundColor = "White"
-$host.privatedata.ProgressBackgroundColor = "DarkCyan"
 
 . Import-AsDotSource "$PSScriptRoot\Scripts\Playground.ps1"
 tm playground
