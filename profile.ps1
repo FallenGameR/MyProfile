@@ -8,7 +8,7 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Common/Import-ComputerVars.ps1"
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-PreOs.ps1"
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Windows.ps1" (Test-Windows)
-. Import-AsDotSource "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (Test-Windows) -and (Test-Elevated))
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" ((Test-Windows) -and (Test-Elevated))
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Unix.ps1" (Test-Windows)
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Prompt.ps1"

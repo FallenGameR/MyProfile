@@ -18,7 +18,7 @@ if( -not (Test-Path $historyFolder) )
     mkdir $historyFolder -ea Ignore | Out-Null
 }
 
-$SCRIPT:historyFile = "$historyFolder\{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz")
+$SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz"))
 $SCRIPT:lastCommandId = -1
 
 # Computername to use
@@ -33,6 +33,14 @@ $SCRIPT:hostName = switch( $PSVersionTable.Platform )
 function prompt
 {
     $realLastExitCode = $LASTEXITCODE
+    $LASTEXITCODE = $realLastExitCode
+    [char] 187 + " "
+}
+
+
+function prompt
+{
+    $realLastExitCode = $LASTEXITCODE
 
     # Preserve last command in log file
     $lastCommand = Get-History -Count 1
@@ -41,7 +49,8 @@ function prompt
         if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
         {
             $SCRIPT:lastCommandId = $lastCommand.Id
-            Add-Content $historyFile $lastCommand.CommandLine -replace "`r?`n", [environment]::NewLine
+            $lineNormalized = $lastCommand.CommandLine -replace "`r?`n", [environment]::NewLine
+            Add-Content $historyFile $lineNormalized
         }
     }
     else
