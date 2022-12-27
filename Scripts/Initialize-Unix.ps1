@@ -1,13 +1,6 @@
 # Common command names
-function bat
-{
-    batcat @args
-}
-
-function mkdir
-{
-    New-Item -ItemType Directory @args
-}
+function bat { batcat @args }
+function mkdir { New-Item -ItemType Directory @args }
 
 # Default conhost console color setup
 Complete-Once "Gnome terminal colors" {

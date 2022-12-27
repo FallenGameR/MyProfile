@@ -2,6 +2,15 @@
     "cSpell.enableFiletypes": [
         "powershell"
     ],
+    "cSpell.ignorePaths": [
+        "package-lock.json",
+        "node_modules",
+        "vscode-extension",
+        ".git/objects",
+        ".vscode",
+        ".vscode-insiders",
+        "*-apps.txt",
+    ],
     "cSpell.words": [
         "adsi",
         "Aleksandr",
@@ -13,6 +22,7 @@
         "batcat",
         "bing",
         "chafa",
+        "choco",
         "COMPUTERNAME",
         "Conhost",
         "datetime",
@@ -50,6 +60,7 @@
         "psobject",
         "psreadline",
         "pstoolset",
+        "pwsh",
         "Readline",
         "repos",
         "Retryable",
@@ -67,6 +78,7 @@
         "USERDOMAIN",
         "USERPROFILE",
         "Winamp",
+        "winget",
         "xattr",
         "xcomm",
         "xelem",
@@ -79,7 +91,7 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/Help": true,
-        "**/.DS_Store": true
+        "**/.DS_Store": true,
     },
     "powershell.codeFormatting.openBraceOnSameLine": false,
     "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",

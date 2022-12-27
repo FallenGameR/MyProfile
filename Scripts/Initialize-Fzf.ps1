@@ -37,29 +37,6 @@ $fzfOptions = @(
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 
 
-<#
-.SYNOPSIS
-    Experimental playground with unstable or hardcoded stuff.
-
-.NOTES
-    fzf issues:
-    - bug in cyrillic typing https://github.com/junegunn/fzf/issues/2921
-    - bug in cyrillic output https://github.com/junegunn/fzf/issues/2922
-    - bug in cyrillic FZF_DEFAULT_COMMAND https://github.com/junegunn/fzf/issues/2923
-    - bug in passing escaped query to rg https://github.com/junegunn/fzf/issues/2947
-    - fzf can't exit until piped input will be handled (by design)
-
-    fzf unused features:
-    - it can use SHELL env variable to call different commands using -command switch for pwsh
-
-    find "C:\Program Files\Git\usr\bin\find.exe" issues:
-    - downloads all that it finds in OneDrive
-
-    ANSI Escape sequences - https://duffney.io/usingansiescapesequencespowershell/
-    -"`e[2A" + "test" # mouse move
-    -"`e[2S" + "test" # viewport move
-#>
-
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"

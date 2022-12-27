@@ -1,0 +1,14 @@
+bat
+cmatrix
+code
+cowsay
+doublecmd-gtk
+fortune
+git
+htop
+kdiff3
+lolcat
+mc
+powershell
+tmux
+xsel

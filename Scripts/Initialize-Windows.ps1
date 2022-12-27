@@ -7,6 +7,9 @@ $addToPath =
     "C:\tools\chafa"
 $env:Path += ";" + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join ";")
 
+# Common functions
+function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
+
 # Default classic Powershell setup
 Complete-Once "Classic Powershell" {
     $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
@@ -39,24 +42,6 @@ Complete-Once "Environment vars" {
         $homeSimplified = $env:USERPROFILE
     }
     Set-EnvironmentVariable "Home" $homeSimplified
-}
-
-# Tools folder setup and update
-Complete-Once "Tools folder creation" {
-    if( -not (Test-Path "c:\tools") )
-    {
-        mkdir "c:\tools" -ea Stop | Out-Null
-    }
-}
-
-foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-{
-    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
-}
-
-foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-{
-    New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
 
 tm (Split-Path $PSCommandPath -Leaf)

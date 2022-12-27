@@ -1,4 +1,3 @@
-
 Complete-Once "Windows apps" {
     $apps = cat "$PSScriptRoot/windows-apps.txt"
     choco install -s=chocolatey @apps -y
@@ -24,3 +23,5 @@ Complete-Once "Tools folder" {
         New-Junction $tool.FullName "c:\tools\$($tool.Name)"
     }
 }
+
+tm (Split-Path $PSCommandPath -Leaf)
