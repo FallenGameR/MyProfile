@@ -77,6 +77,7 @@ function prompt
             }
 
             $title = $path
+            if( $home ) { $title = replace $title $home "~" }
             if( $env:home ) { $title = replace $title $env:home "~" }
             if( $env:inetroot )
             {
