@@ -47,8 +47,8 @@ Set-Alias ls Get-ChildItem
 
 # Common tools setup
 $env:LESS = "-IeFRX"
-$env:RIPGREP_CONFIG_PATH = "$PSScriptRoot\..\rg.config"
-$env:BAT_CONFIG_PATH = "$PSScriptRoot\..\bat.config"
+$env:RIPGREP_CONFIG_PATH = "$PSScriptRoot/../rg.config"
+$env:BAT_CONFIG_PATH = "$PSScriptRoot/../bat.config"
 
 # Colors
 if( Test-Full )

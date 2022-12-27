@@ -13,3 +13,4 @@ powershell
 tmux
 xsel
 libc6-dev
+ripgrep
