@@ -59,7 +59,6 @@ $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
     -"`e[2A" + "test" # mouse move
     -"`e[2S" + "test" # viewport move
 #>
-function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
