@@ -351,3 +351,5 @@ function capp( $url, [switch] $Music )
         & "C:\Program Files\Google\Chrome\Application\chrome.exe" "--app=$url"
     }
 }
+
+tm (Split-Path $PSCommandPath -Leaf)

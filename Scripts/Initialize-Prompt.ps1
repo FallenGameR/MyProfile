@@ -37,7 +37,6 @@ function prompt
     [char] 187 + " "
 }
 
-
 function prompt
 {
     $realLastExitCode = $LASTEXITCODE
