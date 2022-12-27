@@ -77,7 +77,7 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardW
 Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
 
-if( $PSVersionTable.Platform -ne "Unix" )
+if( Test-Windows )
 {
     # Doesn't work in unix terminals
     Set-PSReadlineKeyHandler -Chord "Ctrl+UpArrow" -Function ScrollDisplayUpLine
@@ -222,3 +222,5 @@ Set-PSReadlineKeyHandler `
         }
     }
 }
+
+tm (Split-Path $PSCommandPath -Leaf)

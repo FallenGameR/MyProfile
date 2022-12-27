@@ -6,14 +6,28 @@ param()
 $SCRIPT:isElevated = Test-Elevated
 
 # History folder and file
-"~\.pwsh_history"
-$SCRIPT:historyFolder = "c:\automation\history\"
+$SCRIPT:historyFolder = switch( $PSVersionTable.Platform )
+{
+    "Windows" { "c:\automation\history\" }
+    "Unix" { "~\.pwsh_history\" }
+    default { "pwsh_history" }
+}
+
 if( -not (Test-Path $historyFolder) )
 {
     mkdir $historyFolder -ea Ignore | Out-Null
 }
+
 $SCRIPT:historyFile = "$historyFolder\{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz")
 $SCRIPT:lastCommandId = -1
+
+# Computername to use
+$SCRIPT:hostName = switch( $PSVersionTable.Platform )
+{
+    "Windows" { $Env:ComputerName }
+    "Unix" { hostname }
+    default { "UNKNOWN" }
+}
 
 # Prompt
 function prompt
@@ -27,7 +41,7 @@ function prompt
         if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
         {
             $SCRIPT:lastCommandId = $lastCommand.Id
-            Add-Content $historyFile $lastCommand.CommandLine.Replace("`n", "`r`n")
+            Add-Content $historyFile $lastCommand.CommandLine -replace "`r?`n", [environment]::NewLine
         }
     }
     else
@@ -69,7 +83,7 @@ function prompt
 
     # Update prompt
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$Env:ComputerName] " -ForegroundColor DarkGreen -NoNewline
+    Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
     {
         Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
@@ -79,3 +93,5 @@ function prompt
     $LASTEXITCODE = $realLastExitCode
     [char] 187 + " "
 }
+
+tm (Split-Path $PSCommandPath -Leaf)

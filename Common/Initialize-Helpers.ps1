@@ -1,6 +1,6 @@
 $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $SCRIPT:enableTiming = $true
-$SCRIPT:verbose = $true
+$SCRIPT:verbose = $false
 
 function SCRIPT:tm($info = "=>")
 {
@@ -9,6 +9,16 @@ function SCRIPT:tm($info = "=>")
         Write-Host "$($SCRIPT:stopwatch.ElapsedMilliseconds / 1000) $info"
         $SCRIPT:stopwatch.Restart()
     }
+}
+
+function SCRIPT:Test-Windows()
+{
+    $PSVersionTable.Platform -eq "Windows"
+}
+
+function SCRIPT:Test-Unix()
+{
+    $PSVersionTable.Platform -eq "Unix"
 }
 
 function SCRIPT:Import-AsDotSource($path, $condition = $true)
