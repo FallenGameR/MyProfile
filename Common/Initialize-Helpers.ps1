@@ -21,6 +21,16 @@ function SCRIPT:Test-Unix()
     $PSVersionTable.Platform -eq "Unix"
 }
 
+function SCRIPT:Test-Full()
+{
+    $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage"
+}
+
+function SCRIPT:Test-Constrained()
+{
+    $ExecutionContext.SessionState.LanguageMode -eq "Constrained"
+}
+
 function SCRIPT:Import-AsDotSource($path, $condition = $true)
 {
     $exists = Test-Path $path

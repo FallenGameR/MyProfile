@@ -63,7 +63,7 @@ function prompt
     $path = $pwd -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
 
     # Update title
-    if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
+    if( Test-Full )
     {
         if( $GLOBAL:WindowTitle )
         {

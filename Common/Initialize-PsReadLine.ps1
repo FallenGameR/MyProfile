@@ -9,10 +9,6 @@ if( -not (Get-Module PsReadLine) )
     Import-Module PsReadLine
 }
 
-# Shift + up - select from cursor up
-# Shift - down - select from cursor down
-# Ctrl+C - no selection, copy whole line
-
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
 
@@ -82,6 +78,38 @@ if( Test-Windows )
     # Doesn't work in unix terminals
     Set-PSReadlineKeyHandler -Chord "Ctrl+UpArrow" -Function ScrollDisplayUpLine
     Set-PSReadlineKeyHandler -Chord "Ctrl+DownArrow" -Function ScrollDisplayDownLine
+}
+
+Set-PSReadlineKeyHandler -Chord "Ctrl+a" -Function SelectAll
+
+Set-PSReadlineKeyHandler `
+    -Key "Ctrl+UpArrow" `
+    -BriefDescription GoToBegin `
+    -LongDescription "Set cursor to the start of the line" `
+    -ScriptBlock `
+{
+    [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition(0)
+}
+
+Set-PSReadlineKeyHandler `
+    -Key "Ctrl+DownArrow" `
+    -BriefDescription GoToEnd `
+    -LongDescription "Set cursor to the end of the line" `
+    -ScriptBlock `
+{
+    $string = $null
+    $cursor = $null
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+    [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition($string.Length)
+}
+
+Set-PSReadlineKeyHandler `
+    -Key "Ctrl+z" `
+    -BriefDescription Abort `
+    -LongDescription "Abort current operation" `
+    -ScriptBlock `
+{
+    [Microsoft.Powershell.PSConsoleReadLine]::CancelLine()
 }
 
 #
