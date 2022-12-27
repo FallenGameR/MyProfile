@@ -12,6 +12,7 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-PostOs.ps1"
 . Import-AsDotSource "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-Prompt.ps1"
 
 if( $PSVersionTable.Platform -eq "Unix" )
 {
@@ -21,7 +22,6 @@ if( $PSVersionTable.Platform -eq "Unix" )
 # Unclear if still needed
 # Remove-Variable proc -ea Ignore # hides pro<tab> = profile
 
-. Import-AsDotSource "$PSScriptRoot\Scripts\Initialize-Prompt.ps1"
 tm prompt
 
 # For some reason they changed progress color in PS 7.1.1

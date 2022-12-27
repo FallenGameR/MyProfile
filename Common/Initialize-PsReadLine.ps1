@@ -9,6 +9,10 @@ if( -not (Get-Module PsReadLine) )
     Import-Module PsReadLine
 }
 
+# Shift + up - select from cursor up
+# Shift - down - select from cursor down
+# Ctrl+C - no selection, copy whole line
+
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
 
@@ -61,7 +65,7 @@ $colors["Variable"] = [ConsoleColor]::DarkGray
 Set-PSReadlineOption -Colors $colors
 
 # Console behavior
-Set-PSReadlineOption -HistorySaveStyle SaveAtExit
+Set-PSReadlineOption -HistorySaveStyle SaveAtExit # SaveNothing if it is buggy
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
 # Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine # that should be the default
 
