@@ -58,3 +58,5 @@ foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where
 {
     New-Junction $tool.FullName "c:\tools\$($tool.Name)"
 }
+
+tm (Split-Path $PSCommandPath -Leaf)
