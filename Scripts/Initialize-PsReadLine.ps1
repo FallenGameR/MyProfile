@@ -26,12 +26,14 @@ switch( $PSVersionTable.Platform )
     }
 }
 
-# Fancy table formatting was added only in 7.2
+# Fancy formatting was added only in 7.2
 if( $PSVersionTable.PSVersion -ge 7.2 )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
     $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan
+    $PSStyle.FileInfo.Directory = $PSStyle.Bold + $PSStyle.Foreground.Blue
 }
+
 
 # History command prediction was added in 2.1.0 and this feature
 # should have been included by default in PS 7.2 but there
