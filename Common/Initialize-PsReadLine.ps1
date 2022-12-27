@@ -3,52 +3,47 @@
 # that import profile and Set-PSReadlineKeyHandler can randomly fail
 # https://github.com/lzybkr/PSReadLine/issues/182
 
-<#
-#
-# Combinations to remember:
-#
-# Ctrl+Space - menu complete
-# Ctrl+a - select whole line
-# Ctrl+l - clear screen
-# Ctrl+d,Ctrl+c - capture screen
-# Ctrl+] - matching brace
-# Alt+?(Ctrl) - get binding
-# Ctrl+x - close on new line
-# Alt+n - normalize command (expand alias, fix casing)
-# Alt+' - change surrounding quotation
-# Alt+( - add surrounding braces
-#
-#>
-
-"!!!"
-
+# If there is no PsReadLine module there is nothing to setup here
 if( -not (Get-Module PsReadLine) )
 {
     Import-Module PsReadLine
 }
 
+# Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
-Register-Shortcut "Alt+c" "gite commit" "GitExtensions commit"
-Register-Shortcut "Alt+b" "gite" "GitExtensions browse"
 
-# Added only in 7.2
+switch( $PSVersionTable.Platform )
+{
+    "Windows"
+    {
+        Register-Shortcut "Alt+c" "gite commit" "Git commit dialog"
+        Register-Shortcut "Alt+b" "gite" "Git commit browser"
+    }
+    "Unix"
+    {
+        Register-Shortcut "Alt+c" "git commit -a" "Git commit dialog"
+        Register-Shortcut "Alt+b" "git lg" "Git commit browser"
+    }
+}
+
+# Fancy table formatting was added only in 7.2
 if( $PSVersionTable.PSVersion -ge 7.2 )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
     $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan
 }
 
-# Added only in 2.1.0, should be included in PS 7.2 but there may be weird combinations
-if( (get-module psreadline).Version -ge 2.1 )
+# History command prediction was added in 2.1.0 and this feature
+# should have been included by default in PS 7.2 but there
+# could be some weird combinations
+if( (Get-Module psreadline).Version -ge 2.1 )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
     Set-PSReadLineOption -PredictionSource History
 }
 
-#
 # Since PS 5.1 console beeps on backspace while on empty prompt
 # https://superuser.com/questions/1113429/disable-powershell-beep-on-backspace
-#
 Set-PSReadlineOption -BellStyle None
 
 # RS5 and after use this API
@@ -65,12 +60,10 @@ $colors["Type"] = [ConsoleColor]::DarkCyan
 $colors["Variable"] = [ConsoleColor]::DarkGray
 Set-PSReadlineOption -Colors $colors
 
-#
-# Other options
-#
+# Console behavior
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
-Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine       # Old enter behavior
+# Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine # that should be the default
 
 # Command edits
 Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function BackwardWord
@@ -87,92 +80,95 @@ if( $PSVersionTable.Platform -ne "Unix" )
     Set-PSReadlineKeyHandler -Chord "Ctrl+DownArrow" -Function ScrollDisplayDownLine
 }
 
-
 #
 # Ctrl+X that either:
 # - cuts selected text
-# - cuts whole unselected text
+# - cuts whole unselected line
 # - exits console
 #
-Set-PSReadlineKeyHandler -Key Ctrl+x `
-                         -BriefDescription CutOrExit `
-                         -LongDescription "Cuts selection, whole input or exits console" `
-                         -ScriptBlock {
-    # Work as cut if text is selected
+Set-PSReadlineKeyHandler `
+    -Key Ctrl+x `
+    -BriefDescription CutOrExit `
+    -LongDescription "Cuts selection, whole input or exits console" `
+    -ScriptBlock `
+{
     $start = $null
     $length = $null
+    $string = $null
+    $cursor = $null
+
+    # Work as cut if text is selected
     [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
     if( $length -gt 0 )
     {
-        [Microsoft.Powershell.PSConsoleReadLine]::Cut()
-        return
-    }
-
-    # Work as line cut if no text is selected, but there is input
-    $string = $null
-    $cursor = $null
-    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
-    if( $string )
-    {
         switch( $PSVersionTable.Platform )
         {
-            "Windows"
-            {
-                $string | clip
-                [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
-            }
+            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
             "Unix"
             {
-                $string | xsel --input -b
-            }
-            default
-            {
+                [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+                [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+                $string.Substring($start, $length) | xsel --input -b
+                [Microsoft.Powershell.PSConsoleReadLine]::Insert($string.Remove($start, $length))
             }
         }
         return
     }
 
-    # Otherwise quickly close the console
+    # Work as line cut if no text is selected, but there is input
+    [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+    if( $string )
+    {
+        switch( $PSVersionTable.Platform )
+        {
+            "Windows" { $string | clip }
+            "Unix" { $string | xsel --input -b }
+            default { return }
+        }
+        [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
+        return
+    }
+
+    # Otherwise just close the terminal
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
-}
-
-if( $PSVersionTable.Platform -ne "Windows" )
-{
-    # Looks like this messes up with the terminal shortcuts
-    # and terminal shortcuts are terminal app dependent to boot
-    return
 }
 
 # Sometimes you enter a command but realize you forgot to do something else first.
 # This binding will let you save that command in the history so you can recall it,
 # but it doesn't actually execute.  It also clears the line with RevertLine so the
 # undo stack is reset - though redo will still reconstruct the command line.
-Set-PSReadlineKeyHandler -Key Alt+w `
-                         -BriefDescription SaveInHistory `
-                         -LongDescription "Save current line in history but do not execute" `
-                         -ScriptBlock {
+Set-PSReadlineKeyHandler `
+    -Key Alt+w `
+    -BriefDescription SaveInHistory `
+    -LongDescription "Save current line in history but do not execute" `
+    -ScriptBlock `
+{
     param($key, $arg)
 
     $line = $null
     $cursor = $null
+
     [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     [Microsoft.Powershell.PSConsoleReadLine]::AddToHistory($line)
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
 }
 
 # Will normalize command with the resolved commands.
-Set-PSReadlineKeyHandler -Key "Alt+n" `
-                         -BriefDescription ExpandAliases `
-                         -LongDescription "Replace all aliases with the full command" `
-                         -ScriptBlock {
+Set-PSReadlineKeyHandler `
+    -Key "Alt+n" `
+    -BriefDescription ExpandAliases `
+    -LongDescription "Replace aliases with the full command" `
+    -ScriptBlock `
+{
     param($key, $arg)
 
     $ast = $null
     $tokens = $null
     $errors = $null
     $cursor = $null
+
     [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
     $startAdjustment = 0

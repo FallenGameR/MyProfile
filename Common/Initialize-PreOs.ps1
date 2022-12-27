@@ -61,7 +61,4 @@ $fzfOptions = @(
 )
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 
-
-
-
 tm (Split-Path $PSCommandPath -Leaf)

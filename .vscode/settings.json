@@ -67,7 +67,8 @@
         "xattr",
         "xcomm",
         "xelem",
-        "xname"
+        "xname",
+        "xsel"
     ],
     "files.exclude": {
         "**/.git": true,

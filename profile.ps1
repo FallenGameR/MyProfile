@@ -6,12 +6,12 @@ $global:Profile = $PSCommandPath
 
 . $PSScriptRoot/Common/Initialize-Helpers.ps1
 . Import-AsDotSource "$PSScriptRoot/Common/Import-ComputerVars.ps1"
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PreOs.ps1"
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and (Test-Elevated))
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PostOs.ps1"
-Import-AsInvoke "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-PreOs.ps1"
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-Windows.ps1" ($PSVersionTable.Platform -eq "Windows")
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-WindowsElevated.ps1" (($PSVersionTable.Platform -eq "Windows") -and (Test-Elevated))
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-Unix.ps1" ($PSVersionTable.Platform -eq "Unix")
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-PostOs.ps1"
+. Import-AsDotSource "$PSScriptRoot/Common/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 
 if( $PSVersionTable.Platform -eq "Unix" )
 {
