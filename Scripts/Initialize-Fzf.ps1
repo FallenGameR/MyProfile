@@ -90,6 +90,7 @@ function Invoke-Fzf( $newCommand, $invokeFzf )
     and not piping in the choices. This helper function is needed for safe FZF
     calls that don't break FZF call convention for everyone.
 #>
+
     $oldCommand = $env:FZF_DEFAULT_COMMAND
     $env:FZF_DEFAULT_COMMAND = $newCommand
     try
