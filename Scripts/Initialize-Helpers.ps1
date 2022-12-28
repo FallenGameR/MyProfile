@@ -1,6 +1,12 @@
 $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $SCRIPT:enableTiming = $false
 $SCRIPT:verbose = $false
+$SCRIPT:hostName = switch( $PSVersionTable.Platform )
+{
+    "Windows" { $Env:ComputerName }
+    "Unix" { hostname }
+    default { "UNKNOWN" }
+}
 
 function SCRIPT:tm($info = "=>")
 {

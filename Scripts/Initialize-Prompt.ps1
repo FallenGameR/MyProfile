@@ -21,14 +21,6 @@ if( -not (Test-Path $historyFolder) )
 $SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz"))
 $SCRIPT:lastCommandId = -1
 
-# Computername to use
-$SCRIPT:hostName = switch( $PSVersionTable.Platform )
-{
-    "Windows" { $Env:ComputerName }
-    "Unix" { hostname }
-    default { "UNKNOWN" }
-}
-
 # Prompt
 function prompt
 {

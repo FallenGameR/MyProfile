@@ -31,10 +31,6 @@ Complete-Once "ColorTool" {
 
 # Set up environment variables
 Complete-Once "Environment vars" {
-    Set-EnvironmentVariable "AzCompute" $azcompute
-    Set-EnvironmentVariable "ApGold" $apgold
-    Set-EnvironmentVariable "PfGold" $pfgold
-    Set-EnvironmentVariable "NTP" $ntp
     Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
     if( -not (Test-Path $homeSimplified -ea Ignore) )

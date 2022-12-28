@@ -5,7 +5,6 @@ param()
 $global:Profile = $PSCommandPath
 
 . $PSScriptRoot/Scripts/Initialize-Helpers.ps1
-. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Vars.ps1"
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-WindowsApps.ps1" (Test-Windows)
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Windows.ps1" (Test-Windows)
@@ -19,5 +18,6 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Fzf.ps1"
 
+. Import-AsDotSource "$PSScriptRoot/Scripts/$SCRIPT:hostName/Initialize-Computer.ps1"
 . Import-AsDotSource "$PSScriptRoot/playground.ps1"
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
