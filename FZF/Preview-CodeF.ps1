@@ -31,6 +31,4 @@ if( $resolved.Extension -in $markdown )
     return
 }
 
-$bat = "bat"
-if( $PSVersionTable.Platform -eq "Unix" ) { $bat = "batcat" }
-& $bat $path --color=always --plain
+& bat $path --color=always --plain

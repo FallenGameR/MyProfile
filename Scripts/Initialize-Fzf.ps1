@@ -49,27 +49,20 @@ Register-Shortcut "Alt+d" "cdf" "Change directory"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
 
-# fzf by default can work with cyrillic files - so we want to preserve that until fixed
-# but we want custom behaviour on codef/cdf commands
-# and we want to be able to exit fzf fast before it finish reading input on large folders
-# so we need fzf to call a command to get input, not pipe it in (although that would be more convinient)
-function Invoke-ScriptedFzf( $newCommand, $invokeFzf )
-{
-    $oldCommand = $env:FZF_DEFAULT_COMMAND
-    $env:FZF_DEFAULT_COMMAND = $newCommand
-    try
-    {
-        $invokeFzf.Invoke()
-    }
-    finally
-    {
-        $env:FZF_DEFAULT_COMMAND = $oldCommand
-    }
-}
-
 Set-Alias hlp Show-Help
-function Show-Help($path)
+
+function Show-Help( $path )
 {
+<#
+    .SYNOPSIS
+        Show colorized help for a native command
+
+    .EXAMPLE
+        hlp ping
+
+    .EXAMPLE
+        walker --help | hlp
+#>
     begin
     {
         if( $path )
@@ -85,6 +78,31 @@ function Show-Help($path)
         $accumulator | bat -pl man
     }
 }
+
+function Invoke-Fzf( $newCommand, $invokeFzf )
+{
+<#
+.SYNOPSIS
+    Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
+
+.DESCRIPTION
+    There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
+    and not piping in the choices. This helper function is needed for safe FZF
+    calls that don't break FZF call convention for everyone.
+#>
+    $oldCommand = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = $newCommand
+    try
+    {
+        $invokeFzf.Invoke()
+    }
+    finally
+    {
+        $env:FZF_DEFAULT_COMMAND = $oldCommand
+    }
+}
+
+
 
 function startf($path)
 {
@@ -214,7 +232,7 @@ function codef
     if( -not $paths )
     {
         $fzfArgs = Get-PreviewFzfArgs
-        $paths = Invoke-ScriptedFzf "$pwsh -nop -f $PSScriptRoot/../FZF/Invoke-Codef.ps1" { fzf @fzfArgs }
+        $paths = Invoke-Fzf "$pwsh -nop -f $PSScriptRoot/../FZF/Invoke-Codef.ps1" { fzf @fzfArgs }
     }
 
     if( -not $paths )
