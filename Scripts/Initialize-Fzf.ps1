@@ -102,6 +102,41 @@ function Invoke-Fzf( $newCommand, $invokeFzf )
     }
 }
 
+function Get-PreviewFzfArgs( $path )
+{
+    $fzfArgs =
+        "--margin", "1%",
+        "--padding", "1%",
+        "--border",
+        "--keep-right",
+        "--preview", "$pwsh -nop -f $PSScriptRoot/../FZF/Preview-CodeF.ps1 {}",
+        "--preview-window=55%"
+
+    $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
+    if( -not $executedFromCode )
+    {
+        # For some reason in VS code terminal background color remains
+        $fzfArgs += "--color", "preview-bg:#222222"
+    }
+
+    if( $path )
+    {
+        $fzfArgs += "-q"
+        $fzfArgs += $path
+    }
+
+    $fzfArgs
+}
+
+
+# Preview with fzf
+# Note that it will not pipe in input to fzf until all the input will be collected
+# If you want to call fzf immediately call it directly
+function pf
+{
+    $fzfArgs = Get-PreviewFzfArgs
+    $input | fzf @fzfArgs
+}
 
 
 function startf($path)
@@ -161,59 +196,31 @@ function killf( $name )
 
 function Get-DirectoryStack
 {
-    $parts = $pwd -split "\\"
+    $parts = $pwd -split "\\|/"
     $path = $parts | select -f 1
     $paths = @()
+
     foreach( $part in $parts[1..($parts.Length-2)] )
     {
-        $path += "\" + $part
+        $path += [io.path]::DirectorySeparatorChar + $part
         $path
+    }
+
+    if( Test-Unix )
+    {
+        "/"
     }
 }
 
 function pushf
 {
-    $path = Get-DirectoryStack | sort -desc | pf
+    $path = Get-DirectoryStack | Sort-Object -desc | pf
     if( $path )
     {
         pushd $path
     }
 }
 
-function Get-PreviewFzfArgs( $path )
-{
-    $fzfArgs =
-        "--margin", "1%",
-        "--padding", "1%",
-        "--border",
-        "--keep-right",
-        "--preview", "$pwsh -nop -f $PSScriptRoot/../FZF/Preview-CodeF.ps1 {}",
-        "--preview-window=55%"
-
-    $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
-    if( -not $executedFromCode )
-    {
-        # For some reason in VS code terminal background color remains
-        $fzfArgs += "--color", "preview-bg:#222222"
-    }
-
-    if( $path )
-    {
-        $fzfArgs += "-q"
-        $fzfArgs += $path
-    }
-
-    $fzfArgs
-}
-
-# Preview with fzf
-# Note that it will not pipe in input to fzf until all the input will be collected
-# If you want to call fzf immediately call it directly
-function pf
-{
-    $fzfArgs = Get-PreviewFzfArgs
-    $input | fzf @fzfArgs
-}
 
 function codef
 {
