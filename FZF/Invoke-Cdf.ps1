@@ -24,6 +24,7 @@ function included_folders
     $env:FZF_QUICK_PATHS -split ";"
 }
 
+$walker = "$PsScriptRoot/../Bin/Walker/walker"
 $param = @()
 $param += $pwd
 $param += "-f" # don't show files, only directories
@@ -40,6 +41,10 @@ foreach( $included in included_folders )
     $param += $included
 }
 
-$walker = "$PsScriptRoot/../Bin/Walker/walker"
-if( $PSVersionTable.Platform -eq "Windows" ) { $walker += ".exe" }
+if( $PSVersionTable.Platform -eq "Windows" )
+{
+    $walker += ".exe"
+    $param += "-D" # traverse into .directories
+}
+
 & $walker @param

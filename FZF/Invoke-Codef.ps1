@@ -16,10 +16,10 @@ function excluded_folders
     "TestResults"
 }
 
+$walker = "$PsScriptRoot/../Bin/Walker/walker"
 $param = @()
 $param += $pwd
 $param += "-d" # don't show directories, only files
-$param += "-D" # traverse into .directories
 
 foreach( $excluded in excluded_folders )
 {
@@ -27,6 +27,10 @@ foreach( $excluded in excluded_folders )
     $param += $excluded
 }
 
-$walker = "$PsScriptRoot/../Bin/Walker/walker"
-if( $PSVersionTable.Platform -eq "Windows" ) { $walker += ".exe" }
+if( $PSVersionTable.Platform -eq "Windows" )
+{
+    $walker += ".exe"
+    $param += "-D" # traverse into .directories
+}
+
 & $walker @param
