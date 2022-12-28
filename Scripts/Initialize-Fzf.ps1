@@ -104,7 +104,7 @@ function startf($path)
 function cdf( $Path )
 {
     $fzfArgs = Get-PreviewFzfArgs $path
-    $cdf = "$PSScriptRoot\..\FZF\Invoke-Cdf.ps1"
+    $cdf = "$PSScriptRoot/../FZF/Invoke-Cdf.ps1"
     $destination = @(& $cdf | fzf @fzfArgs)
 
     $destination
@@ -166,7 +166,7 @@ function Get-PreviewFzfArgs( $path )
         "--padding", "1%",
         "--border",
         "--keep-right",
-        "--preview", "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Preview-CodeF.ps1 {}",
+        "--preview", "pwsh.exe -nop -f $PSScriptRoot/../FZF/Preview-CodeF.ps1 {}",
         "--preview-window=55%"
 
     $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"

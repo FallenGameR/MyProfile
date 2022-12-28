@@ -43,5 +43,6 @@ foreach( $included in included_folders )
     $param += $included
 }
 
-$walker = "$PsScriptRoot\..\Bin\Walker\walker.exe"
+$walker = "$PsScriptRoot/../Bin/Walker/walker"
+if( $PSVersionTable.Platform -eq "Windows" ) { $walker += ".exe" }
 & $walker @param

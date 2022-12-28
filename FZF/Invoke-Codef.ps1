@@ -27,5 +27,6 @@ foreach( $excluded in excluded_folders )
     $param += $excluded
 }
 
-$walker = "$PsScriptRoot\..\Bin\Walker\walker.exe"
+$walker = "$PsScriptRoot/../Bin/Walker/walker"
+if( $PSVersionTable.Platform -eq "Windows" ) { $walker += ".exe" }
 & $walker @param
