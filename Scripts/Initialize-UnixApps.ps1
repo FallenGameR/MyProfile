@@ -1,5 +1,5 @@
 Complete-Once "Unix apps" {
-    $apps = cat "$PSScriptRoot/unix-apps.txt"
+    $apps = cat "$PSScriptRoot/../Data/unix-apps.txt"
     sudo apt install @apps -y
 }
 

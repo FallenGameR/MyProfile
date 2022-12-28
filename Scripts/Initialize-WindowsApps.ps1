@@ -1,5 +1,5 @@
 Complete-Once "Windows apps" {
-    $apps = cat "$PSScriptRoot/windows-apps.txt"
+    $apps = cat "$PSScriptRoot/../Data/windows-apps.txt"
     choco install -s=chocolatey @apps -y
 }
 
