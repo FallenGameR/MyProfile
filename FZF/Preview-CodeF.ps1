@@ -15,7 +15,7 @@ if( -not $resolved )
 
 if( $resolved -is [System.IO.DirectoryInfo] )
 {
-    ls -LiteralPath $path | ft -auto
+    Get-ChildItem -LiteralPath $path | ft -auto
     return
 }
 
@@ -31,4 +31,6 @@ if( $resolved.Extension -in $markdown )
     return
 }
 
-bat $path --color=always --plain
+$bat = "bat"
+if( $PSVersionTable.Platform -eq "Unix" ) { $bat = "batcat" }
+& $bat $path --color=always --plain

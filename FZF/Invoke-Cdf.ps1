@@ -19,17 +19,14 @@ function excluded_folders
 
 function included_folders
 {
-    "$env:HOME\Downloads"
-    "$env:HOME\Documents"
-    #"$env:OneDriveConsumer"
-    #"$env:OneDriveCommercial"
+    "$env:HOME/Downloads"
+    "$env:HOME/Documents"
     $env:FZF_QUICK_PATHS -split ";"
 }
 
 $param = @()
 $param += $pwd
 $param += "-f" # don't show files, only directories
-$param += "-D" # traverse into .directories
 
 foreach( $excluded in excluded_folders )
 {
