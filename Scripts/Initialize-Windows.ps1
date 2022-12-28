@@ -17,16 +17,14 @@ Complete-Once "Classic Powershell" {
     mkdir $classic | Out-Null
     ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
 
-    pushd $classic
+    cd $classic
     New-Item -Type Junction -Name Modules -Value "$modern\Modules"
-    popd
 }
 
 # Default conhost console color setup
 Complete-Once "ColorTool" {
-    Push-Location "$PsScriptRoot\..\Bin\ColorTool\"
+    cd "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
-    Pop-Location
 }
 
 # Set up environment variables
