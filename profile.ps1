@@ -12,6 +12,7 @@ $global:Profile = $PSCommandPath
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-UnixApps.ps1" (Test-Unix)
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Unix.ps1" (Test-Unix)
+. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-UnixRoot.ps1" ((Test-Unix) -and (Test-Elevated))
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-AnyOS.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))

@@ -7,9 +7,8 @@ if( -not $env:PSModulePath.Contains($modules) )
 
 # PSToolset module
 Complete-Once PSToolset {
-    pushd $PsScriptRoot/../Modules
+    cd $PsScriptRoot/../Modules
     git clone https://github.com/microsoft/PSToolset.git
-    popd
 }
 
 # Git setup

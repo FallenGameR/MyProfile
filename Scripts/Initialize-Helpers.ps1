@@ -64,8 +64,10 @@ function SCRIPT:Complete-Once( $name, $script )
 
     # Do one time setup
     Write-Host "Setting up $name"
+    Push-Location
     & $script
     touch $flag | Out-Null
+    Pop-Location
 }
 
 function SCRIPT:New-Junction( $from, $to )

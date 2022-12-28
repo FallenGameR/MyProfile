@@ -67,13 +67,14 @@ function Invoke-ScriptedFzf( $newCommand, $invokeFzf )
     }
 }
 
-function hlp($exe)
+Set-Alias hlp Show-Help
+function Show-Help($path)
 {
     begin
     {
-        if( $exe )
+        if( $path )
         {
-            & $exe --help | hlp
+            & $path --help 2>&1 | Show-Help
             return
         }
         $accumulator = @()
@@ -81,7 +82,7 @@ function hlp($exe)
     process { $accumulator += $psitem }
     end
     {
-        $accumulator | bat -pl help
+        $accumulator | bat -pl man
     }
 }
 
