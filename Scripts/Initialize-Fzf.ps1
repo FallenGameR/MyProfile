@@ -36,6 +36,8 @@ $fzfOptions = @(
 )
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 
+$SCRIPT:pwsh = "pwsh"
+if( Test-Windows ) { $SCRIPT:pwsh += ".exe" }
 
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
@@ -166,7 +168,7 @@ function Get-PreviewFzfArgs( $path )
         "--padding", "1%",
         "--border",
         "--keep-right",
-        "--preview", "pwsh.exe -nop -f $PSScriptRoot/../FZF/Preview-CodeF.ps1 {}",
+        "--preview", "$pwsh -nop -f $PSScriptRoot/../FZF/Preview-CodeF.ps1 {}",
         "--preview-window=55%"
 
     $executedFromCode = (gps -id $pid | % parent | % name) -eq "Code"
@@ -211,7 +213,7 @@ function codef
     if( -not $paths )
     {
         $fzfArgs = Get-PreviewFzfArgs
-        $paths = Invoke-ScriptedFzf "pwsh.exe -nop -f $PSScriptRoot\..\FZF\Invoke-Codef.ps1" { fzf @fzfArgs }
+        $paths = Invoke-ScriptedFzf "$pwsh -nop -f $PSScriptRoot/../FZF/Invoke-Codef.ps1" { fzf @fzfArgs }
     }
 
     if( -not $paths )
