@@ -1,3 +1,8 @@
+# Path setup
+$addToPath =
+    "$HOME/.cargo/bin"
+$env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
+
 # Common command names
 function bat { batcat @args }
 function mkdir { New-Item -ItemType Directory @args }

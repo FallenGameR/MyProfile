@@ -5,7 +5,7 @@ $addToPath =
     "C:\Program Files (x86)\Winamp\",
     "C:\Program Files (x86)\LINQPad5\",
     "C:\tools\chafa"
-$env:Path += ";" + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join ";")
+$env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
 
 # Common functions
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
