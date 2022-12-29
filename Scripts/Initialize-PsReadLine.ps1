@@ -9,6 +9,12 @@ if( -not (Get-Module PsReadLine) )
     Import-Module PsReadLine
 }
 
+# Useful default things
+#
+# Alt+Backspace - backward word kill
+# Alt+a - highlight arguments
+# F2 - prediction view
+
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
 
@@ -33,7 +39,6 @@ if( $PSVersionTable.PSVersion -ge 7.2 )
     $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan
     $PSStyle.FileInfo.Directory = $PSStyle.Bold + $PSStyle.Foreground.Blue
 }
-
 
 # History command prediction was added in 2.1.0 and this feature
 # should have been included by default in PS 7.2 but there
@@ -65,15 +70,18 @@ Set-PSReadlineOption -Colors $colors
 # Console behavior
 Set-PSReadlineOption -HistorySaveStyle SaveAtExit # SaveNothing if it is buggy
 Set-PSReadlineOption -ContinuationPrompt ([char] 187 + " ")
-# Set-PSReadlineKeyHandler -Key Enter -Function AcceptLine # that should be the default
 
 # Command edits
 Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function BackwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function SelectBackwardsLine
+Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function SelectLine
+
+# These don't work in VS code integrated terminal on Unix though
+# Something intercepts these chords and PSReadLine doesn't get to process them
+# https://stackoverflow.com/questions/59074722/how-to-ctrlshift%E2%86%90-%E2%86%92-to-select-previous-or-next-word-at-the-vscode-integrated-t
 Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+LeftArrow" -Function SelectBackwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+Shift+RightArrow" -Function SelectForwardWord
-Set-PSReadlineKeyHandler -Chord "Ctrl+Home" -Function BackwardKillLine
-Set-PSReadlineKeyHandler -Chord "Ctrl+End" -Function KillLine
 
 if( Test-Windows )
 {
@@ -167,6 +175,53 @@ Set-PSReadlineKeyHandler `
     [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
     [Microsoft.Powershell.PSConsoleReadLine]::Insert("exit")
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+
+if( Test-Unix )
+{
+    # Ctrl+c is buggy in linux, it hangs the current console and only another
+    # console with the same Ctrl+c can mke the first one unstuck
+    Set-PSReadlineKeyHandler `
+        -Key Ctrl+c `
+        -BriefDescription CopyOrCancel `
+        -LongDescription "Copies selected text or does cancellation" `
+        -ScriptBlock `
+    {
+        $start = $null
+        $length = $null
+        $string = $null
+        $cursor = $null
+
+        [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
+
+        # Cancel if there is no selection
+        if( $length -eq 0 )
+        {
+            [Microsoft.Powershell.PSConsoleReadLine]::CancelLine()
+            return
+        }
+
+        switch( $PSVersionTable.Platform )
+        {
+            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Copy() }
+            "Unix"
+            {
+                [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+                $string.Substring($start, $length) | xsel --input -b
+            }
+        }
+    }
+
+    # While we are at it, let's by default use clipboard on unix as well on ctrl+v
+    Set-PSReadlineKeyHandler `
+        -Key Ctrl+v `
+        -BriefDescription PasteFromClipboard `
+        -LongDescription "Paste test from clipboard" `
+        -ScriptBlock `
+    {
+        $clipboard = xsel --output -b
+        [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard.Trim())
+    }
 }
 
 # Sometimes you enter a command but realize you forgot to do something else first.
