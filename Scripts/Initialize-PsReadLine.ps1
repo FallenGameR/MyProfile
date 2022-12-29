@@ -201,6 +201,8 @@ if( Test-Unix )
             return
         }
 
+        # TODO: copy paste from another line causes exception - start of line is negative
+
         switch( $PSVersionTable.Platform )
         {
             "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Copy() }
@@ -219,8 +221,18 @@ if( Test-Unix )
         -LongDescription "Paste test from clipboard" `
         -ScriptBlock `
     {
-        $clipboard = xsel --output -b
-        [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard.Trim())
+        switch( $PSVersionTable.Platform )
+        {
+            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Paste() }
+            "Unix"
+            {
+                # TODO: Try replacing line endings.
+                # For some reason it fails. Extra stuff in the input?
+                $clipboard = xsel --output -b
+                $clipboard = $clipboard -replace "`n", "`r`n"
+                [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard)
+            }
+        }
     }
 }
 
