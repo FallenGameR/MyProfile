@@ -225,10 +225,8 @@ if( Test-Unix )
             "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Paste() }
             "Unix"
             {
-                # TODO: Try replacing line endings.
-                # For some reason it fails. Extra stuff in the input?
                 $clipboard = xsel --output -b
-                $clipboard = $clipboard -replace "`n", "`r`n"
+                $clipboard = ($clipboard | foreach ToString) -join ([environment]::NewLine)
                 [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard)
             }
         }
