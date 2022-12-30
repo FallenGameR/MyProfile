@@ -180,7 +180,8 @@ Set-PSReadlineKeyHandler `
 if( Test-Unix )
 {
     # Ctrl+c is buggy in linux, it hangs the current console and only another
-    # console with the same Ctrl+c can mke the first one unstuck
+    # console with the same Ctrl+c can mke the first one unstuck. Plus if we
+    # select another line with a mouse then selection state returns -1 -1
     Set-PSReadlineKeyHandler `
         -Key Ctrl+c `
         -BriefDescription CopyOrCancel `
@@ -195,13 +196,11 @@ if( Test-Unix )
         [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
 
         # Cancel if there is no selection
-        if( $length -eq 0 )
+        if( $length -le 0 )
         {
             [Microsoft.Powershell.PSConsoleReadLine]::CancelLine()
             return
         }
-
-        # TODO: copy paste from another line causes exception - start of line is negative
 
         switch( $PSVersionTable.Platform )
         {
