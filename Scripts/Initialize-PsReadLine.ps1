@@ -226,7 +226,7 @@ if( Test-Unix )
             "Unix"
             {
                 $clipboard = xsel --output -b
-                $clipboard = ($clipboard | foreach ToString) -join ([environment]::NewLine)
+                $clipboard = $clipboard -join [environment]::NewLine
                 [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard)
             }
         }
