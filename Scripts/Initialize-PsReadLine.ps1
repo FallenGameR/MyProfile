@@ -202,15 +202,9 @@ if( Test-Unix )
             return
         }
 
-        switch( $PSVersionTable.Platform )
-        {
-            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Copy() }
-            "Unix"
-            {
-                [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
-                $string.Substring($start, $length) | xsel --input -b
-            }
-        }
+        # Copy selection (from the current line only)
+        [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
+        $string.Substring($start, $length) | xsel --input -b
     }
 
     # While we are at it, let's by default use clipboard on unix as well on ctrl+v
@@ -220,16 +214,9 @@ if( Test-Unix )
         -LongDescription "Paste test from clipboard" `
         -ScriptBlock `
     {
-        switch( $PSVersionTable.Platform )
-        {
-            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Paste() }
-            "Unix"
-            {
-                $clipboard = xsel --output -b
-                $clipboard = $clipboard -join [environment]::NewLine
-                [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard)
-            }
-        }
+        $clipboard = xsel --output -b
+        $clipboard = $clipboard -join [environment]::NewLine
+        [Microsoft.Powershell.PSConsoleReadLine]::Insert($clipboard)
     }
 }
 
