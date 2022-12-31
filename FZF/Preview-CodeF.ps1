@@ -15,7 +15,16 @@ if( -not $resolved )
 
 if( $resolved -is [System.IO.DirectoryInfo] )
 {
-    Get-ChildItem -LiteralPath $path | ft -auto
+    $folder = Get-ChildItem -LiteralPath $path
+    if( $folder )
+    {
+        $folder | ft -auto
+    }
+    else
+    {
+        ""
+        "`tEmpty Directory: $resolved"
+    }
     return
 }
 

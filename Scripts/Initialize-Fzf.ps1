@@ -79,7 +79,7 @@ function Show-Help( $path )
     }
 }
 
-function Invoke-Fzf( $newCommand, $invokeFzf )
+function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
 {
 <#
 .SYNOPSIS
@@ -103,7 +103,7 @@ function Invoke-Fzf( $newCommand, $invokeFzf )
     }
 }
 
-function Get-PreviewFzfArgs( $path )
+function SCRIPT:Get-PreviewFzfArgs( $path )
 {
     $fzfArgs =
         "--margin", "1%",
