@@ -21,7 +21,6 @@ function excluded_folders
 $walker = "$PsScriptRoot/../Bin/Walker/walker"
 $param = @()
 $param += $pwd
-$param += "-d" # don't show directories, only files
 
 foreach( $excluded in excluded_folders )
 {

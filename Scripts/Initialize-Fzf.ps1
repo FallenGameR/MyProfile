@@ -44,7 +44,7 @@ Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
 Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
-Register-Shortcut "Alt+v" "codef" "Code to open file or directory (shortcut from Vim times)"
+Register-Shortcut "Alt+v" "codef" "Code to open file or directory (shortcut from Vim"
 Register-Shortcut "Alt+d" "cdf" "Change directory"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
@@ -55,6 +55,7 @@ Set-Alias cdf Set-LocationFzf
 Set-Alias killf Stop-ProcessFzf
 Set-Alias pushf Push-LocationFzf
 Set-Alias hf Invoke-HistoryFzf
+Set-Alias codef Invoke-CodeFzf
 
 function Show-Help
 {
@@ -94,31 +95,8 @@ function Show-Help
     }
 }
 
-function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
-{
-    <#
-    .SYNOPSIS
-        Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
-
-    .DESCRIPTION
-        There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
-        and not piping in the choices. This helper function is needed for safe FZF
-        calls that don't break FZF call convention for everyone.
-    #>
-
-    $oldCommand = $env:FZF_DEFAULT_COMMAND
-    $env:FZF_DEFAULT_COMMAND = $newCommand
-    try
-    {
-        $invokeFzf.Invoke()
-    }
-    finally
-    {
-        $env:FZF_DEFAULT_COMMAND = $oldCommand
-    }
-}
-
-function SCRIPT:Get-PreviewArgsFzf( $path )
+# SCRIPT: after debugging
+function Get-PreviewArgsFzf( $path )
 {
     $fzfArgs =
         "--margin", "1%",
@@ -345,16 +323,52 @@ function Invoke-HistoryFzf
 }
 
 
-function codef
+function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
 {
+    <#
+    .SYNOPSIS
+        Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
+
+    .DESCRIPTION
+        There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
+        and not piping in the choices. This helper function is needed for safe FZF
+        calls that don't break FZF call convention for everyone.
+    #>
+
+    $oldCommand = $env:FZF_DEFAULT_COMMAND
+    $env:FZF_DEFAULT_COMMAND = $newCommand
+    try
+    {
+        $invokeFzf.Invoke()
+    }
+    finally
+    {
+        $env:FZF_DEFAULT_COMMAND = $oldCommand
+    }
+}
+
+function Invoke-CodeFzf
+{
+    <#
+    .SYNOPSIS
+        Invoke VS code after finding path to file or folder via fzf
+
+    .DESCRIPTION
+        Another use case for this function is to be a preview and
+        then open found files in VS code after lookup via ripgrep.
+
+    .PARAMETER Paths
+        Paths that were found via ripgrep. Each path can be of form:
+        - path
+        - path:line
+        - path:line:char
+
+        Preview and VS Code will move to the specified
+        location in that file in case it is provided.
+    #>
+
     param
     (
-        # Collection of file paths. Each one in the form:
-        # 1) path
-        # 2) path:line
-        # 3) path:line:char
-        #
-        # If not specified fzf with preview is used
         $Paths
     )
 
@@ -362,7 +376,8 @@ function codef
     if( -not $paths )
     {
         $fzfArgs = Get-PreviewArgsFzf
-        $paths = Invoke-Fzf "$pwsh -nop -f $PSScriptRoot/../FZF/Invoke-Codef.ps1" { fzf @fzfArgs }
+        $codef = "$PSScriptRoot/../FZF/Invoke-Codef.ps1"
+        $paths = @(& $codef | fzf @fzfArgs)
     }
 
     if( -not $paths )
@@ -375,7 +390,7 @@ function codef
     {
         $invoke = "code --goto ""{0}""" -f $path
         $invoke
-        Invoke-Expression $invoke
+        code --goto $path
     }
 }
 
