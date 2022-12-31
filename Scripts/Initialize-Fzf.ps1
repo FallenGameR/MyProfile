@@ -48,10 +48,10 @@ Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
 Register-Shortcut "Alt+d" "cdf" "Change directory"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
-
 Set-Alias hlp Show-Help
 Set-Alias pf Show-PreviewFzf
 Set-Alias startf Invoke-AppFzf
+Set-Alias cdf Set-LocationFzf
 
 function Show-Help
 {
@@ -198,12 +198,32 @@ function Invoke-AppFzf($path)
     }
 }
 
-function cdf( $Path )
+
+
+function Set-LocationFzf
 {
+    <#
+    .SYNOPSIS
+        Change current folder with fzf preview
+
+    .PARAMETER Path
+        Part of the folder path to for initial filtration.
+        Or just do the search interactively with fzf.
+
+    .NOTES
+        Specify excluded and included folders in
+        FZF/Invoke-sdf.ps1 and via $env:FZF_QUICK_PATHS
+    #>
+
+    param
+    (
+        [string] $Path
+    )
+
     $fzfArgs = Get-PreviewArgsFzf $path
     $cdf = "$PSScriptRoot/../FZF/Invoke-Cdf.ps1"
-    $destination = @(& $cdf | fzf @fzfArgs)
 
+    $destination = @(& $cdf | fzf @fzfArgs)
     $destination
 
     if( $destination.Length -eq 1 )

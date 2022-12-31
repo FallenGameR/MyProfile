@@ -3,9 +3,11 @@ param
     $Path
 )
 
+# Spell-checker: disable
 $resolved = Get-Item $path -Force -ea Ignore
 $pictures = ".jpg", ".jpeg", ".bmp", ".gif", ".png", ".webp"
 $markdown = ".md"
+# Spell-checker: enable
 
 if( -not $resolved )
 {

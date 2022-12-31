@@ -5,6 +5,7 @@
 # - allow fzf to terminate output early (piped in input blocks fzf from exit)
 #
 
+# Spell-checker: disable
 function excluded_folders
 {
     ".git"
@@ -15,6 +16,7 @@ function excluded_folders
     "target"
     "TestResults"
 }
+# Spell-checker: enable
 
 $walker = "$PsScriptRoot/../Bin/Walker/walker"
 $param = @()
