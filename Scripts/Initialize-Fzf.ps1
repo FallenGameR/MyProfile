@@ -44,14 +44,17 @@ Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
 Register-Shortcut "Alt+k" "killf" "Kill process"
 Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
-Register-Shortcut "Alt+v" "codef" "Code to open file or directory"
+Register-Shortcut "Alt+v" "codef" "Code to open file or directory (shortcut from Vim times)"
 Register-Shortcut "Alt+d" "cdf" "Change directory"
 Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
 Set-Alias hlp Show-Help
 Set-Alias pf Show-PreviewFzf
-Set-Alias startf Invoke-AppFzf
+Set-Alias startf Start-ProcessFzf
 Set-Alias cdf Set-LocationFzf
+Set-Alias killf Stop-ProcessFzf
+Set-Alias pushf Push-LocationFzf
+Set-Alias hf Invoke-HistoryFzf
 
 function Show-Help
 {
@@ -147,21 +150,21 @@ function Show-PreviewFzf
     .SYNOPSIS
         Preview piped in files with fzf
 
-    .EXAMPLE
-        ls | % FullName | pf src
-
-    .NOTES
+    .DESCRIPTION
         This command will not pipe in input to fzf until all the input
         will be collected. That is important on huge inputs. If you want
         async fast output call fzf directly (but no preview) or combine
         it with walker (as it is done in cdf and CodeF).
+
+    .EXAMPLE
+        ls | % FullName | pf src
     #>
 
     $fzfArgs = Get-PreviewArgsFzf
     $input | fzf @fzfArgs
 }
 
-function Invoke-AppFzf($path)
+function Start-ProcessFzf($path)
 {
     <#
     .SYNOPSIS
@@ -198,21 +201,19 @@ function Invoke-AppFzf($path)
     }
 }
 
-
-
 function Set-LocationFzf
 {
     <#
     .SYNOPSIS
         Change current folder with fzf preview
 
+    .DESCRIPTION
+        Specify excluded and included folders in
+        FZF/Invoke-sdf.ps1 and via $env:FZF_QUICK_PATHS
+
     .PARAMETER Path
         Part of the folder path to for initial filtration.
         Or just do the search interactively with fzf.
-
-    .NOTES
-        Specify excluded and included folders in
-        FZF/Invoke-sdf.ps1 and via $env:FZF_QUICK_PATHS
     #>
 
     param
@@ -232,8 +233,25 @@ function Set-LocationFzf
     }
 }
 
-function killf( $name )
+function Stop-ProcessFzf
 {
+    <#
+    .SYNOPSIS
+        Kill processes after a fzf search by name
+
+    .PARAMETER Name
+        Part of the process name to initialize fzf filter.
+        Or search the process in an interactive way without initialization.
+
+    .EXAMPLE
+        killf nuget
+    #>
+
+    param
+    (
+        [string] $Name
+    )
+
     $fzfArgs = @()
     $fzfArgs += "--header-lines=3"  # PS output table header
     $fzfArgs += "--height"          # To see few lines of previous input in case we want to kill pwsh
@@ -255,7 +273,7 @@ function killf( $name )
     }
 }
 
-function Get-DirectoryStack
+function SCRIPT:Get-DirectoryStack
 {
     $parts = $pwd -split "\\|/"
     $path = $parts | select -f 1
@@ -273,12 +291,56 @@ function Get-DirectoryStack
     }
 }
 
-function pushf
+function Push-LocationFzf
 {
+    <#
+    .SYNOPSIS
+        Push current location onto location stack
+        and change directory to something that is
+        higher in the directory tree
+
+    .DESCRIPTION
+        This function is complimentary to cdf that does something
+        similar but it searches for the new location down in
+        the directory tree.
+
+        Plus this command does pushd so that it is easy to
+        return to the folder where you did stand on before
+        this command. This is useful if you want to do quick
+        look around up the file tree but then get back with
+        the results to the current folder.
+
+    .EXAMPLE
+        pushd mv
+    #>
+
     $path = Get-DirectoryStack | Sort-Object -desc | pf
     if( $path )
     {
         pushd $path
+    }
+}
+
+function Invoke-HistoryFzf
+{
+    <#
+    .SYNOPSIS
+        Find a history command with fzf and execute it again
+
+    .DESCRIPTION
+        Complimentary to PSReadLine:
+        - autocompletion from history
+        - F2 argument lookup
+        -  Alt+a argument highlight
+    #>
+
+    $result = Get-History | foreach CommandLine | fzf
+
+    if( $result )
+    {
+        $command = $result -join ";"
+        $command
+        Invoke-Expression $command
     }
 }
 
@@ -393,16 +455,5 @@ function rgf
     }
 }
 
-function hf
-{
-    $result = Get-History | foreach CommandLine | fzf
-
-    if( $result )
-    {
-        $command = $result -join ";"
-        $command
-        Invoke-Expression $command
-    }
-}
 
 tm (Split-Path $PSCommandPath -Leaf)
