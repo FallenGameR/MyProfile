@@ -12,6 +12,11 @@ Complete-Once "Fzf git install" {
     ~/.fzf/install
 }
 
+Complete-Once "Git-fuzzy git install" {
+    git clone https://github.com/bigH/git-fuzzy.git ~/.git-fuzzy
+    # It is added to PATH elsewhere
+}
+
 Complete-Once "Bat proper name" {
     cd /usr/bin
     sudo ln -s batcat bat
