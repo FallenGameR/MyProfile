@@ -1,4 +1,6 @@
+arduino
 bat
+chafa
 cmatrix
 code
 cowsay
@@ -7,11 +9,10 @@ fortune
 git
 htop
 kdiff3
+libc6-dev
 lolcat
 mc
 powershell
+ripgrep
 tmux
 xsel
-libc6-dev
-ripgrep
-chafa
