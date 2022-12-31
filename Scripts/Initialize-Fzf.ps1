@@ -56,6 +56,7 @@ Set-Alias killf Stop-ProcessFzf
 Set-Alias pushf Push-LocationFzf
 Set-Alias hf Invoke-HistoryFzf
 Set-Alias codef Invoke-CodeFzf
+Set-Alias rgf Search-RipgrepFzf
 
 function Show-Help
 {
@@ -251,24 +252,6 @@ function Stop-ProcessFzf
     }
 }
 
-function SCRIPT:Get-DirectoryStack
-{
-    $parts = $pwd -split "\\|/"
-    $path = $parts | select -f 1
-    $paths = @()
-
-    foreach( $part in $parts[1..($parts.Length-2)] )
-    {
-        $path += [io.path]::DirectorySeparatorChar + $part
-        $path
-    }
-
-    if( Test-Unix )
-    {
-        "/"
-    }
-}
-
 function Push-LocationFzf
 {
     <#
@@ -291,6 +274,24 @@ function Push-LocationFzf
     .EXAMPLE
         pushd mv
     #>
+
+    function Get-DirectoryStack
+    {
+        $parts = $pwd -split "\\|/"
+        $path = $parts | select -f 1
+        $paths = @()
+
+        foreach( $part in $parts[1..($parts.Length-2)] )
+        {
+            $path += [io.path]::DirectorySeparatorChar + $part
+            $path
+        }
+
+        if( Test-Unix )
+        {
+            "/"
+        }
+    }
 
     $path = Get-DirectoryStack | Sort-Object -desc | pf
     if( $path )
@@ -369,10 +370,32 @@ function Invoke-CodeFzf
     }
 }
 
-function rgf
+function Search-RipgrepFzf
 {
-    # original: https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
-    # example: rgf regex -tps
+    <#
+    .SYNOPSIS
+        Search files via ripgrep with fzf preview and filtration
+
+    .DESCRIPTION
+        Selected files will be opened in VS code on the matched lines
+
+    .PARAMETER Query
+        Text query to look for in files
+
+    .PARAMETER Options
+        Options that will be passed to ripgrep
+
+    .PARAMETER NoEditor
+        Use this switch if you don't need to open VS code
+        and you want the list of the found files with line info.
+
+    .EXAMPLE
+        rgf args -g *.rsq
+
+    .NOTES
+        Adopted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
+    #>
+
     param
     (
         [Parameter(Mandatory)] $Query,
@@ -444,6 +467,5 @@ function rgf
         codef $paths
     }
 }
-
 
 tm (Split-Path $PSCommandPath -Leaf)
