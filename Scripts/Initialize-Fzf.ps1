@@ -322,31 +322,6 @@ function Invoke-HistoryFzf
     }
 }
 
-
-function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
-{
-    <#
-    .SYNOPSIS
-        Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
-
-    .DESCRIPTION
-        There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
-        and not piping in the choices. This helper function is needed for safe FZF
-        calls that don't break FZF call convention for everyone.
-    #>
-
-    $oldCommand = $env:FZF_DEFAULT_COMMAND
-    $env:FZF_DEFAULT_COMMAND = $newCommand
-    try
-    {
-        $invokeFzf.Invoke()
-    }
-    finally
-    {
-        $env:FZF_DEFAULT_COMMAND = $oldCommand
-    }
-}
-
 function Invoke-CodeFzf
 {
     <#
