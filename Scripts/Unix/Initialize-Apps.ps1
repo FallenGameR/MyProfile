@@ -1,6 +1,26 @@
+# Some commands here use sudo, but we can't demand that
+# whole script is run under root. We need identity of a current
+# user but root privileges here.
+
 Complete-Once "Unix apps" {
     $apps = cat "$PSScriptRoot/../Data/unix-apps.txt"
     sudo apt install @apps -y
+}
+
+Complete-Once "Fzf git install" {
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+}
+
+Complete-Once "Bat proper name" {
+    cd /usr/bin
+    sudo ln -s batcat bat
+}
+
+Complete-Once "Fzf link" {
+    cd /usr/bin
+    sudo ln -s ~/.fzf/bin/fzf fzf
+    sudo ln -s ~/.fzf/bin/fzf-tmux fzf-tmux
 }
 
 <#
