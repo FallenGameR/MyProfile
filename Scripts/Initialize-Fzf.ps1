@@ -50,19 +50,31 @@ Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
 
 
 Set-Alias hlp Show-Help
+Set-Alias pf Show-PreviewFzf
+Set-Alias startf Invoke-AppFzf
 
-function Show-Help( $path )
+function Show-Help
 {
-<#
+    <#
     .SYNOPSIS
-        Show colorized help for a native command
+        Show colorized via bat help for a native command
+
+    .PARAMETER Path
+        Path to the native executable.
+        Or you can pipe in the help text to render.
 
     .EXAMPLE
         hlp ping
 
     .EXAMPLE
         walker --help | hlp
-#>
+    #>
+
+    param
+    (
+        [string] $Path
+    )
+
     begin
     {
         if( $path )
@@ -81,15 +93,15 @@ function Show-Help( $path )
 
 function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
 {
-<#
-.SYNOPSIS
-    Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
+    <#
+    .SYNOPSIS
+        Invoke FZF while preserving the currently used $env:FZF_DEFAULT_COMMAND
 
-.DESCRIPTION
-    There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
-    and not piping in the choices. This helper function is needed for safe FZF
-    calls that don't break FZF call convention for everyone.
-#>
+    .DESCRIPTION
+        There are a number of bugs in fzf that can be fixed by FZF_DEFAULT_COMMAND
+        and not piping in the choices. This helper function is needed for safe FZF
+        calls that don't break FZF call convention for everyone.
+    #>
 
     $oldCommand = $env:FZF_DEFAULT_COMMAND
     $env:FZF_DEFAULT_COMMAND = $newCommand
@@ -103,7 +115,7 @@ function SCRIPT:Invoke-Fzf( $newCommand, $invokeFzf )
     }
 }
 
-function SCRIPT:Get-PreviewFzfArgs( $path )
+function SCRIPT:Get-PreviewArgsFzf( $path )
 {
     $fzfArgs =
         "--margin", "1%",
@@ -129,19 +141,42 @@ function SCRIPT:Get-PreviewFzfArgs( $path )
     $fzfArgs
 }
 
-
-# Preview with fzf
-# Note that it will not pipe in input to fzf until all the input will be collected
-# If you want to call fzf immediately call it directly
-function pf
+function Show-PreviewFzf
 {
-    $fzfArgs = Get-PreviewFzfArgs
+    <#
+    .SYNOPSIS
+        Preview piped in files with fzf
+
+    .EXAMPLE
+        ls | % FullName | pf src
+
+    .NOTES
+        This command will not pipe in input to fzf until all the input
+        will be collected. That is important on huge inputs. If you want
+        async fast output call fzf directly (but no preview) or combine
+        it with walker (as it is done in cdf and CodeF).
+    #>
+
+    $fzfArgs = Get-PreviewArgsFzf
     $input | fzf @fzfArgs
 }
 
-
-function startf($path)
+function Invoke-AppFzf($path)
 {
+    <#
+    .SYNOPSIS
+        Find app with fzf and execute it via shell
+
+    .PARAMETER Path
+        Part of the path to the started executable somewhere
+        in the current folder or it's descendants.
+
+        Or don't select anything and find it interactively via fzf.
+
+    .EXAMPLE
+        startf sln
+    #>
+
     $fzfArgs = @()
     if( $path )
     {
@@ -150,17 +185,22 @@ function startf($path)
     }
 
     $destination = fzf @fzfArgs
-
     $destination
+
     if( $destination )
     {
-        start $destination
+        switch( $PSVersionTable.Platform )
+        {
+            "Windows" { start $destination }
+            "Unix" { & $destination }
+            default { & $destination }
+        }
     }
 }
 
 function cdf( $Path )
 {
-    $fzfArgs = Get-PreviewFzfArgs $path
+    $fzfArgs = Get-PreviewArgsFzf $path
     $cdf = "$PSScriptRoot/../FZF/Invoke-Cdf.ps1"
     $destination = @(& $cdf | fzf @fzfArgs)
 
@@ -239,7 +279,7 @@ function codef
     # Select paths
     if( -not $paths )
     {
-        $fzfArgs = Get-PreviewFzfArgs
+        $fzfArgs = Get-PreviewArgsFzf
         $paths = Invoke-Fzf "$pwsh -nop -f $PSScriptRoot/../FZF/Invoke-Codef.ps1" { fzf @fzfArgs }
     }
 
