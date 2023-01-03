@@ -173,7 +173,7 @@ function Start-ProcessFzf($path)
     {
         switch( $PSVersionTable.Platform )
         {
-            "Windows" { start $destination }
+            "Win32NT" { start $destination }
             "Unix" { & $destination }
             default { & $destination }
         }

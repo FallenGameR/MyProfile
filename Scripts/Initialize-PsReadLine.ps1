@@ -20,7 +20,7 @@ Register-Shortcut "Alt+g" "code" "Code open"
 
 switch( $PSVersionTable.Platform )
 {
-    "Windows"
+    "Win32NT"
     {
         Register-Shortcut "Alt+c" "gite commit" "Git commit dialog"
         Register-Shortcut "Alt+b" "gite" "Git commit browser"
@@ -145,7 +145,7 @@ Set-PSReadlineKeyHandler `
     {
         switch( $PSVersionTable.Platform )
         {
-            "Windows" { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
+            "Win32NT" { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
             "Unix"
             {
                 [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
@@ -163,7 +163,7 @@ Set-PSReadlineKeyHandler `
     {
         switch( $PSVersionTable.Platform )
         {
-            "Windows" { $string | clip }
+            "Win32NT" { $string | clip }
             "Unix" { $string | xsel --input -b }
             default { return }
         }
