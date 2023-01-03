@@ -43,7 +43,7 @@ foreach( $included in included_folders )
     $param += $included
 }
 
-if( $PSVersionTable.Platform -eq "Windows" )
+if( $PSVersionTable.Platform -eq "Win32NT" )
 {
     $walker += ".exe"
     $param += "-D" # traverse into .directories

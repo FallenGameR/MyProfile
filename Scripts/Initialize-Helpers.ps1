@@ -3,7 +3,7 @@ $SCRIPT:enableTiming = $false
 $SCRIPT:verbose = $false
 $SCRIPT:hostName = switch( $PSVersionTable.Platform )
 {
-    "Windows" { $Env:ComputerName }
+    "Win32NT" { $Env:ComputerName }
     "Unix" { hostname }
     default { "UNKNOWN" }
 }
@@ -19,7 +19,7 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Test-Windows()
 {
-    $PSVersionTable.Platform -eq "Windows"
+    $PSVersionTable.Platform -eq "Win32NT"
 }
 
 function SCRIPT:Test-Unix()
@@ -66,7 +66,7 @@ function SCRIPT:Complete-Once( $name, $script )
     Write-Host "Setting up $name"
     Push-Location
     & $script
-    touch $flag | Out-Null
+    $null > $flag
     Pop-Location
 }
 
@@ -112,7 +112,7 @@ function SCRIPT:Test-Elevated
 {
     switch( $PSVersionTable.Platform )
     {
-        "Windows"
+        "Win32NT"
         {
             if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
             {
