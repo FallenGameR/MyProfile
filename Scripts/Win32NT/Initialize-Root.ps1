@@ -1,3 +1,9 @@
+# Install apps
+Complete-Once "Windows apps" {
+    $apps = cat "$PSScriptRoot/../../Data/windows-apps.txt"
+    choco install -s=chocolatey @apps -y
+}
+
 # Conhost should draw ANSI escape sequences
 Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
 

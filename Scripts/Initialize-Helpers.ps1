@@ -7,6 +7,12 @@ $SCRIPT:hostName = switch( $PSVersionTable.Platform )
     "Unix" { hostname }
     default { "UNKNOWN" }
 }
+$SCRIPT:oneTimeFolder = "$PSScriptRoot/../OneTime/"
+
+if( -not (Test-Path $SCRIPT:oneTimeFolder) )
+{
+    mkdir $SCRIPT:oneTimeFolder | Out-Null
+}
 
 function SCRIPT:tm($info = "=>")
 {
@@ -56,7 +62,7 @@ function SCRIPT:Import-AsInvoke($path, $condition = $true)
 function SCRIPT:Complete-Once( $name, $script )
 {
     # Skip if one time setup was already done
-    $flag = "$PSScriptRoot/../OneTime/$name"
+    $flag = "$SCRIPT:oneTimeFolder/$name"
     if( Test-Path $flag )
     {
         return

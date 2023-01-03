@@ -3,7 +3,7 @@
 # user but root privileges here.
 
 Complete-Once "Unix apps" {
-    $apps = cat "$PSScriptRoot/../Data/unix-apps.txt"
+    $apps = cat "$PSScriptRoot/../../Data/unix-apps.txt"
     sudo apt install @apps -y
 }
 

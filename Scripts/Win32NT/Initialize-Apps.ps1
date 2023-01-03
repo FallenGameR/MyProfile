@@ -1,8 +1,3 @@
-Complete-Once "Windows apps" {
-    $apps = cat "$PSScriptRoot/../Data/windows-apps.txt"
-    choco install -s=chocolatey @apps -y
-}
-
 Complete-Once "Mouse setup" {
     & "$env:OneDriveConsumer\Distrib\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
