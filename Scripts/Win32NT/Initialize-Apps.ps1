@@ -2,6 +2,10 @@ Complete-Once "Mouse setup" {
     & "$env:OneDriveConsumer\Distrib\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
 
+Complete-Once "Rust clippy" {
+    rustup component add clippy
+}
+
 Complete-Once "Tools folder" {
     if( -not (Test-Path "c:\tools") )
     {
