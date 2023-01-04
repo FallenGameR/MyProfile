@@ -11,9 +11,8 @@ if( -not (Get-Module PsReadLine) )
 
 # Useful default things, turns out this is a Unix default, need to get them on Windows =)
 #
-# Alt+Backspace - backward word kill
-# Alt+a - highlight arguments
-# F2 - prediction view
+# Alt+a - highlight arguments, SelectCommandArgument
+# F2 - prediction view, SwitchPredictionView
 
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
