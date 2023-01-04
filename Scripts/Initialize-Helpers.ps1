@@ -25,7 +25,8 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Test-Windows()
 {
-    $PSVersionTable.Platform -eq "Win32NT"
+    # Classic Powershell doesn't have this field set
+    (-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -eq "Win32NT")
 }
 
 function SCRIPT:Test-Unix()

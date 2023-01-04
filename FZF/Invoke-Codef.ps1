@@ -28,7 +28,7 @@ foreach( $excluded in excluded_folders )
     $param += $excluded
 }
 
-if( $PSVersionTable.Platform -eq "Win32NT" )
+if( $PSVersionTable.Platform -ne "Unix" )
 {
     $walker += ".exe"
     $param += "-D" # traverse into .directories

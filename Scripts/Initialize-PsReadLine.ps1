@@ -17,7 +17,7 @@ if( -not (Get-Module PsReadLine) )
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
 
-switch( $PSVersionTable.Platform )
+switch( $SCRIPT:platform )
 {
     "Win32NT"
     {
@@ -144,7 +144,7 @@ Set-PSReadlineKeyHandler `
     [Microsoft.Powershell.PSConsoleReadLine]::GetSelectionState([ref] $start, [ref] $length)
     if( $length -gt 0 )
     {
-        switch( $PSVersionTable.Platform )
+        switch( $SCRIPT:platform )
         {
             "Win32NT" { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
             "Unix"
@@ -162,7 +162,7 @@ Set-PSReadlineKeyHandler `
     [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
     if( $string )
     {
-        switch( $PSVersionTable.Platform )
+        switch( $SCRIPT:platform )
         {
             "Win32NT" { $string | clip }
             "Unix" { $string | xsel --input -b }

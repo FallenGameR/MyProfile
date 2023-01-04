@@ -171,7 +171,7 @@ function Start-ProcessFzf($path)
 
     if( $destination )
     {
-        switch( $PSVersionTable.Platform )
+        switch( $SCRIPT:platform )
         {
             "Win32NT" { start $destination }
             "Unix" { & $destination }

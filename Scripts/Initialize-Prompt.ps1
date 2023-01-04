@@ -6,7 +6,7 @@ param()
 $SCRIPT:isElevated = Test-Elevated
 
 # History folder and file
-$SCRIPT:historyFolder = switch( $PSVersionTable.Platform )
+$SCRIPT:historyFolder = switch( $SCRIPT:platform )
 {
     "Win32NT" { "c:\automation\history\" }
     "Unix" { "~\.pwsh_history\" }
