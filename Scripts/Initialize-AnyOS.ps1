@@ -42,7 +42,7 @@ $PSDefaultParameterValues["Get-Command:All"] = $true
 
 # Aliases
 Set-Alias m Measure-Object
-Set-Alias ls Get-ChildItem
+Set-Alias ls Get-ChildItem -Option AllScope
 
 # Common tools setup
 $env:LESS = "-IeFRX"
