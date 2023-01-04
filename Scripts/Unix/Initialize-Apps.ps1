@@ -28,6 +28,12 @@ Complete-Once "Fzf link" {
     sudo ln -s ~/.fzf/bin/fzf-tmux fzf-tmux
 }
 
+Complete-Once "Arduino fix" {
+    # see https://bugs.launchpad.net/ubuntu/+source/arduino/+bug/1916278
+    sudo apt install libserialport0 patchelf
+    sudo patchelf --add-needed /usr/lib/x86_64-linux-gnu/libserialport.so.0 /usr/lib/x86_64-linux-gnu/liblistSerialsj.so.1.4.0
+}
+
 <#
 
 Spell-checker: disable
