@@ -9,7 +9,7 @@ if( -not (Get-Module PsReadLine) )
     Import-Module PsReadLine
 }
 
-# Useful default things
+# Useful default things, turns out this is a Unix default, need to get them on Windows =)
 #
 # Alt+Backspace - backward word kill
 # Alt+a - highlight arguments
@@ -76,6 +76,8 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+LeftArrow" -Function BackwardWord
 Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
 Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function SelectBackwardsLine
 Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function SelectLine
+Set-PSReadlineKeyHandler -Chord "Alt+Delete" -Function KillWord
+Set-PSReadlineKeyHandler -Chord "Alt+Backspace" -Function BackwardKillWord
 
 # These don't work in VS code integrated terminal on Unix though
 # Something intercepts these chords and PSReadLine doesn't get to process them
