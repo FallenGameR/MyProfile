@@ -30,6 +30,8 @@ Complete-Once "Fzf link" {
 
 <#
 
+Spell-checker: disable
+
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
@@ -39,6 +41,8 @@ sudo apt update && sudo apt install glow
 https://rustup.rs
 rustup toolchain install nightly
 sudo apt install avr-libc gcc-avr pkg-config avrdude libudev-dev build-essential
+
+dialout group can upload firmware to arduino board
 #>
 
 tm (Split-Path $PSCommandPath -Leaf)
