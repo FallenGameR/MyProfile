@@ -11,8 +11,11 @@ if( -not (Get-Module PsReadLine) )
 
 # Useful default things, turns out this is a Unix default, need to get them on Windows =)
 #
-# Alt+a - highlight arguments, SelectCommandArgument
-# F2 - prediction view, SwitchPredictionView
+# Unix-only:
+# - Alt+a - highlight arguments, SelectCommandArgument
+# - F2 - prediction view, SwitchPredictionView
+
+Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen # Windows
 
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
