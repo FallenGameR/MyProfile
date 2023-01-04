@@ -1,18 +1,6 @@
 $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $SCRIPT:enableTiming = $false
 $SCRIPT:verbose = $false
-$SCRIPT:hostName = switch( $PSVersionTable.Platform )
-{
-    "Win32NT" { $Env:ComputerName }
-    "Unix" { hostname }
-    default { "UNKNOWN" }
-}
-$SCRIPT:oneTimeFolder = "$PSScriptRoot/../OneTime/"
-
-if( -not (Test-Path $SCRIPT:oneTimeFolder) )
-{
-    mkdir $SCRIPT:oneTimeFolder | Out-Null
-}
 
 function SCRIPT:tm($info = "=>")
 {
@@ -23,15 +11,36 @@ function SCRIPT:tm($info = "=>")
     }
 }
 
+function SCRIPT:Get-Platform()
+{
+    if( $PSVersionTable.Platform )
+    {
+        $PSVersionTable.Platform
+    }
+    else
+    {
+        "Win32NT"
+    }
+}
+
+function SCRIPT:Get-HostName()
+{
+    switch( Get-Platform )
+    {
+        "Win32NT" { $Env:ComputerName }
+        "Unix" { hostname }
+        default { "UNKNOWN" }
+    }
+}
+
 function SCRIPT:Test-Windows()
 {
-    # Classic Powershell doesn't have this field set
-    (-not $PSVersionTable.Platform) -or ($PSVersionTable.Platform -eq "Win32NT")
+    (Get-Platform) -eq "Win32NT"
 }
 
 function SCRIPT:Test-Unix()
 {
-    $PSVersionTable.Platform -eq "Unix"
+    (Get-Platform) -eq "Unix"
 }
 
 function SCRIPT:Test-Full()
@@ -117,7 +126,7 @@ function SCRIPT:Set-EnvironmentVariable( $name, $value )
 
 function SCRIPT:Test-Elevated
 {
-    switch( $PSVersionTable.Platform )
+    switch( Get-Platform )
     {
         "Win32NT"
         {
@@ -183,6 +192,15 @@ function SCRIPT:Register-Shortcut
             [Microsoft.Powershell.PSConsoleReadLine]::Insert($Command)
             [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
         }.GetNewClosure()
+}
+
+$SCRIPT:platform = Get-Platform
+$SCRIPT:hostName = Get-HostName
+$SCRIPT:oneTimeFolder = "$PSScriptRoot/../OneTime/"
+
+if( -not (Test-Path $SCRIPT:oneTimeFolder) )
+{
+    mkdir $SCRIPT:oneTimeFolder | Out-Null
 }
 
 tm (Split-Path $PSCommandPath -Leaf)

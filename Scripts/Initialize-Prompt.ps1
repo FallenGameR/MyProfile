@@ -6,7 +6,7 @@ param()
 $SCRIPT:isElevated = Test-Elevated
 
 # History folder and file
-$SCRIPT:historyFolder = switch( $SCRIPT:platform )
+$SCRIPT:historyFolder = switch( Get-Platform )
 {
     "Win32NT" { "c:\automation\history\" }
     "Unix" { "~\.pwsh_history\" }
