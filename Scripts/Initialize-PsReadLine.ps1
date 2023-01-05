@@ -79,6 +79,7 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
 Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function SelectBackwardsLine
 Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function SelectLine
 
+# shell word is defined by tokens
 Set-PSReadlineKeyHandler -Chord "Alt+Delete" -Function ShellKillWord
 Set-PSReadlineKeyHandler -Chord "Alt+Backspace" -Function ShellBackwardKillWord
 
