@@ -81,6 +81,11 @@ Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function SelectLine
 Set-PSReadlineKeyHandler -Chord "Alt+Delete" -Function KillWord
 Set-PSReadlineKeyHandler -Chord "Alt+Backspace" -Function BackwardKillWord
 
+Set-PSReadlineKeyHandler -Chord "Alt+q" -Function ShellBackwardKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+e" -Function ShellKillWord
+Set-PSReadlineKeyHandler -Chord "Alt+a" -Function ShellBackwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ShellForwardWord
+
 # These don't work in VS code integrated terminal on Unix though
 # Something intercepts these chords and PSReadLine doesn't get to process them
 # https://stackoverflow.com/questions/59074722/how-to-ctrlshift%E2%86%90-%E2%86%92-to-select-previous-or-next-word-at-the-vscode-integrated-t
