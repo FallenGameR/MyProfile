@@ -2,6 +2,8 @@
 # whole script is run under root. We need identity of a current
 # user but root privileges here.
 
+# Spell-checker: disable
+
 Complete-Once "Unix apps" {
     $apps = cat "$PSScriptRoot/../../Data/unix-apps.txt"
     sudo apt install @apps -y
@@ -34,9 +36,15 @@ Complete-Once "Arduino fix" {
     sudo patchelf --add-needed /usr/lib/x86_64-linux-gnu/libserialport.so.0 /usr/lib/x86_64-linux-gnu/liblistSerialsj.so.1.4.0
 }
 
-<#
+Complete-Once "Rust arduino" {
+    # https://blog.logrocket.com/complete-guide-running-rust-arduino/
+    rustup toolchain install nightly
+    sudo apt install avr-libc gcc-avr pkg-config avrdude libudev-dev build-essential -y
+    cargo +stable install ravedude
+    cargo install cargo-generate
+}
 
-Spell-checker: disable
+<#
 
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
