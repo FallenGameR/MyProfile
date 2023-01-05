@@ -92,7 +92,8 @@ function Show-Help
     process { $accumulator += $psitem }
     end
     {
-        $accumulator | bat -pl man
+        # NOTE: On Unix it may be 'man'
+        $accumulator | bat -pl help
     }
 }
 
