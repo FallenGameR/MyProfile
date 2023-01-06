@@ -16,5 +16,8 @@
 
 <https://duffney.io/usingansiescapesequencespowershell/>
 
--"`e[2A" + "test" # mouse move
--"`e[2S" + "test" # viewport move
+```ps1
+"`e[36m" + "text" + "`e[0m" # color
+"`e[2A" + "test"            # mouse move
+"`e[2S" + "test"            # viewport move
+```
