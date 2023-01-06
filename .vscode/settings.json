@@ -66,6 +66,7 @@
         "pushf",
         "pwsh",
         "Readline",
+        "Recasing",
         "repos",
         "Retryable",
         "RIPGREP",

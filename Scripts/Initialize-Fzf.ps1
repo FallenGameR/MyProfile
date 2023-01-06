@@ -386,6 +386,15 @@ function Search-RipgrepFzf
     .PARAMETER Options
         Options that will be passed to ripgrep
 
+    .PARAMETER NoRecasing
+        I use ripgrep with the default --ignore-case argument that makes rg
+        to ignore case but only if the input is in lowercase. That feels strange -
+        I usually copy-paste searched term from somewhere and it may be specified
+        in any case and I expect the search to be case insensitive.
+
+        This command does lowercase normalization to mitigate that issue.
+        But if you want to have the default rg casing logic use this switch.
+
     .PARAMETER NoEditor
         Use this switch if you don't need to open VS code
         and you want the list of the found files with line info.
@@ -399,10 +408,16 @@ function Search-RipgrepFzf
 
     param
     (
-        [Parameter(Mandatory)] $Query,
+        [Parameter(Mandatory=$true)] $Query,
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)] $Options,
+        [switch] $NoRecasing,
         [switch] $NoEditor
     )
+
+    if( -not $NoRecasing )
+    {
+        $Query = $Query.ToLower()
+    }
 
     $rgArgs =
         "rg",
