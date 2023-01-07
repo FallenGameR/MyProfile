@@ -305,16 +305,19 @@ function Invoke-HistoryFzf
 {
     <#
     .SYNOPSIS
-        Find a history command with fzf and execute it again
+        Find a history command (or multiple) with fzf and execute it again
 
     .DESCRIPTION
         Complimentary to PSReadLine:
         - autocompletion from history
-        - F2 argument lookup
-        -  Alt+a argument highlight
+        - F2 argument lookup (Unix only)
+        - Alt+a argument highlight (Unix only)
     #>
 
-    $result = Get-History | foreach CommandLine | fzf
+    $commands = @(Get-History | foreach CommandLine)
+    [array]::Reverse($commands)
+
+    $result = $commands | fzf
 
     if( $result )
     {
