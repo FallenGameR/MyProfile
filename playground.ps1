@@ -1,3 +1,6 @@
+# New: dust, btm, tldr, tokei, bandwhich
+# Unix: exa, sd
+
 function capp( $url, [switch] $Music )
 {
     if( $music )

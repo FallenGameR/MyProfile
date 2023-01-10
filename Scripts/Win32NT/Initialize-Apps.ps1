@@ -6,6 +6,11 @@ Complete-Once "Rust clippy" {
     rustup component add clippy
 }
 
+Complete-Once "TLDR" {
+    cargo install tealdeer
+    tldr --update
+}
+
 Complete-Once "Tools folder" {
     if( -not (Test-Path "c:\tools") )
     {

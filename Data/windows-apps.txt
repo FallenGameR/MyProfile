@@ -1,9 +1,11 @@
 bat
 beyondcompare
+bottom
 dnspy
 dust
 firacode
 fzf
+sd-cli
 geforce-game-ready-driver
 gimp
 gitextensions
