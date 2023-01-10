@@ -6,6 +6,10 @@ Complete-Once "Rust clippy" {
     rustup component add clippy
 }
 
+Complete-Once Dust {
+    cargo install du-dust
+}
+
 Complete-Once "Tools folder" {
     if( -not (Test-Path "c:\tools") )
     {

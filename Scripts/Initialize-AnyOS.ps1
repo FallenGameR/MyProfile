@@ -11,6 +11,11 @@ Complete-Once PSToolset {
     git clone https://github.com/microsoft/PSToolset.git
 }
 
+# Dust from sources
+Complete-Once Dust {
+    cargo install du-dust
+}
+
 # Git setup
 Complete-Once "Git setup" {
     git config --global user.name "Aleksandr Kostikov"
