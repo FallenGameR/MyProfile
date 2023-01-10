@@ -1,4 +1,4 @@
-# New: dust, btm, tldr, tokei, bandwhich
+# New: dust, btm, tldr, tokei, bandwhich, sds, grex
 # Unix: exa, sd
 
 function capp( $url, [switch] $Music )

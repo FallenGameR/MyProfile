@@ -5,12 +5,12 @@ dnspy
 dust
 firacode
 fzf
-sd-cli
 geforce-game-ready-driver
 gimp
 gitextensions
 glow
 googlechrome
+grex
 hyperfine
 iperf3
 ipython
