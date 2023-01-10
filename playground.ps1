@@ -1,6 +1,9 @@
 # New: dust, btm, tldr, tokei, bandwhich, sds, grex
 # Unix: exa, sd
 
+# Git:
+# git (add|checkout) -p
+
 function capp( $url, [switch] $Music )
 {
     if( $music )
