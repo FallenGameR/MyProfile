@@ -1,6 +1,7 @@
 bat
 beyondcompare
 dnspy
+dust
 firacode
 fzf
 geforce-game-ready-driver
