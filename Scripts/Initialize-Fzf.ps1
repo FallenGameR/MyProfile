@@ -314,14 +314,21 @@ function Invoke-HistoryFzf
         - Alt+a argument highlight (Unix only)
     #>
 
-    $commands = @(Get-History | foreach CommandLine)
+    # Get history reversed
+    $commands = @(Get-History)
     [array]::Reverse($commands)
 
-    $result = $commands | fzf
+    # Select commands to execute with fzf
+    $text = ($commands | Out-String) -split [Environment]::NewLine | select -Skip 3
+    $result = $text | fzf
 
     if( $result )
     {
-        $command = $result -join ";"
+        $ids = $result | where{ $psitem -match "^\s*(\d+)" } | foreach{ [int] $matches[1] }
+        $toExecute = $commands | where Id -in $ids
+        $command = $toExecute.CommandLine -join "; "
+
+        Clear-Host
         $command
         Invoke-Expression $command
     }
