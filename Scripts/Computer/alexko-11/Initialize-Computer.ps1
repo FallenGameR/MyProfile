@@ -11,10 +11,12 @@ Complete-Once "bandwhich" {
     git clone https://github.com/imsnif/bandwhich.git
     cd bandwhich
 
+    cargo install bandwhich
     cargo vendor
 
     # Apply build patch https://github.com/imsnif/bandwhich/pull/234/commits/424e96cc27aefc80d25ac883987a62fd9c93c2f9
     sds "https://nmap.org/npcap/dist/npcap-sdk-1.05.zip" "https://npcap.com/dist/npcap-sdk-1.05.zip" build.rs
+    cargo build -r
     cargo install --offline --path .
 }
 
