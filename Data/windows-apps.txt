@@ -27,6 +27,7 @@ nmap
 openhardwaremonitor
 powershell-core
 ripgrep
+rust
 steam
 sysinternals
 visualstudio2019-workload-azure
