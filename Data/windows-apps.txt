@@ -10,7 +10,6 @@ gimp
 gitextensions
 glow
 googlechrome
-grex
 hyperfine
 iperf3
 ipython

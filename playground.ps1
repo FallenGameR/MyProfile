@@ -1,4 +1,4 @@
-# New: dust, btm, tldr, tokei, bandwhich, sds, grex
+# New: dust, btm, tldr, tokei, bandwhich, sds
 # Unix: exa, sd
 
 # Git:
