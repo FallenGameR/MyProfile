@@ -32,9 +32,14 @@ $SCRIPT:hostColor = e 0 32
 $SCRIPT:clearColor = e 0
 $SCRIPT:elevatedColor = e 0 36
 
+$SCRIPT:promptCacheKey = $null
+$SCRIPT:promptCacheValue = $null
+
 function SCRIPT:Show-PromptPath
 {
     $pwdPath = $pwd.Path
+    if( $SCRIPT:promptCacheKey -eq $pwdPath ) { return $SCRIPT:promptCacheValue }
+
     $gitRoot = git rev-parse --show-toplevel 2>$null
 
     $pwdPathParts = @($pwdPath -split "\\|/")
@@ -57,6 +62,9 @@ function SCRIPT:Show-PromptPath
     $path = $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
     $path += [environment]::NewLine
     $path += [char] 187 + " "
+
+    $SCRIPT:promptCacheKey = $pwdPath
+    $SCRIPT:promptCacheValue = $path
     $path
 }
 
