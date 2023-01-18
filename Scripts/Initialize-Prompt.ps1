@@ -22,12 +22,44 @@ $SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::N
 $SCRIPT:lastCommandId = -1
 
 # Prompt
-function prompt
+# https://duffney.io/usingansiescapesequencespowershell/
+function SCRIPT:e { "`e[" + ($args -join ";") + "m" }
+
+# https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+$SCRIPT:pathColor = e 0 33
+$SCRIPT:gitRootColor = e 38 5 208 # e 4 33
+$SCRIPT:hostColor = e 0 32
+$SCRIPT:clearColor = e 0
+$SCRIPT:elevatedColor = e 0 36
+
+function SCRIPT:Show-PromptPath
 {
-    $realLastExitCode = $LASTEXITCODE
-    $LASTEXITCODE = $realLastExitCode
-    [char] 187 + " "
+    $pwdPath = $pwd.Path
+    $gitRoot = git rev-parse --show-toplevel 2>$null
+
+    $pwdPathParts = @($pwdPath -split "\\|/")
+    $gitRootParts = @($gitRoot -split "\\|/")
+    $gitHighlightIndex = $gitRootParts.Length - 1 # can be -1 if no git folder
+    if( $gitHighlightIndex -ne -1 )
+    {
+        $pwdPathParts[$gitHighlightIndex] = $gitRootColor + $pwdPathParts[$gitHighlightIndex] + $pathColor
+    }
+
+    $path = $pwdPathParts -join [io.path]::DirectorySeparatorChar
+    $path = $pathColor + $path + $hostColor + " [$hostName] "
+
+    if( $SCRIPT:isElevated )
+    {
+        $path += $elevatedColor + " ELEVATED"
+    }
+
+    $path += $clearColor
+    $path = $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    $path += [environment]::NewLine
+    $path += [char] 187 + " "
+    $path
 }
+
 
 function prompt
 {
@@ -82,7 +114,10 @@ function prompt
         }
     }
 
-    # Update prompt
+    # Position
+
+    <#
+    # Title can show path relative to the root
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
     if( $SCRIPT:isElevated )
@@ -90,9 +125,11 @@ function prompt
         Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
     }
     Write-Host ""
+    #>
+
+    Show-PromptPath
 
     $LASTEXITCODE = $realLastExitCode
-    [char] 187 + " "
 }
 
 tm (Split-Path $PSCommandPath -Leaf)

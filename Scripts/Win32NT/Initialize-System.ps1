@@ -5,6 +5,9 @@ $addToPath =
     "C:\Program Files (x86)\Winamp\",
     "C:\Program Files (x86)\LINQPad5\",
     "C:\Program Files\Git\usr\bin\",
+    "c:\tools\miniconda3\",
+    "c:\tools\miniconda3\Scripts\",
+    "c:\tools\miniconda3\Library\bin\",
     "C:\tools\chafa",
     "C:\tools\sd"
 $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
