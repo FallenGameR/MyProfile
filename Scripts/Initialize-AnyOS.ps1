@@ -11,6 +11,12 @@ Complete-Once PSToolset {
     git clone https://github.com/microsoft/PSToolset.git
 }
 
+# FzfBindings module
+Complete-Once FzfBindings {
+    cd $PsScriptRoot/../Modules
+    git clone https://github.com/FallenGameR/FzfBindings.git
+}
+
 # Git setup
 Complete-Once "Git setup" {
     git config --global user.name "Aleksandr Kostikov"
