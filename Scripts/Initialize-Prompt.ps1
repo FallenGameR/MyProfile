@@ -21,9 +21,15 @@ if( -not (Test-Path $historyFolder) )
 $SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz"))
 $SCRIPT:lastCommandId = -1
 
-# Prompt
 # https://duffney.io/usingansiescapesequencespowershell/
-function SCRIPT:e { "`e[" + ($args -join ";") + "m" }
+function SCRIPT:e
+{
+    # Compatibility with PS5 that doesn't handle ANSI
+    if( $PSVersionTable.PSVersion.Major -gt 5 )
+    {
+        "`e[" + ($args -join ";") + "m"
+    }
+}
 
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 $SCRIPT:pathColor = e 0 33
@@ -32,20 +38,41 @@ $SCRIPT:hostColor = e 0 32
 $SCRIPT:clearColor = e 0
 $SCRIPT:elevatedColor = e 0 36
 
-$SCRIPT:promptCacheKey = $null
-$SCRIPT:promptCacheValue = $null
+$SCRIPT:cachedForPath = $null
+$SCRIPT:pathParts = $null
+$SCRIPT:promptPath = $null
+$SCRIPT:titlePath = $null
+
+
+$SCRIPT:cache = @{}
+
+function SCRIPT:Get-CachedResult( $functionName )
+{
+    $cached = $SCRIPT:cache[$functionName]
+    if( -not $cached ) { return }
+
+    $path, $value = $cached
+    if( $path -eq $pwd.Path ) { return $value }
+}
+
+function SCRIPT:Update-CachedResult( $functionName, $value )
+{
+    $SCRIPT:cache[$functionName] = $pwd.Path, $value
+    $value
+}
 
 function SCRIPT:Get-GitPath
 {
+    $cached = Get-CachedResult "Get-GitPath"
+    if( $cached ) { return $cached }
+
     $pwdPath = $pwd.Path
     $pwdPathParts = @($pwdPath -split "\\|/")
-
     $gitRoot = git rev-parse --show-toplevel 2>$null
     $gitRootParts = @($gitRoot -split "\\|/")
 
     $gitPathStartIndex = $gitRootParts.Length - 1
-
-    if( $gitPathStartIndex -eq -1 )
+    $result = if( $gitPathStartIndex -eq -1 )
     {
         $pwdPathParts, @()
     }
@@ -53,12 +80,19 @@ function SCRIPT:Get-GitPath
     {
         @($pwdPathParts[0..($gitPathStartIndex-1)]), $pwdPathParts[$gitPathStartIndex..($pwdPathParts.Length - 1)]
     }
+
+    Update-CachedResult "Get-GitPath" $result
 }
 
-function SCRIPT:Show-PromptPath
+function SCRIPT:Update-UserAliasInPath( $path )
 {
-    $pwdPath = $pwd.Path
-    if( $SCRIPT:promptCacheKey -eq $pwdPath ) { return $SCRIPT:promptCacheValue }
+    $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+}
+
+function SCRIPT:Get-PromptPath
+{
+    $cached = Get-CachedResult "Get-PromptPath"
+    if( $cached ) { return $cached }
 
     $pwdParts, $gitParts = Get-GitPath
     if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
@@ -72,19 +106,15 @@ function SCRIPT:Show-PromptPath
     }
 
     $path += $clearColor
-    $path = $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    $path = Update-UserAliasInPath $path
     $path += [environment]::NewLine
     $path += [char] 187 + " "
 
-    $SCRIPT:promptCacheKey = $pwdPath
-    $SCRIPT:promptCacheValue = $path
-    $path
+    Update-CachedResult "Get-PromptPath" $path
 }
 
-function prompt
+function SCRIPT:Update-CommandHistory
 {
-    $realLastExitCode = $LASTEXITCODE
-
     # Preserve last command in log file
     $lastCommand = Get-History -Count 1
     if( $lastCommand )
@@ -98,67 +128,64 @@ function prompt
     }
     else
     {
-        $lastCommandId = -1
+        $SCRIPT:lastCommandId = -1
         Add-Content $historyFile "# No history at this point of time"
     }
+}
 
-    # Path to use
-    $pwdParts, $gitParts = Get-GitPath
-    $path = if( $gitParts )
+function SCRIPT:Get-TitlePath
+{
+    $cached = Get-CachedResult "Get-TitlePath"
+    if( $cached ) { return $cached }
+
+    if( $env:inetroot )
     {
-        $gitParts -join [io.path]::DirectorySeparatorChar
+        function replace($all, $part, $short)
+        {
+            $all = $all -replace [regex]::Escape($part), $short
+            if( $all ) { $all } else { $short + "\" }
+        }
+
+        $title = Update-UserAliasInPath $pwd.Path
+        $title = replace $title $env:inetroot ""
+        $title = replace $title "\src\Client\NTP" "NTP"
+        $title = replace $title "NTP\managed\Clockwork" "Clockwork"
+        $title = replace $title "\data\Autopilot\NtpReferenceClock\Firmware" "Firmware"
     }
     else
     {
-        $pwdParts -join [io.path]::DirectorySeparatorChar
-    }
-    $path = $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
-
-    # Update title
-    if( Test-Full )
-    {
-        if( $GLOBAL:WindowTitle )
-        {
-            $host.UI.RawUI.WindowTitle = $GLOBAL:WindowTitle
-        }
-        else
-        {
-            function replace($all, $part, $short)
-            {
-                $all = $all -replace [regex]::Escape($part), $short
-                if( $all ) { $all } else { $short + "\" }
-            }
-
-            $title = $path
-            if( $home ) { $title = replace $title $home "home" }
-            if( $env:home ) { $title = replace $title $env:home "~" }
-            if( $env:inetroot )
-            {
-                $title = replace $title $env:inetroot ""
-                $title = replace $title "\src\Client\NTP" "NTP"
-                $title = replace $title "NTP\managed\Clockwork" "Clockwork"
-                $title = replace $title "\data\Autopilot\NtpReferenceClock\Firmware" "Firmware"
-            }
-            $host.UI.RawUI.WindowTitle = $title
-        }
+        $pwdParts, $gitParts = Get-GitPath
+        $path =
+            if( $gitParts ) { $gitParts -join [io.path]::DirectorySeparatorChar }
+            else { $pwdParts -join [io.path]::DirectorySeparatorChar }
+        $title = Update-UserAliasInPath $path
     }
 
-    # Position
+    if( $home ) { $title = replace $title $home "home" }
 
-    <#
-    # Title can show path relative to the root
-    Write-Host $path -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
-    if( $SCRIPT:isElevated )
-    {
-        Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
-    }
-    Write-Host ""
-    #>
+    Update-CachedResult "Get-TitlePath" $path
+}
 
-    Show-PromptPath
+function prompt
+{
+    $realLastExitCode = $LASTEXITCODE
+
+    Update-CommandHistory
+    if( Test-Full ) { $host.UI.RawUI.WindowTitle = Get-TitlePath }
+    Get-PromptPath
 
     $LASTEXITCODE = $realLastExitCode
 }
+
+<#
+# How to use colors when there is no ANSI like in PS5
+Write-Host $path -ForegroundColor DarkYellow -NoNewline
+Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
+if( $SCRIPT:isElevated )
+{
+    Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
+}
+Write-Host ""
+#>
 
 tm (Split-Path $PSCommandPath -Leaf)
