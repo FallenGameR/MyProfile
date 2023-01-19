@@ -27,7 +27,7 @@ function SCRIPT:e { "`e[" + ($args -join ";") + "m" }
 
 # https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 $SCRIPT:pathColor = e 0 33
-$SCRIPT:gitRootColor = e 38 5 172 #208 # e 4 33
+$SCRIPT:gitRootColor = e 38 5 214 # 172 # 208 # e 4 33
 $SCRIPT:hostColor = e 0 32
 $SCRIPT:clearColor = e 0
 $SCRIPT:elevatedColor = e 0 36
