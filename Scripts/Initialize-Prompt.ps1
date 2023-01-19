@@ -35,22 +35,35 @@ $SCRIPT:elevatedColor = e 0 36
 $SCRIPT:promptCacheKey = $null
 $SCRIPT:promptCacheValue = $null
 
+function SCRIPT:Get-GitPath
+{
+    $pwdPath = $pwd.Path
+    $pwdPathParts = @($pwdPath -split "\\|/")
+
+    $gitRoot = git rev-parse --show-toplevel 2>$null
+    $gitRootParts = @($gitRoot -split "\\|/")
+
+    $gitPathStartIndex = $gitRootParts.Length - 1
+
+    if( $gitPathStartIndex -eq -1 )
+    {
+        $pwdPathParts, @()
+    }
+    else
+    {
+        @($pwdPathParts[0..($gitPathStartIndex-1)]), $pwdPathParts[$gitPathStartIndex..($pwdPathParts.Length - 1)]
+    }
+}
+
 function SCRIPT:Show-PromptPath
 {
     $pwdPath = $pwd.Path
     if( $SCRIPT:promptCacheKey -eq $pwdPath ) { return $SCRIPT:promptCacheValue }
 
-    $gitRoot = git rev-parse --show-toplevel 2>$null
+    $pwdParts, $gitParts = Get-GitPath
+    if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
 
-    $pwdPathParts = @($pwdPath -split "\\|/")
-    $gitRootParts = @($gitRoot -split "\\|/")
-    $gitHighlightIndex = $gitRootParts.Length - 1 # can be -1 if no git folder
-    if( $gitHighlightIndex -ne -1 )
-    {
-        $pwdPathParts[$gitHighlightIndex] = $gitRootColor + $pwdPathParts[$gitHighlightIndex] + $pathColor
-    }
-
-    $path = $pwdPathParts -join [io.path]::DirectorySeparatorChar
+    $path = @($pwdParts + $gitParts) -join [io.path]::DirectorySeparatorChar
     $path = $pathColor + $path + $hostColor + " [$hostName] "
 
     if( $SCRIPT:isElevated )
@@ -67,7 +80,6 @@ function SCRIPT:Show-PromptPath
     $SCRIPT:promptCacheValue = $path
     $path
 }
-
 
 function prompt
 {
@@ -91,7 +103,16 @@ function prompt
     }
 
     # Path to use
-    $path = $pwd -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    $pwdParts, $gitParts = Get-GitPath
+    $path = if( $gitParts )
+    {
+        $gitParts -join [io.path]::DirectorySeparatorChar
+    }
+    else
+    {
+        $pwdParts -join [io.path]::DirectorySeparatorChar
+    }
+    $path = $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
 
     # Update title
     if( Test-Full )
