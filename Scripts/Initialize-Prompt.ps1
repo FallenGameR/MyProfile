@@ -135,35 +135,32 @@ function SCRIPT:Update-CommandHistory
 
 function SCRIPT:Get-TitlePath
 {
+    function annotate( $result )
+    {
+        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result." }
+        else { $result }
+    }
+
     $cached = Get-CachedResult "Get-TitlePath"
-    if( $cached ) { return $cached }
+    if( $cached ) { return annotate $cached }
 
-    if( $env:inetroot )
-    {
-        function replace($all, $part, $short)
-        {
-            $all = $all -replace [regex]::Escape($part), $short
-            if( $all ) { $all } else { $short + "\" }
-        }
+    $pwdParts, $gitParts = Get-GitPath
+    $path =
+        if( $gitParts ) { $gitParts -join [io.path]::DirectorySeparatorChar }
+        else { $pwdParts -join [io.path]::DirectorySeparatorChar }
 
-        $title = Update-UserAliasInPath $pwd.Path
-        $title = replace $title $env:inetroot ""
-        $title = replace $title "\src\Client\NTP" "NTP"
-        $title = replace $title "NTP\managed\Clockwork" "Clockwork"
-        $title = replace $title "\data\Autopilot\NtpReferenceClock\Firmware" "Firmware"
-    }
-    else
-    {
-        $pwdParts, $gitParts = Get-GitPath
-        $path =
-            if( $gitParts ) { $gitParts -join [io.path]::DirectorySeparatorChar }
-            else { $pwdParts -join [io.path]::DirectorySeparatorChar }
-        $title = Update-UserAliasInPath $path
-    }
+    $title = $path
+    if( $home ) { $title = $title -replace ([regex]::Escape($home)), "home" }
+    $title = Update-UserAliasInPath $path
 
-    if( $home ) { $title = replace $title $home "home" }
+    $title = $title -replace ".+?\\NTP\b", "NTP"
+    $title = $title -replace "NTP\\managed\\Clockwork", "Clockwork"
+    $title = $title -replace "NTP\\managed\\ApQuery", "ApQuery"
+    $title = $title -replace "NTP\\managed\\NtpClient", "NtpClient"
+    $title = $title -replace "NTP\\managed\\NtpWatchdog", "NtpWatchdog"
+    $title = $title -replace ".+\\data\\Autopilot\\NtpReferenceClock\\Firmware", "Firmware"
 
-    Update-CachedResult "Get-TitlePath" $path
+    annotate (Update-CachedResult "Get-TitlePath" $title)
 }
 
 function prompt
