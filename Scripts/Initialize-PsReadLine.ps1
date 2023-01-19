@@ -17,6 +17,18 @@ if( -not (Get-Module PsReadLine) )
 
 Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen # Windows
 
+<#
+# Trying out if this will work
+Set-PSReadlineKeyHandler `
+-Key "Enter" `
+-BriefDescription "Accept line custom" `
+-LongDescription "Mitigation for not line-feeding default AcceptLine" `
+-ScriptBlock `
+{
+    [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
+}
+#>
+
 # Code editors
 Register-Shortcut "Alt+g" "code" "Code open"
 
