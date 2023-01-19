@@ -1,5 +1,5 @@
 $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
-$SCRIPT:enableTiming = $false
+$SCRIPT:enableTiming = $true
 $SCRIPT:verbose = $false
 
 function SCRIPT:tm($info = "=>")
