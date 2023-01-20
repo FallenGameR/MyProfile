@@ -88,7 +88,7 @@ function SCRIPT:Update-UserAliasInPath( $path )
     $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
 }
 
-function SCRIPT:Get-PromptPath
+function SCRIPT:Get-PromptPathAnsi
 {
     $cached = Get-CachedResult "Get-PromptPath"
     if( $cached ) { return $cached }
@@ -110,6 +110,19 @@ function SCRIPT:Get-PromptPath
     $path += [char] 187 + " "
 
     Update-CachedResult "Get-PromptPath" $path
+}
+
+function SCRIPT:Get-PromptPath
+{
+    $path = Update-UserAliasInPath $pwd.Path
+    Write-Host $path -ForegroundColor DarkYellow -NoNewline
+    Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
+    if( $SCRIPT:isElevated )
+    {
+        Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
+    }
+    Write-Host ""
+    [char] 187 + " "
 }
 
 function SCRIPT:Update-CommandHistory
@@ -172,16 +185,5 @@ function prompt
 
     $LASTEXITCODE = $realLastExitCode
 }
-
-<#
-# How to use colors when there is no ANSI like in PS5
-Write-Host $path -ForegroundColor DarkYellow -NoNewline
-Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
-if( $SCRIPT:isElevated )
-{
-    Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
-}
-Write-Host ""
-#>
 
 tm (Split-Path $PSCommandPath -Leaf)
