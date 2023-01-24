@@ -62,12 +62,14 @@ function SCRIPT:Update-CachedResult( $functionName, $value )
 
 function SCRIPT:Get-RepoPath
 {
-    $cached = Get-CachedResult "Get-RepoPath"
+    $cacheKey = "Get-RepoPath - $env:INETROOT"
+    $cached = Get-CachedResult $cacheKey
     if( $cached ) { return $cached }
 
     $pwdPath = $pwd.Path
     $pwdPathParts = @($pwdPath -split "\\|/")
     $gitRoot = git rev-parse --show-toplevel 2>$null
+    if( -not $gitRoot ) { $gitRoot = $env:INETROOT }
     $gitRootParts = @($gitRoot -split "\\|/")
 
     $gitPathStartIndex = $gitRootParts.Length - 1
@@ -80,7 +82,7 @@ function SCRIPT:Get-RepoPath
         @($pwdPathParts[0..($gitPathStartIndex-1)]), $pwdPathParts[$gitPathStartIndex..($pwdPathParts.Length - 1)]
     }
 
-    Update-CachedResult "Get-RepoPath" $resultpsreadline
+    Update-CachedResult $cacheKey $resultpsreadline
 }
 
 function SCRIPT:Update-UserAliasInPath( $path )
