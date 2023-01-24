@@ -7,6 +7,12 @@
 if( -not (Get-Module PsReadLine) )
 {
     Import-Module PsReadLine
+
+    # PsReadline is updated outside of windows
+    if( (Get-Module psreadline | % version) -lt [version]::Parse("2.2.6") )
+    {
+        Install-Module -Name PSReadLine -Force
+    }
 }
 
 # Useful default things, turns out this is a Unix default, need to get them on Windows =)
@@ -18,6 +24,16 @@ if( -not (Get-Module PsReadLine) )
 Set-PSReadlineKeyHandler -Chord "Ctrl+d" -Function CaptureScreen # Windows
 
 <#
+
+ListView
+https://github.com/PowerShell/PSReadLine/pull/1909
+set-PSReadLineOption -PredictionViewStyle ListView
+set-PSReadLineOption -PredictionSource HistoryAndPlugin
+
+Also it implements dynamic help for parameters by showing it below the current command line like MenuComplete.
+https://github.com/PowerShell/PSReadLine/pull/1777
+
+
 # Trying out if this will work
 Set-PSReadlineKeyHandler `
 -Key "Enter" `
@@ -25,6 +41,7 @@ Set-PSReadlineKeyHandler `
 -LongDescription "Mitigation for not line-feeding default AcceptLine" `
 -ScriptBlock `
 {
+    [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition(0)
     [Microsoft.Powershell.PSConsoleReadLine]::AcceptLine()
 }
 #>
