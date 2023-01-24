@@ -73,7 +73,7 @@ function SCRIPT:Get-RepoPath
     $gitRootParts = @($gitRoot -split "\\|/")
 
     $gitPathStartIndex = $gitRootParts.Length - 1
-    $result = if( $gitPathStartIndex -eq -1 )
+    $result = if( (-not $gitPathStartIndex) -or ($gitPathStartIndex -eq -1) )
     {
         $pwdPathParts, @()
     }
@@ -82,7 +82,7 @@ function SCRIPT:Get-RepoPath
         @($pwdPathParts[0..($gitPathStartIndex-1)]), $pwdPathParts[$gitPathStartIndex..($pwdPathParts.Length - 1)]
     }
 
-    Update-CachedResult $cacheKey $resultpsreadline
+    Update-CachedResult $cacheKey $result
 }
 
 function SCRIPT:Update-UserAliasInPath( $path )
