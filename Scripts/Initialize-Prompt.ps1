@@ -60,9 +60,9 @@ function SCRIPT:Update-CachedResult( $functionName, $value )
     $value
 }
 
-function SCRIPT:Get-GitPath
+function SCRIPT:Get-RepoPath
 {
-    $cached = Get-CachedResult "Get-GitPath"
+    $cached = Get-CachedResult "Get-RepoPath"
     if( $cached ) { return $cached }
 
     $pwdPath = $pwd.Path
@@ -80,7 +80,7 @@ function SCRIPT:Get-GitPath
         @($pwdPathParts[0..($gitPathStartIndex-1)]), $pwdPathParts[$gitPathStartIndex..($pwdPathParts.Length - 1)]
     }
 
-    Update-CachedResult "Get-GitPath" $result
+    Update-CachedResult "Get-RepoPath" $resultpsreadline
 }
 
 function SCRIPT:Update-UserAliasInPath( $path )
@@ -93,7 +93,7 @@ function SCRIPT:Get-PromptPathAnsi
     $cached = Get-CachedResult "Get-PromptPath"
     if( $cached ) { return $cached }
 
-    $pwdParts, $gitParts = Get-GitPath
+    $pwdParts, $gitParts = Get-RepoPath
     if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
 
     $path = @($pwdParts + $gitParts) -join [io.path]::DirectorySeparatorChar
@@ -156,7 +156,7 @@ function SCRIPT:Get-TitlePath
     $cached = Get-CachedResult "Get-TitlePath"
     if( $cached ) { return annotate $cached }
 
-    $pwdParts, $gitParts = Get-GitPath
+    $pwdParts, $gitParts = Get-RepoPath
     $path =
         if( $gitParts ) { $gitParts -join [io.path]::DirectorySeparatorChar }
         else { $pwdParts -join [io.path]::DirectorySeparatorChar }
