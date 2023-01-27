@@ -1,6 +1,7 @@
 bat
 beyondcompare
 bottom
+dependencywalker
 dnspy
 dust
 firacode
