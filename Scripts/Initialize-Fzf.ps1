@@ -38,6 +38,10 @@ $fzfOptions = @(
 )
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 
+<#
+
+Removing inlining to test if the error returns
+
 # Cross platform way to call pwsh
 $SCRIPT:pwsh = "pwsh"
 if( $PSVersionTable.Platform -ne "Unix" ) { $SCRIPT:pwsh += ".exe" }
@@ -59,6 +63,7 @@ Set-Alias prf Send-GitBranch
 Set-Alias pushf Push-LocationFzf
 Set-Alias rgf Search-RipgrepFzf
 Set-Alias startf Start-ProcessFzf
+#>
 
 # Shortcuts
 Register-Shortcut "Alt+h" "hf" "History search"
