@@ -151,7 +151,7 @@ function SCRIPT:Get-TitlePath
 {
     function annotate( $result )
     {
-        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result  🗸" }
+        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result  ." }
         else { $result }
     }
 
