@@ -1,6 +1,7 @@
 bat
 beyondcompare
 bottom
+djvu-libre
 dnspy
 dust
 firacode
