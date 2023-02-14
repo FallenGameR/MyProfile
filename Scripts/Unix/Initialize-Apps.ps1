@@ -46,6 +46,20 @@ Complete-Once "Rust arduino" {
 
 <#
 
+In Linux the analog of Sysinternals Suite would be:
+
+ldd - get list of used shared libraries (.so|.dll)
+strace - see what syscalls an executable makes
+lsof - list of opened files and sockets per folder
+
+#>
+
+
+
+
+
+<#
+
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
