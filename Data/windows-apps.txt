@@ -11,6 +11,7 @@ gimp
 gitextensions
 glow
 googlechrome
+httpie
 hyperfine
 iperf3
 ipython
