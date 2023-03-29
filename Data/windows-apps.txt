@@ -3,6 +3,7 @@ beyondcompare
 bottom
 djvu-libre
 dnspy
+docfx
 dust
 firacode
 fzf
