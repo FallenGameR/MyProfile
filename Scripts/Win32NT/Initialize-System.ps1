@@ -9,7 +9,8 @@ $addToPath =
     "c:\tools\miniconda3\Scripts\",
     "c:\tools\miniconda3\Library\bin\",
     "C:\tools\chafa",
-    "C:\tools\sd"
+    "C:\tools\sd",
+    "C:\tools\docfx"
 $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
 
 # Common functions
