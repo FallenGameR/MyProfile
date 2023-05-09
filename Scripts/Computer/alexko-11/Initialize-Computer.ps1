@@ -29,4 +29,9 @@ Complete-Once "sd" {
     cargo build -r
 }
 
+Complete-Once "One Drive Microsoft path without spaces" {
+    New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
+    Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
+}
+
 tm (Split-Path $PSCommandPath -Leaf)
