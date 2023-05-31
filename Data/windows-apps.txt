@@ -24,6 +24,7 @@ microsoft-windows-terminal
 miniconda3
 mls-software-openssh
 mp3tag
+msbuild-structured-log-viewer
 netcat
 nmap
 openhardwaremonitor
