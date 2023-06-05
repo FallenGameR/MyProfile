@@ -26,3 +26,4 @@ $global:Profile = $PSCommandPath
 #}
 #endregion
 
+$env:Path = "$env:Path;C:\tools\FcShell"

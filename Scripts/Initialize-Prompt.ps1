@@ -171,6 +171,7 @@ function SCRIPT:Get-TitlePath
     $title = $title -replace "NTP\\managed\\Clockwork", "Clockwork"
     $title = $title -replace "NTP\\managed\\NtpClient", "NtpClient"
     $title = $title -replace "NTP\\managed\\NtpWatchdog", "NtpWatchdog"
+    $title = $title -replace "NTP\\managed\\W32TimeLogParser", "W32TimeLogParser"
     $title = $title -replace "NTP\\scripts\\modules", "Modules"
     $title = $title -replace ".+\\data\\Autopilot\\NtpReferenceClock\\Firmware", "Firmware"
 
