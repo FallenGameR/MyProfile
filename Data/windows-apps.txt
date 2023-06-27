@@ -26,11 +26,11 @@ rust
 steam
 sysinternals
 tldr
+visualstudio2022enterprise
 visualstudio2022-workload-azure
 visualstudio2022-workload-manageddesktop
 visualstudio2022-workload-nativecrossplat
 visualstudio2022-workload-nativedesktop
 visualstudio2022-workload-netcrossplat
-visualstudio2022enterprise
 vscode
 windirstat

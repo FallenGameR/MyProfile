@@ -16,6 +16,11 @@ $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem 
 # Common functions
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
+# tldr database update
+Complete-Once "tldr update" {
+    tldr --update
+}
+
 # Default classic Powershell setup
 Complete-Once "Classic Powershell" {
     $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
