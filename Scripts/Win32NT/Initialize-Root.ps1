@@ -1,13 +1,8 @@
-# Install apps
-Complete-Once "Windows apps" {
+Complete-Once "install windows apps" {
     $apps = cat "$PSScriptRoot/../../Data/windows-apps.txt"
     choco install -s=chocolatey @apps -y
 }
 
-# Install python dependencies
-Complete-Once IPython {
-    conda install -n base ipykernel --update-deps --force-reinstall
-}
 
 # Conhost should draw ANSI escape sequences
 Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1

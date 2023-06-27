@@ -1,9 +1,5 @@
 Complete-Once "Mouse setup" {
-    & "$env:OneDriveConsumer\Distrib\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
-}
-
-Complete-Once "tldr update" {
-    tldr --update
+    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
 
 Complete-Once "Tools folder" {
