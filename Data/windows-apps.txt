@@ -9,6 +9,7 @@ geforce-game-ready-driver
 gimp
 gitextensions
 googlechrome
+gsudo
 httpie
 hyperfine
 kdiff3
@@ -17,15 +18,8 @@ mp3tag
 openhardwaremonitor
 powershell-core
 ripgrep
-rust
 steam
 sysinternals
 tldr
-visualstudio2022enterprise
-visualstudio2022-workload-azure
-visualstudio2022-workload-manageddesktop
-visualstudio2022-workload-nativecrossplat
-visualstudio2022-workload-nativedesktop
-visualstudio2022-workload-netcrossplat
 vscode
 windirstat
