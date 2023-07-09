@@ -15,6 +15,7 @@ hyperfine
 kdiff3
 mls-software-openssh
 mp3tag
+netcat
 openhardwaremonitor
 powershell-core
 ripgrep
