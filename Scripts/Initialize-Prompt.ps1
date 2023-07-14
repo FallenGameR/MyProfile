@@ -119,10 +119,18 @@ function SCRIPT:Get-PromptPath
     $path = Update-UserAliasInPath $pwd.Path
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
+
+    $branch = git rev-parse --abbrev-ref HEAD
+    if( $LASTEXITCODE -eq 0 )
+    {
+        Write-Host "$branch " -ForegroundColor DarkGray -NoNewline
+    }
+
     if( $SCRIPT:isElevated )
     {
-        Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
+        Write-Host "ELEVATED " -ForegroundColor DarkCyan -NoNewline
     }
+
     Write-Host ""
     [char] 187 + " "
 }
