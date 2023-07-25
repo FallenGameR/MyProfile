@@ -2,7 +2,7 @@ Complete-Once "Mouse setup" {
     & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
 
-Complete-Once "Tools folder" {
+Complete-Once "Tools junction links" {
     if( -not (Test-Path "c:\tools") )
     {
         mkdir "c:\tools" -ea Stop | Out-Null
