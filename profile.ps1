@@ -28,3 +28,5 @@ $global:Profile = $PSCommandPath
 
 $env:Path = "$env:Path;C:\tools\FcShell"
 $env:Path = "$env:Path;C:\tools\dcm.explorer"
+
+$env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"

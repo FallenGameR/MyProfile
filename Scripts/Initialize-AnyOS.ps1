@@ -50,7 +50,6 @@ $PSDefaultParameterValues["man:Detailed"] = $true
 # Aliases
 Set-Alias m Measure-Object
 Set-Alias ls Get-ChildItem -Option AllScope
-Set-Alias sort Sort-Object
 
 # Common tools setup
 $env:LESS = "-IeFRX"
