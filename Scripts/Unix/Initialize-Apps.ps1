@@ -63,10 +63,13 @@ Complete-Once "Rust arduino" {
     cargo install cargo-generate
 }
 
-# Default conhost console color setup
 Complete-Once "Gnome terminal colors" {
     cd "$PsScriptRoot/../../Bin/ColorTool/"
     cat ./campbell.gnome_terminal | dconf load /org/gnome/terminal/
+}
+
+Complete-Once "Bottom setup" {
+    Copy-Item $PSScriptRoot\..\..\bottom.toml ~/.config/bottom/bottom.toml
 }
 
 <#

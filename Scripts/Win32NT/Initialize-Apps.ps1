@@ -19,4 +19,8 @@ Complete-Once "Tools junction links" {
     }
 }
 
+Complete-Once "Bottom setup" {
+    Copy-Item $PSScriptRoot\..\..\bottom.toml $env:APPDATA\bottom\bottom.toml
+}
+
 tm (Split-Path $PSCommandPath -Leaf)
