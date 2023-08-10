@@ -13,7 +13,7 @@ $env:MANPAGER = "sh -c 'col -bx | batcat -l man -p'"
 
 # Default conhost console color setup
 Complete-Once "Gnome terminal colors" {
-    cd "$PsScriptRoot/../Bin/ColorTool/"
+    cd "$PsScriptRoot/../../Bin/ColorTool/"
     cat ./campbell.gnome_terminal | dconf load /org/gnome/terminal/
 }
 
