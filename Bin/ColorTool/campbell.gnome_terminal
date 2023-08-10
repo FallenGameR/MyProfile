@@ -1,0 +1,23 @@
+[legacy/keybindings]
+close-tab='<Primary>w'
+close-window='<Primary>q'
+copy='<Primary>c'
+find='<Primary>f'
+find-clear='<Primary>j'
+find-next='<Primary>g'
+find-previous='<Primary>h'
+new-tab='<Primary>t'
+new-window='<Primary>n'
+paste='<Primary>v'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-color='rgb(12,12,12)'
+bold-is-bright=true
+default-size-columns=130
+default-size-rows=39
+font='Fira Code 14'
+foreground-color='rgb(242,242,242)'
+palette=['rgb(12,12,12)', 'rgb(197,15,31)', 'rgb(19,161,14)', 'rgb(193,156,0)', 'rgb(0,55,218)', 'rgb(136,23,152)', 'rgb(58,150,221)', 'rgb(204,204,204)', 'rgb(118,118,118)', 'rgb(231,72,86)', 'rgb(22,198,12)', 'rgb(249,241,165)', 'rgb(59,120,255)', 'rgb(180,0,158)', 'rgb(97,214,214)', 'rgb(242,242,242)']
+use-system-font=false
+use-theme-colors=false
+visible-name='Default'
