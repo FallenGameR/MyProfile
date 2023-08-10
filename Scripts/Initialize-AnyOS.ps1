@@ -45,6 +45,7 @@ Complete-Once "Git setup" {
 
 # Default command arguments
 $PSDefaultParameterValues["Get-Command:All"] = $true
+$PSDefaultParameterValues["man:Detailed"] = $true
 
 # Aliases
 Set-Alias m Measure-Object

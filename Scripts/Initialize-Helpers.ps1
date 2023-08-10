@@ -35,12 +35,12 @@ function SCRIPT:Get-HostName()
 
 function SCRIPT:Test-Windows()
 {
-    (Get-Platform) -eq "Win32NT"
+    $IsWindows -or ((Get-Platform) -eq "Win32NT")
 }
 
 function SCRIPT:Test-Unix()
 {
-    (Get-Platform) -eq "Unix"
+    $IsLinux -or $IsMacOS -or ((Get-Platform) -eq "Unix")
 }
 
 function SCRIPT:Test-Full()

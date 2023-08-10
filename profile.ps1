@@ -26,3 +26,5 @@ $global:Profile = $PSCommandPath
 #}
 #endregion
 
+$env:Path = "$env:Path;C:\tools\FcShell"
+$env:Path = "$env:Path;C:\tools\dcm.explorer"

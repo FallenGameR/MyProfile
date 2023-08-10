@@ -114,19 +114,6 @@ function SCRIPT:Get-PromptPathAnsi
     Update-CachedResult "Get-PromptPath" $path
 }
 
-function SCRIPT:Get-PromptPath
-{
-    $path = Update-UserAliasInPath $pwd.Path
-    Write-Host $path -ForegroundColor DarkYellow -NoNewline
-    Write-Host " [$hostName] " -ForegroundColor DarkGreen -NoNewline
-    if( $SCRIPT:isElevated )
-    {
-        Write-Host " ELEVATED" -ForegroundColor DarkCyan -NoNewline
-    }
-    Write-Host ""
-    [char] 187 + " "
-}
-
 function SCRIPT:Update-CommandHistory
 {
     # Preserve last command in log file
@@ -151,7 +138,7 @@ function SCRIPT:Get-TitlePath
 {
     function annotate( $result )
     {
-        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result  🗸" }
+        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result  ." }
         else { $result }
     }
 
@@ -169,12 +156,53 @@ function SCRIPT:Get-TitlePath
 
     $title = $title -replace ".+?\\NTP\b", "NTP"
     $title = $title -replace "NTP\\managed\\Clockwork", "Clockwork"
-    $title = $title -replace "NTP\\managed\\ApQuery", "ApQuery"
     $title = $title -replace "NTP\\managed\\NtpClient", "NtpClient"
     $title = $title -replace "NTP\\managed\\NtpWatchdog", "NtpWatchdog"
+    $title = $title -replace "NTP\\managed\\W32TimeLogParser", "W32TimeLogParser"
+    $title = $title -replace "NTP\\scripts\\modules", "Modules"
     $title = $title -replace ".+\\data\\Autopilot\\NtpReferenceClock\\Firmware", "Firmware"
 
     annotate (Update-CachedResult "Get-TitlePath" $title)
+}
+
+function SCRIPT:Get-PromptPath
+{
+    $path = Update-UserAliasInPath $pwd.Path
+    Write-Host $path -ForegroundColor DarkYellow -NoNewline
+    Write-Host " " -NoNewline
+
+    # Calling git in a normal way messes up with $LASTEXITCODE for some reason
+    # Even when we preserve and restore its value after the prompt returns
+    # the console doesn't get the correct LASTEXITCODE value anyway.
+    $process = [Diagnostics.Process] @{
+        StartInfo = [Diagnostics.ProcessStartInfo] @{
+            FileName = "git.exe"
+            Arguments = "rev-parse --abbrev-ref HEAD"
+            WorkingDirectory = (Get-Location).Path
+            UseShellExecute = $false
+            RedirectStandardError = $true
+            RedirectStandardOutput = $true
+        }
+    }
+    $process.Start() | Out-Null
+    $branch = $process.StandardOutput.ReadToEnd().Trim()
+    $process.WaitForExit()
+    $success = $process.ExitCode -eq 0
+
+    if( $success )
+    {
+        Write-Host "$branch " -ForegroundColor DarkGray -NoNewline
+    }
+
+    Write-Host "[$hostName] " -ForegroundColor DarkGreen -NoNewline
+
+    if( $SCRIPT:isElevated )
+    {
+        Write-Host "ELEVATED " -ForegroundColor DarkCyan -NoNewline
+    }
+
+    Write-Host ""
+    [char] 187 + " "
 }
 
 function prompt

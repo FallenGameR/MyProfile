@@ -4,16 +4,25 @@ $addToPath =
     "C:\Program Files (x86)\WinDirStat\",
     "C:\Program Files (x86)\Winamp\",
     "C:\Program Files (x86)\LINQPad5\",
+    "C:\Program Files (x86)\Midnight Commander\",
     "C:\Program Files\Git\usr\bin\",
-    "c:\tools\miniconda3\",
-    "c:\tools\miniconda3\Scripts\",
-    "c:\tools\miniconda3\Library\bin\",
+    "$PsScriptRoot\..\..\Bin\Walker",
+    #"c:\tools\miniconda3\",
+    #"c:\tools\miniconda3\Scripts\",
+    #"c:\tools\miniconda3\Library\bin\",
     "C:\tools\chafa",
-    "C:\tools\sd"
+    "C:\tools\sd",
+    "C:\tools\docfx",
+    "C:\tools\tagger"
 $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
 
 # Common functions
 function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
+
+# tldr database update
+Complete-Once "tldr update" {
+    tldr --update
+}
 
 # Default classic Powershell setup
 Complete-Once "Classic Powershell" {
