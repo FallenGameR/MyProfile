@@ -79,10 +79,6 @@ lsof - list of opened files and sockets per folder
 
 #>
 
-
-
-
-
 <#
 
 sudo mkdir -p /etc/apt/keyrings
