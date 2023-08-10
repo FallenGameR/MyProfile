@@ -1,7 +1,8 @@
 # Path setup
 $addToPath =
     "$HOME/.cargo/bin",
-    "$HOME/.git-fuzzy/bin"
+    "$HOME/.git-fuzzy/bin",
+    "$HOME/.local/bin"
 $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
 
 # Common command names
