@@ -24,6 +24,13 @@ Complete-Once "Bat proper name" {
     sudo ln -s batcat bat
 }
 
+Complete-Once "Install chrome" {
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    sudo add-apt-repository "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    sudo apt update
+    sudo apt install google-chrome-stable
+}
+
 Complete-Once "Fzf link" {
     cd /usr/bin
     sudo ln -s ~/.fzf/bin/fzf fzf
@@ -34,6 +41,18 @@ Complete-Once "Arduino fix" {
     # see https://bugs.launchpad.net/ubuntu/+source/arduino/+bug/1916278
     sudo apt install libserialport0 patchelf
     sudo patchelf --add-needed /usr/lib/x86_64-linux-gnu/libserialport.so.0 /usr/lib/x86_64-linux-gnu/liblistSerialsj.so.1.4.0
+}
+
+Complete-Once "Install bottom" {
+    curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.4/bottom_0.9.4_amd64.deb
+    sudo dpkg -i bottom_0.9.4_amd64.deb
+}
+
+Complete-Once "Install rust" {
+    sudo apt update
+    sudo apt upgrade
+    sudo apt install curl gcc make build-essential -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
 Complete-Once "Rust arduino" {
