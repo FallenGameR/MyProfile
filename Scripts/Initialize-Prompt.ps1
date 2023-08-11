@@ -87,7 +87,14 @@ function SCRIPT:Get-RepoPath
 
 function SCRIPT:Update-UserAliasInPath( $path )
 {
-    $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    if( $env:USERDOMAIN )
+    {
+        $path -replace [regex]::Escape("$($env:USERNAME).$($env:USERDOMAIN)"), $env:USERNAME
+    }
+    else
+    {
+        $path
+    }
 }
 
 function SCRIPT:Get-PromptPathAnsi
