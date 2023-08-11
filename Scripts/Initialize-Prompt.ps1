@@ -176,7 +176,7 @@ function SCRIPT:Get-PromptPath
     # the console doesn't get the correct LASTEXITCODE value anyway.
     $process = [Diagnostics.Process] @{
         StartInfo = [Diagnostics.ProcessStartInfo] @{
-            FileName = "git.exe"
+            FileName = if( Test-Windows ) { "git.exe" } else { "git" }
             Arguments = "rev-parse --abbrev-ref HEAD"
             WorkingDirectory = (Get-Location).Path
             UseShellExecute = $false

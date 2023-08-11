@@ -11,7 +11,7 @@ function SCRIPT:tm($info = "=>")
     }
 }
 
-function SCRIPT:Get-Platform()
+function SCRIPT:Get-Platform
 {
     if( $PSVersionTable.Platform )
     {
@@ -23,7 +23,7 @@ function SCRIPT:Get-Platform()
     }
 }
 
-function SCRIPT:Get-HostName()
+function SCRIPT:Get-HostName
 {
     switch( Get-Platform )
     {
@@ -33,22 +33,22 @@ function SCRIPT:Get-HostName()
     }
 }
 
-function SCRIPT:Test-Windows()
+function SCRIPT:Test-Windows
 {
     $IsWindows -or ((Get-Platform) -eq "Win32NT")
 }
 
-function SCRIPT:Test-Unix()
+function SCRIPT:Test-Unix
 {
     $IsLinux -or $IsMacOS -or ((Get-Platform) -eq "Unix")
 }
 
-function SCRIPT:Test-Full()
+function SCRIPT:Test-Full
 {
     $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage"
 }
 
-function SCRIPT:Test-Constrained()
+function SCRIPT:Test-Constrained
 {
     $ExecutionContext.SessionState.LanguageMode -eq "Constrained"
 }
