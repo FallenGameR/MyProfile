@@ -20,6 +20,10 @@ Complete-Once "Tools junction links" {
 }
 
 Complete-Once "Bottom setup" {
+    if( -not (Test-Path $env:APPDATA\bottom) )
+    {
+        mkdir $env:APPDATA\bottom -ea Stop | Out-Null
+    }
     Copy-Item $PSScriptRoot\..\..\bottom.toml $env:APPDATA\bottom\bottom.toml
 }
 

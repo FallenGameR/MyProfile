@@ -10,6 +10,7 @@ $addToPath =
     #"c:\tools\miniconda3\",
     #"c:\tools\miniconda3\Scripts\",
     #"c:\tools\miniconda3\Library\bin\",
+    "C:\Program Files\Python311\Scripts\", # if python is installed from the main web site, needed for httpie
     "C:\tools\chafa",
     "C:\tools\sd",
     "C:\tools\docfx",
