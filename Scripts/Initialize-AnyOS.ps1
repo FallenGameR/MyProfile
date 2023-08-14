@@ -52,7 +52,7 @@ $env:LESS = "-IeFRX"
 $env:RIPGREP_CONFIG_PATH = "$PSScriptRoot/../rg.config"
 $env:BAT_CONFIG_PATH = "$PSScriptRoot/../bat.config"
 
-# LSCOLORS
+# LSCOLORS, used by fd, dust and ls.exe
 # was generated with:
 # cargo install vivid
 # vivid generate snazzy
