@@ -82,6 +82,12 @@ Complete-Once FdExcludes {
     mkdir $path\fd | Out-Null
     cat "$PsScriptRoot/../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
 }
+
+<#
+Check if hyper is a good terminal - https://hyper.is/
+Themes for it - https://github.com/sindresorhus/hyper-snazzy
+#>
+
 <#
 
 In Linux the analog of Sysinternals Suite would be:
