@@ -86,6 +86,11 @@ Complete-Once FdExcludes {
 <#
 Check if hyper is a good terminal - https://hyper.is/
 Themes for it - https://github.com/sindresorhus/hyper-snazzy
+
+Other options could be https://www.slant.co/topics/1552/~best-terminal-emulators-for-windows#1
+cmder
+ConEmu
+TabbyTerminal
 #>
 
 <#
