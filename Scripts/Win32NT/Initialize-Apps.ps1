@@ -23,4 +23,10 @@ Complete-Once "Bottom setup" {
     Copy-Item $PSScriptRoot\..\..\bottom.toml $env:APPDATA\bottom\bottom.toml
 }
 
+Complete-Once FdExcludes {
+    $path = $env:APPDATA
+    mkdir "$path\fd" | Out-Null
+    cat "$PsScriptRoot/../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
+}
+
 tm (Split-Path $PSCommandPath -Leaf)

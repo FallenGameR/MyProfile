@@ -72,6 +72,11 @@ Complete-Once "Bottom setup" {
     Copy-Item $PSScriptRoot\..\..\bottom.toml ~/.config/bottom/bottom.toml
 }
 
+Complete-Once FdExcludes {
+    $path = "~/.config/fd"
+    mkdir $path\fd | Out-Null
+    cat "$PsScriptRoot/../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
+}
 <#
 
 In Linux the analog of Sysinternals Suite would be:
