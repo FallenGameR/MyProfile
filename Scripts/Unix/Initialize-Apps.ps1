@@ -72,6 +72,11 @@ Complete-Once "Bottom setup" {
     Copy-Item $PSScriptRoot\..\..\bottom.toml ~/.config/bottom/bottom.toml
 }
 
+Complete-Once fd-renaming {
+    ln -s $(which fdfind) ~/.local/bin/fd
+    # $HOME/.local/bin needs to be in PATH
+}
+
 Complete-Once FdExcludes {
     $path = "~/.config/fd"
     mkdir $path\fd | Out-Null

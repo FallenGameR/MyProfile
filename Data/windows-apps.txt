@@ -3,6 +3,7 @@ beyondcompare
 bottom
 dnspy
 dust
+fd
 firacode
 fzf
 geforce-game-ready-driver
