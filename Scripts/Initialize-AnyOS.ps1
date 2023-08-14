@@ -14,6 +14,10 @@ Complete-Once FzfBindings {
     git clone https://github.com/FallenGameR/FzfBindings.git
 }
 
+Complete-Once as-tree {
+    cargo install -f --git https://github.com/jez/as-tree
+}
+
 Complete-Once "Git setup" {
     git config --global user.name "Aleksandr Kostikov"
     git config --global user.email "Alex.Kostikov@gmail.com"
