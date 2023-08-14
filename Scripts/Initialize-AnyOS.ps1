@@ -1,23 +1,19 @@
-# Modules in profile subfolder
 $modules = Join-Path (Split-Path $profile) Modules
 if( -not $env:PSModulePath.Contains($modules) )
 {
     $env:PSModulePath += [io.path]::PathSeparator + $modules
 }
 
-# PSToolset module
 Complete-Once PSToolset {
     cd $PsScriptRoot/../Modules
     git clone https://github.com/microsoft/PSToolset.git
 }
 
-# FzfBindings module
 Complete-Once FzfBindings {
     cd $PsScriptRoot/../Modules
     git clone https://github.com/FallenGameR/FzfBindings.git
 }
 
-# Git setup
 Complete-Once "Git setup" {
     git config --global user.name "Aleksandr Kostikov"
     git config --global user.email "Alex.Kostikov@gmail.com"
