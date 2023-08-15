@@ -62,4 +62,49 @@ Complete-Once setup-environment-permanent {
     Set-EnvironmentVariable "Home" $homeSimplified
 }
 
+# Elevated setup here
+
+Complete-Once install-apps -elevated {
+    $apps = cat "$PSScriptRoot/../../Data/windows-apps.txt"
+    choco install -s=chocolatey @apps -y
+}
+
+Complete-Once setup-conhost-ansi -elevated {
+    Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
+}
+
+Complete-Once junction-system -elevated {
+    New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
+    New-Junction "c:\Program Files (x86)" "c:\programs"
+    New-Junction $home "c:\home"
+}
+
+Complete-Once hide-folders -elevated {
+    $noisyFolders =
+        "c:\Intel",
+        "c:\PerfLogs",
+        "c:\Program Files",
+        "c:\Program Files (x86)",
+        "c:\Users",
+        "c:\Windows",
+        "c:\inetpub",
+        "$home\3D Objects",
+        "$home\Contacts",
+        "$home\Favorites",
+        "$home\Links",
+        "$home\Pictures",
+        "$home\Saved Games",
+        "$home\Searches",
+        "$home\Videos"
+    $noisyFolders | where{gi $psitem -ea ignore} | Set-Visible $false
+}
+
+Complete-Once install-wsl -elevated {
+    # This command can forcefully reboot machine, don't execute if something else is running
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    wsl --set-default-version 2
+}
+
 tm (Split-Path $PSCommandPath -Leaf)

@@ -83,11 +83,14 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     {
         if( -not (Test-Elevated) )
         {
-            if( -not (Get-Command sudo -ea Ignore) )
-            {
-                Write-Warning "Skipping $name because it requires elevation we are not elevated and sudo is missing"
-                return
-            }
+            Write-Warning "Skipping $name because it requires elevation"
+            return
+
+            #if( -not (Get-Command sudo -ea Ignore) )
+            #{
+            #    Write-Warning "Skipping $name because it requires elevation we are not elevated and sudo is missing"
+            #    return
+            #}
         }
     }
 
