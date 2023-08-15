@@ -35,8 +35,8 @@ Complete-Once setup-fd {
 
 # tldr database update
 Complete-Once "tldr update" {
-    # TODO: Capture all the output to the file
-    # TODO: If failed print one liner as warning and don't create the file
+    # TODO: Tee all the output to the marker file
+    # TODO: If it fails print one liner as warning and don't create the file
     # TODO: Automatic sudo elevation possible?
 
     tldr --update
