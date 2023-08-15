@@ -77,10 +77,10 @@ Complete-Once fd-renaming {
     # $HOME/.local/bin needs to be in PATH
 }
 
-Complete-Once FdExcludes {
+Complete-Once fd-excludes {
     $path = "~/.config/fd"
-    mkdir $path\fd | Out-Null
-    cat "$PsScriptRoot/../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
+    mkdir "$path\fd" -ea Ignore | Out-Null
+    cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
 }
 
 <#
