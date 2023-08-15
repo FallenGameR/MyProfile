@@ -7,6 +7,7 @@ $global:Profile = $PSCommandPath
 . $PSScriptRoot/Scripts/Initialize-Helpers.ps1
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-OS.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Apps.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/$(Get-Platform)/Initialize-OS.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/$(Get-Platform)/Initialize-Apps.ps1"
 

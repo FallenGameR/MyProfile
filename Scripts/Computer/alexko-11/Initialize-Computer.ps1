@@ -1,11 +1,11 @@
-Complete-Once "Computer-specific environment vars" {
+Complete-Once env-computer {
     Set-EnvironmentVariable "AzCompute" "d:\src\mv\"
     Set-EnvironmentVariable "ApGold" "d:\src\golds\ap\"
     Set-EnvironmentVariable "PfGold" "d:\src\golds\pf\"
     Set-EnvironmentVariable "NTP" "d:\src\ntp\"
 }
 
-Complete-Once "bandwhich" {
+Complete-Once install-bandwhich {
     mkdir c:\tools\rust\
     cd c:\tools\rust\
     git clone https://github.com/imsnif/bandwhich.git
@@ -20,7 +20,7 @@ Complete-Once "bandwhich" {
     cargo install --offline --path .
 }
 
-Complete-Once "sd" {
+Complete-Once install-sds {
     mkdir c:\tools\rust\
     cd c:\tools\rust\
     git clone https://github.com/chmln/sd.git
@@ -29,7 +29,7 @@ Complete-Once "sd" {
     cargo build -r
 }
 
-Complete-Once "One Drive Microsoft path without spaces" {
+Complete-Once junction-one-drive-ms {
     New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
     Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
 }
