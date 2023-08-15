@@ -47,3 +47,13 @@ System Reports/System Information will list something like this:
   Device-2: 9-1.1.2:12 info: Microsoft LifeCam Cinema type: Video,Audio
     driver: snd-usb-audio,uvcvideo rev: 2.0 speed: 480 Mb/s chip-ID: 045e:075d
 ```
+
+## Install rofi
+
+```ps1
+apt-cache search xcb-xkb
+sudo apt remove libxcb-xkb1 libxcb-xkb-dev -y
+sudo apt remove libxkbcommon-dev -y
+sudo apt remove libglib2.0-dev -y
+
+```
