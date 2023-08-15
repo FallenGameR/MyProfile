@@ -69,7 +69,7 @@ function SCRIPT:Import-AsInvoke($path, $condition = $true)
     & $path
 }
 
-function SCRIPT:Complete-Once( $name, $script )
+function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
 {
     # Skip if one time setup was already done
     $flag = "$SCRIPT:oneTimeFolder/$name"
@@ -78,11 +78,37 @@ function SCRIPT:Complete-Once( $name, $script )
         return
     }
 
+    # Check for elevation
+    if( $elevated )
+    {
+        if( -not (Test-Elevated) )
+        {
+            if( -not (Get-Command sudo -ea Ignore) )
+            {
+                Write-Warning "Skipping $name because it requires elevation we are not elevated and sudo is missing"
+                return
+            }
+        }
+    }
+
     # Do one time setup
     Write-Host "Setting up $name"
     Push-Location
-    & $script
-    $null > $flag
+    try
+    {
+        & $script | Tee-Object $flag
+    }
+    catch
+    {
+        if( Test-Path $flag -ea Ignore )
+        {
+            Rename-Item $flag "$flag.err"
+        }
+
+        $psitem | Tee-Object "$flag.err" -Append
+        Write-Warning "Failed $name because: $psitem"
+    }
+
     Pop-Location
 }
 
@@ -196,7 +222,7 @@ function SCRIPT:Register-Shortcut
 
 $SCRIPT:platform = Get-Platform
 $SCRIPT:hostName = Get-HostName
-$SCRIPT:oneTimeFolder = "$PSScriptRoot/../OneTime/"
+$SCRIPT:oneTimeFolder = "$PSScriptRoot/../Completed/"
 
 if( -not (Test-Path $SCRIPT:oneTimeFolder) )
 {

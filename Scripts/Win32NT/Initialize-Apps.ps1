@@ -33,15 +33,11 @@ Complete-Once setup-fd {
     cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
 }
 
-# tldr database update
-Complete-Once "tldr update" {
-
-
+Complete-Once setup-tldr {
     tldr --update
 }
 
-# Default classic Powershell setup
-Complete-Once "Classic Powershell" {
+Complete-Once setup-powershell-classic {
     $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
     $modern = "$env:USERPROFILE\Documents\Powershell"
     mkdir $classic | Out-Null
@@ -51,14 +47,12 @@ Complete-Once "Classic Powershell" {
     New-Item -Type Junction -Name Modules -Value "$modern\Modules"
 }
 
-# Default conhost console color setup
-Complete-Once "ColorTool" {
+Complete-Once setup-conhost {
     cd "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
 }
 
-# Set up environment variables
-Complete-Once "Environment vars" {
+Complete-Once setup-environment-permanent {
     Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
     if( -not (Test-Path $homeSimplified -ea Ignore) )
