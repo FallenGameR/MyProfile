@@ -1,8 +1,4 @@
-Complete-Once "Mouse setup" {
-    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
-}
-
-Complete-Once "Tools junction links" {
+Complete-Once junction-tools {
     if( -not (Test-Path "c:\tools") )
     {
         mkdir "c:\tools" -ea Stop | Out-Null
@@ -19,7 +15,11 @@ Complete-Once "Tools junction links" {
     }
 }
 
-Complete-Once "Bottom setup" {
+Complete-Once setup-trackball {
+    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
+}
+
+Complete-Once setup-bottom {
     if( -not (Test-Path $env:APPDATA\bottom) )
     {
         mkdir $env:APPDATA\bottom -ea Stop | Out-Null
@@ -27,10 +27,47 @@ Complete-Once "Bottom setup" {
     Copy-Item $PSScriptRoot\..\..\bottom.toml $env:APPDATA\bottom\bottom.toml
 }
 
-Complete-Once fd-excludes {
+Complete-Once setup-fd {
     $path = $env:APPDATA
     mkdir "$path\fd" -ea Ignore | Out-Null
     cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
+}
+
+# tldr database update
+Complete-Once "tldr update" {
+    # TODO: Capture all the output to the file
+    # TODO: If failed print one liner as warning and don't create the file
+    # TODO: Automatic sudo elevation possible?
+
+    tldr --update
+}
+
+# Default classic Powershell setup
+Complete-Once "Classic Powershell" {
+    $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
+    $modern = "$env:USERPROFILE\Documents\Powershell"
+    mkdir $classic | Out-Null
+    ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
+
+    cd $classic
+    New-Item -Type Junction -Name Modules -Value "$modern\Modules"
+}
+
+# Default conhost console color setup
+Complete-Once "ColorTool" {
+    cd "$PsScriptRoot\..\Bin\ColorTool\"
+    .\ColorTool.exe -b -q campbell | Out-Null
+}
+
+# Set up environment variables
+Complete-Once "Environment vars" {
+    Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+    $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
+    if( -not (Test-Path $homeSimplified -ea Ignore) )
+    {
+        $homeSimplified = $env:USERPROFILE
+    }
+    Set-EnvironmentVariable "Home" $homeSimplified
 }
 
 tm (Split-Path $PSCommandPath -Leaf)
