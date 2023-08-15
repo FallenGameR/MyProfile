@@ -52,7 +52,7 @@ Complete-Once setup-conhost {
     .\ColorTool.exe -b -q campbell | Out-Null
 }
 
-Complete-Once setup-environment-permanent {
+Complete-Once env-common {
     Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
     if( -not (Test-Path $homeSimplified -ea Ignore) )
