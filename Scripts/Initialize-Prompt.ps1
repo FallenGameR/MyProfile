@@ -43,6 +43,8 @@ $SCRIPT:pathParts = $null
 $SCRIPT:promptPath = $null
 $SCRIPT:titlePath = $null
 
+# If user redefines $cache we have a problem
+# For some reason prompt is not private
 $SCRIPT:cache = @{}
 
 function SCRIPT:Get-CachedResult( $functionName )
