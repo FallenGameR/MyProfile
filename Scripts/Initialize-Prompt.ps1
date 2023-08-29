@@ -43,6 +43,10 @@ $SCRIPT:pathParts = $null
 $SCRIPT:promptPath = $null
 $SCRIPT:titlePath = $null
 
+$SCRIPT:prompt_state = [ordered] @{
+    preserved_ps_module_path = $env:PSModulePath
+}
+
 # If user redefines $cache we have a problem
 # For some reason prompt is not private
 $SCRIPT:cache = @{}
@@ -208,6 +212,12 @@ function SCRIPT:Get-PromptPath
     if( $SCRIPT:isElevated )
     {
         Write-Host "ELEVATED " -ForegroundColor DarkCyan -NoNewline
+    }
+
+    if( $SCRIPT:prompt_state.preserved_ps_module_path -ne $env:PSModulePath )
+    {
+        Write-Host "PSModulePath changed! " -ForegroundColor DarkMagenta -NoNewline
+        $SCRIPT:prompt_state.preserved_ps_module_path = $env:PSModulePath
     }
 
     Write-Host ""
