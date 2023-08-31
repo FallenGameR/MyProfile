@@ -6,7 +6,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # For bootstrap we need just git and this module
-choco install -s=chocolatey git -y
+choco install -s=chocolatey git powershell-core -y
 $destination = "$home/Documents/Powershell"
 git clone https://github.com/FallenGameR/MyProfile.git $destination
 

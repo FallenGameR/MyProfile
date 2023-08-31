@@ -18,7 +18,6 @@ mls-software-openssh
 mp3tag
 netcat
 openhardwaremonitor
-powershell-core
 ripgrep
 steam
 sysinternals
