@@ -45,6 +45,13 @@ Complete-Once install-wsl -elevated {
 
 # Non elevated setup
 
+Complete-Once setup-windows-powershell-profile {
+    $shouldBeDocumentsFolder = Split-Path (Split-Path $profile)
+    $windowsPowershellFolder = Join-Path $shouldBeDocumentsFolder WindowsPowerShell
+    mkdir $windowsPowershellFolder -ea Ignore | Out-Null
+    ". $profile" | Add-Content "$windowsPowershellFolder\profile.ps1"
+}
+
 Complete-Once junction-tools {
     if( -not (Test-Path "c:\tools") )
     {
