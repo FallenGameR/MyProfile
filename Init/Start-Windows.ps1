@@ -12,7 +12,7 @@ choco install -s=chocolatey git powershell-core -y
 wget https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe -OutFile .\Downloads\rustup-init.exe
 .\Downloads\rustup-init.exe
 
-# First profile invocation will take some time
+# First profile invocation will take some time, start in elevated
 $destination = "$home/Documents/Powershell"
 git clone https://github.com/FallenGameR/MyProfile.git $destination
 
