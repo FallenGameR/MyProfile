@@ -8,7 +8,7 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 # For bootstrap we need just git, rust, powershell core and this module
 choco install -s=chocolatey git powershell-core -y
 
-# Select 1 for installation through Visual Studio Community edition
+# Select 1 then after compiler install 1 for default installation
 wget https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe -OutFile .\Downloads\rustup-init.exe
 .\Downloads\rustup-init.exe
 
@@ -16,5 +16,6 @@ wget https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init
 $destination = "$home/Documents/Powershell"
 git clone https://github.com/FallenGameR/MyProfile.git $destination
 
+# Notes
 "To speed things up make sure defender ignores folders like C:\src"
-# C:\ProgramData\chocolatey\lib may be another candidate
+"C:\ProgramData\chocolatey\lib may be another candidate"
