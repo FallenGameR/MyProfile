@@ -75,6 +75,7 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     $flag = "$SCRIPT:oneTimeFolder/$name"
     if( Test-Path $flag )
     {
+        Remove-Item "$flag.err" -ea Ignore
         return
     }
 
