@@ -95,7 +95,7 @@ Complete-Once setup-powershell-classic {
 }
 
 Complete-Once setup-conhost {
-    cd "$PsScriptRoot\..\Bin\ColorTool\"
+    cd "$PsScriptRoot\..\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
 }
 
