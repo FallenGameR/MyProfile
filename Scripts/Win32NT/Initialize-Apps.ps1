@@ -66,7 +66,7 @@ Complete-Once env-common {
 
 Complete-Once install-apps -elevated {
     $apps = cat "$PSScriptRoot/../../Data/windows-apps.txt"
-    choco install -s=chocolatey @apps -y
+    choco install -s=chocolatey @apps -y --no-progress
 }
 
 Complete-Once setup-conhost-ansi -elevated {
