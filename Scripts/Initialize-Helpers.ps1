@@ -101,6 +101,7 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     try
     {
         & $script | Tee-Object $flag
+        "" | Add-Content $flag
     }
     catch
     {
