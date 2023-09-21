@@ -57,12 +57,12 @@ function SCRIPT:Get-CachedResult( $functionName )
     if( -not $cached ) { return }
 
     $path, $value = $cached
-    if( $path -eq $pwd.Path ) { return $value }
+    if( $path -eq (Get-Location).ProviderPath ) { return $value }
 }
 
 function SCRIPT:Update-CachedResult( $functionName, $value )
 {
-    $SCRIPT:cache[$functionName] = $pwd.Path, $value
+    $SCRIPT:cache[$functionName] = (Get-Location).ProviderPath, $value
     $value
 }
 
@@ -72,7 +72,7 @@ function SCRIPT:Get-RepoPath
     $cached = Get-CachedResult $cacheKey
     if( $cached ) { return $cached }
 
-    $pwdPath = $pwd.Path
+    $pwdPath = (Get-Location).ProviderPath
     $pwdPathParts = @($pwdPath -split "\\|/")
     $gitRoot = git rev-parse --show-toplevel 2>$null
     if( -not $gitRoot ) { $gitRoot = $env:INETROOT }
@@ -151,7 +151,7 @@ function SCRIPT:Get-TitlePath
 {
     function annotate( $result )
     {
-        if( $env:inetroot -and $pwd.path.StartsWith($env:inetroot) ) { "$result  ." }
+        if( $env:inetroot -and (Get-Location).ProviderPath.StartsWith($env:inetroot) ) { "$result  ." }
         else { $result }
     }
 
@@ -180,7 +180,7 @@ function SCRIPT:Get-TitlePath
 
 function SCRIPT:Get-PromptPath
 {
-    $path = Update-UserAliasInPath $pwd.Path
+    $path = Update-UserAliasInPath ((Get-Location).ProviderPath)
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " " -NoNewline
 
