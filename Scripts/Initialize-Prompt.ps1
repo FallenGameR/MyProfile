@@ -180,46 +180,37 @@ function SCRIPT:Get-TitlePath
 
 function SCRIPT:Get-PromptPath
 {
+    # Path part
     $path = Update-UserAliasInPath ((Get-Location).ProviderPath)
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " " -NoNewline
 
-    # Calling git in a normal way messes up with $LASTEXITCODE for some reason
-    # Even when we preserve and restore its value after the prompt returns
-    # the console doesn't get the correct LASTEXITCODE value anyway.
-    $process = [Diagnostics.Process] @{
-        StartInfo = [Diagnostics.ProcessStartInfo] @{
-            FileName = if( Test-Windows ) { "git.exe" } else { "git" }
-            Arguments = "rev-parse --abbrev-ref HEAD"
-            WorkingDirectory = (Get-Location).Path
-            UseShellExecute = $false
-            RedirectStandardError = $true
-            RedirectStandardOutput = $true
-        }
-    }
-    $process.Start() | Out-Null
-    $branch = $process.StandardOutput.ReadToEnd().Trim()
-    $process.WaitForExit()
-    $success = $process.ExitCode -eq 0
-
-    if( $success )
+    # Git branch
+    $preservedExitCode = $LASTEXITCODE
+    $branch = git rev-parse --abbrev-ref HEAD
+    if( -not $LASTEXITCODE )
     {
         Write-Host "$branch " -ForegroundColor DarkGray -NoNewline
     }
+    Set-Variable LASTEXITCODE -Scope Global -Force -Value $preservedExitCode
 
+    # Host name
     Write-Host "[$hostName] " -ForegroundColor DarkGreen -NoNewline
 
+    # Elevation
     if( $SCRIPT:isElevated )
     {
         Write-Host "ELEVATED " -ForegroundColor DarkCyan -NoNewline
     }
 
+    # Tracking PSModulePath changes
     if( $SCRIPT:prompt_state.preserved_ps_module_path -ne $env:PSModulePath )
     {
-        Write-Host "PSModulePath changed! " -ForegroundColor DarkMagenta -NoNewline
+        Write-Host "PSModulePath changed " -ForegroundColor DarkMagenta -NoNewline
         $SCRIPT:prompt_state.preserved_ps_module_path = $env:PSModulePath
     }
 
+    # New line prompt
     Write-Host ""
     [char] 187 + " "
 }
