@@ -43,6 +43,11 @@ Complete-Once install-wsl -elevated {
     wsl --set-default-version 2
 }
 
+Complete-Once setup-trackball -elevated {
+    # May need this fix as well: [console]::InputEncoding = [console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
+    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
+}
+
 # Non elevated setup
 
 Complete-Once setup-windows-powershell-profile {
@@ -67,10 +72,6 @@ Complete-Once junction-tools {
     {
         New-Junction $tool.FullName "c:\tools\$($tool.Name)"
     }
-}
-
-Complete-Once setup-trackball {
-    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
 
 Complete-Once setup-bottom {
