@@ -8,7 +8,6 @@ firacode
 fzf
 geforce-game-ready-driver
 gimp
-gitextensions
 googlechrome
 gsudo
 httpie
