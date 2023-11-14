@@ -44,6 +44,7 @@ $SCRIPT:promptPath = $null
 $SCRIPT:titlePath = $null
 
 $SCRIPT:prompt_state = [ordered] @{
+    ps_module_path_changes = 0
     preserved_ps_module_path = $env:PSModulePath
 }
 
@@ -206,7 +207,11 @@ function SCRIPT:Get-PromptPath
     # Tracking PSModulePath changes
     if( $SCRIPT:prompt_state.preserved_ps_module_path -ne $env:PSModulePath )
     {
-        Write-Host "PSModulePath changed " -ForegroundColor DarkMagenta -NoNewline
+        $SCRIPT:prompt_state.ps_module_path_changes += 1
+        if( $SCRIPT:prompt_state.ps_module_path_changes -gt 1 )
+        {
+            Write-Host "PSModulePath changed " -ForegroundColor DarkMagenta -NoNewline
+        }
         $SCRIPT:prompt_state.preserved_ps_module_path = $env:PSModulePath
     }
 
