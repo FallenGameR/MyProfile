@@ -1,8 +1,8 @@
 Complete-Once env-computer {
-    Set-EnvironmentVariable "AzCompute" "d:\src\mv\"
-    Set-EnvironmentVariable "ApGold" "d:\src\golds\ap\"
-    Set-EnvironmentVariable "PfGold" "d:\src\golds\pf\"
-    Set-EnvironmentVariable "NTP" "d:\src\ntp\"
+    Set-EnvironmentVariable "AzCompute" "v:\src\mv\"
+    Set-EnvironmentVariable "ApGold" "v:\src\golds\ap\"
+    Set-EnvironmentVariable "PfGold" "v:\src\golds\pf\"
+    Set-EnvironmentVariable "NTP" "v:\src\ntp\"
 }
 
 Complete-Once install-bandwhich {
