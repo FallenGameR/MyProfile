@@ -36,5 +36,4 @@ $env:PSModulePath = "D:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
 $env:Path = "$env:Path;C:\tools\xts"
-
 $env:Path = "$env:Path;C:\tools\drop"
