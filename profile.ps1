@@ -37,3 +37,5 @@ $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
 $env:Path = "$env:Path;C:\tools\xts"
 $env:Path = "$env:Path;C:\tools\drop"
+$env:Path = "$env:Path;C:\tools\lens"
+$env:Path = "$env:Path;C:\tools\prorab"
