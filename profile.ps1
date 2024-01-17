@@ -30,12 +30,12 @@ $global:Profile = $PSCommandPath
 
 $env:Path = "$env:Path;C:\tools\FcShell"
 $env:Path = "$env:Path;C:\tools\dcm.explorer"
-
-$env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
-$env:PSModulePath = "D:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
-$env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
-
 $env:Path = "$env:Path;C:\tools\xts"
 $env:Path = "$env:Path;C:\tools\drop"
 $env:Path = "$env:Path;C:\tools\lens"
 $env:Path = "$env:Path;C:\tools\prorab"
+
+$env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
+$env:PSModulePath = "D:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+$env:PSModulePath = "C:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+$env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
