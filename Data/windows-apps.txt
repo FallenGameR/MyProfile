@@ -12,8 +12,6 @@ googlechrome
 gsudo
 httpie
 hyperfine
-kdiff3
-mls-software-openssh
 mp3tag
 netcat
 openhardwaremonitor
@@ -21,5 +19,4 @@ ripgrep
 steam
 sysinternals
 tldr
-vscode
 windirstat
