@@ -7,11 +7,14 @@ if( -not $env:PSModulePath.Contains($modules) )
 
 # Default command arguments
 $PSDefaultParameterValues["Get-Command:All"] = $true
+$PSDefaultParameterValues["Out-GridView:OutputMode"] = "Single"
 $PSDefaultParameterValues["man:Detailed"] = $true
 
 # Aliases
 Set-Alias m Measure-Object
 Set-Alias ls Get-ChildItem -Option AllScope
+Set-Alias fg Out-GridView
+Set-Alias grid Out-GridView
 
 # Common tools setup
 $env:LESS = "-IeFRX"
