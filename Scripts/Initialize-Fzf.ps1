@@ -1,6 +1,5 @@
 # Default FZF options
 $fzfOptions = @(
-    "--info=right",                 # Show found element count on the right(0.42)
     "--layout=reverse",             # Grow list down, not upwards
     "--tabstop=4",                  # Standard tab size
     "--multi",                      # Multi select possible
