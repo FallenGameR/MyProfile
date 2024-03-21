@@ -36,6 +36,13 @@ $fzfOptions = @(
     #"--color=prompt:#RRGGBB",      # Prompt
     #"--color=spinner:#RRGGBB",     # Streaming input indicator
 )
+
+$fzfVersion = [version]((fzf --version) -split " " | select -f 1)
+if( $fzfVersion -ge ([version] "0.42.0") )
+{
+    $fzfOptions += "--info=right"   # Show found element count on the right(0.42)
+}
+
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 
 # Shortcuts
