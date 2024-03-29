@@ -337,6 +337,7 @@ Set-PSReadlineKeyHandler `
             {
                 $extent = $token.Extent
                 $length = $extent.EndOffset - $extent.StartOffset
+                $startOfModifiedToken = $extent.StartOffset + $startAdjustment
                 [Microsoft.Powershell.PSConsoleReadLine]::Replace(
                     $extent.StartOffset + $startAdjustment,
                     $length,
@@ -345,9 +346,18 @@ Set-PSReadlineKeyHandler `
                 # Our copy of the tokens won't have been updated, so we need to
                 # adjust by the difference in length
                 $startAdjustment += ($resolvedCommand.Length - $length)
+
+                # Fixing the cursor position but only for the beginning of the string
+                if( $startOfModifiedToken -lt $cursor )
+                {
+                    $cursor += ($resolvedCommand.Length - $length)
+                }
             }
         }
     }
+
+    # Fix the cursor position
+    [Microsoft.Powershell.PSConsoleReadLine]::SetCursorPosition($cursor)
 }
 
 tm (Split-Path $PSCommandPath -Leaf)
