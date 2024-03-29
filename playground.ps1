@@ -16,4 +16,9 @@ function capp( $url, [switch] $Music )
     }
 }
 
+function dcm
+{
+    & "C:\tools\dcm\Dcm.Explorer.exe"
+}
+
 tm (Split-Path $PSCommandPath -Leaf)
