@@ -5,8 +5,6 @@ Complete-Once "Computer-specific environment vars" {
     Set-EnvironmentVariable "NTP" "C:\src\ntp\"
 }
 
-Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
-
 $env:Path = "$env:Path;C:\tools\FcShell"
 $env:Path = "$env:Path;C:\tools\dcm.explorer"
 $env:Path = "$env:Path;C:\tools\xts"
@@ -19,5 +17,7 @@ $env:PSModulePath = "C:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
+
+Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
 
 tm (Split-Path $PSCommandPath -Leaf)
