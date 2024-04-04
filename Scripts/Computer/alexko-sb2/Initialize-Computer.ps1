@@ -5,4 +5,6 @@ Complete-Once "Computer-specific environment vars" {
     Set-EnvironmentVariable "NTP" "C:\src\ntp\"
 }
 
+Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
+
 tm (Split-Path $PSCommandPath -Leaf)
