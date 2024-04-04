@@ -1,6 +1,10 @@
-$SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
 $SCRIPT:enableTiming = $false
 $SCRIPT:verbose = $false
+
+if( $ExecutionContext.SessionState.LanguageMode -ne "Constrained" )
+{
+    $SCRIPT:stopwatch = [system.diagnostics.stopwatch]::StartNew()
+}
 
 function SCRIPT:tm($info = "=>")
 {
@@ -212,6 +216,12 @@ function SCRIPT:Register-Shortcut
         $Command,
         $Description
     )
+
+    if( Test-Constrained )
+    {
+        Write-Warning "Skipping registration of $key - $description, we are in a constrained language mode"
+        return
+    }
 
     Set-PSReadlineKeyHandler `
         -Key $Key `
