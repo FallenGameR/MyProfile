@@ -47,4 +47,8 @@ $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
+$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
+    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml" # ;" +
+# Update-GitLineEndingsMitigation
+
 tm (Split-Path $PSCommandPath -Leaf)
