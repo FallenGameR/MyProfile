@@ -1,7 +1,8 @@
 Complete-Once env-computer {
     Set-EnvironmentVariable "AzCompute" "v:\src\mv\"
     Set-EnvironmentVariable "ApGold" "v:\src\golds\ap\"
-    Set-EnvironmentVariable "PfGold" "v:\src\golds\pf\"
+    Set-EnvironmentVariable "PfGold" "v:\src\golds\PfGold\"
+    Set-EnvironmentVariable "ConfigGold" "v:\src\golds\Config\"
     Set-EnvironmentVariable "NTP" "v:\src\ntp\"
 }
 
@@ -50,5 +51,16 @@ $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 $env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
     "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml" # ;" +
 # Update-GitLineEndingsMitigation
+
+$env:FZF_QUICK_PATHS =
+    "v:\src\mv\src\Client\NTP\;" +
+    "v:\src\mv\src\Client\NTP\scripts\s1-tools\;" +
+    "v:\src\mv\src\Client\NTP\scripts\modules\DriScripts\;" +
+    "v:\src\golds\PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
+
+function reload
+{
+    Import-Module DriScripts -Force
+}
 
 tm (Split-Path $PSCommandPath -Leaf)
