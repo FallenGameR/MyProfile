@@ -18,4 +18,6 @@ $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
+Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
+
 tm (Split-Path $PSCommandPath -Leaf)
