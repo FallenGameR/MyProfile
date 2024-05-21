@@ -186,13 +186,15 @@ function SCRIPT:Get-PromptPath
     Write-Host $path -ForegroundColor DarkYellow -NoNewline
     Write-Host " " -NoNewline
 
-    # Git branch
+    # Git branch, ErrorActionPreference magic is needed to not populate $error when we are outside of git
     $preservedExitCode = $LASTEXITCODE
+    $preserved, $ErrorActionPreference = $ErrorActionPreference, "Ignore"
     $branch = git rev-parse --abbrev-ref HEAD
     if( -not $LASTEXITCODE )
     {
         Write-Host "$branch " -ForegroundColor DarkGray -NoNewline
     }
+    $ErrorActionPreference = $preserved
     Set-Variable LASTEXITCODE -Scope Global -Force -Value $preservedExitCode
 
     # Host name
