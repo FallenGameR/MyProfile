@@ -58,9 +58,20 @@ $env:FZF_QUICK_PATHS =
     "v:\src\mv\src\Client\NTP\scripts\modules\DriScripts\;" +
     "v:\src\golds\PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
-function reload
+function reload( [switch] $Official )
 {
-    Import-Module DriScripts -Force
+    Get-Module DriScripts | Remove-Module
+
+    if( $Official )
+    {
+        Import-Module C:\tools\DriScripts\DriScripts\DriScripts.psd1 -Force
+    }
+    else
+    {
+        Import-Module DriScripts -Force
+    }
+
+    Get-Module DriScripts | select name, version, path
 }
 
 tm (Split-Path $PSCommandPath -Leaf)
