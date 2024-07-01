@@ -43,7 +43,7 @@ $env:Path = "$env:Path;C:\tools\lens"
 $env:Path = "$env:Path;C:\tools\prorab"
 $env:Path = "$env:Path;C:\tools\oneAccess"
 
-$env:PSModulePath = "v:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+#$env:PSModulePath = "v:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
