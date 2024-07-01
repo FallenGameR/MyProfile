@@ -237,7 +237,7 @@ function SCRIPT:Register-Shortcut
 
 $SCRIPT:platform = Get-Platform
 $SCRIPT:hostName = Get-HostName
-$SCRIPT:oneTimeFolder = "$PSScriptRoot/../Completed/"
+$SCRIPT:oneTimeFolder = "$PSScriptRoot/../Data/Completed/"
 
 if( -not (Test-Path $SCRIPT:oneTimeFolder) )
 {
