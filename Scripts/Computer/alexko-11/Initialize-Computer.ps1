@@ -1,8 +1,8 @@
 Complete-Once env-computer {
     Set-EnvironmentVariable "AzCompute" "v:\src\mv\"
     Set-EnvironmentVariable "ApGold" "v:\src\golds\ap\"
-    Set-EnvironmentVariable "PfGold" "v:\src\golds\PfGold\"
-    Set-EnvironmentVariable "ConfigGold" "v:\src\golds\Config\"
+    Set-EnvironmentVariable "PfGold" "v:\src\golds\pf\"
+    Set-EnvironmentVariable "ConfigGold" "v:\src\config\"
     Set-EnvironmentVariable "NTP" "v:\src\ntp\"
 }
 
@@ -56,7 +56,7 @@ $env:FZF_QUICK_PATHS =
     "v:\src\mv\src\Client\NTP\;" +
     "v:\src\mv\src\Client\NTP\scripts\s1-tools\;" +
     "v:\src\mv\src\Client\NTP\scripts\modules\DriScripts\;" +
-    "v:\src\golds\PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
+    "v:\src\golds\pf\data\Autopilot\NtpReferenceClock\Firmware\"
 
 function reload( [switch] $Official )
 {
