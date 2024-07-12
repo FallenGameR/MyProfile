@@ -1,5 +1,5 @@
 Complete-Once env-computer {
-    Set-EnvironmentVariable "AzCompute" "v:\src\mv\"
+    Set-EnvironmentVariable "mv" "v:\src\mv\"
     Set-EnvironmentVariable "ApGold" "v:\src\golds\ap\"
     Set-EnvironmentVariable "PfGold" "v:\src\golds\pf\"
     Set-EnvironmentVariable "ConfigGold" "v:\src\config\"
@@ -43,7 +43,7 @@ $env:Path = "$env:Path;C:\tools\lens"
 $env:Path = "$env:Path;C:\tools\prorab"
 $env:Path = "$env:Path;C:\tools\oneAccess"
 
-$env:PSModulePath = "v:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+$env:PSModulePath = "$env:NTP\scripts\modules;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
@@ -53,10 +53,10 @@ $env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
 # Update-GitLineEndingsMitigation
 
 $env:FZF_QUICK_PATHS =
-    "v:\src\mv\src\Client\NTP\;" +
-    "v:\src\mv\src\Client\NTP\scripts\s1-tools\;" +
-    "v:\src\mv\src\Client\NTP\scripts\modules\DriScripts\;" +
-    "v:\src\golds\pf\data\Autopilot\NtpReferenceClock\Firmware\"
+    "$env:NTP\;" +
+    "$env:NTP\scripts\s1-tools\;" +
+    "$env:NTP\scripts\modules\DriScripts\;" +
+    "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 function reload( [switch] $Official )
 {
