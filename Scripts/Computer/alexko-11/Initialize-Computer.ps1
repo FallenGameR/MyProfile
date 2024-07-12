@@ -53,9 +53,9 @@ $env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
 # Update-GitLineEndingsMitigation
 
 $env:FZF_QUICK_PATHS =
-    "$env:NTP\;" +
-    "$env:NTP\scripts\s1-tools\;" +
-    "$env:NTP\scripts\modules\DriScripts\;" +
+    "$env:mv\src\Client\NTP\;" +
+    "$env:mv\src\Client\NTP\scripts\s1-tools\;" +
+    "$env:mv\src\Client\NTP\scripts\modules\DriScripts\;" +
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 function reload( [switch] $Official )
@@ -73,5 +73,7 @@ function reload( [switch] $Official )
 
     Get-Module DriScripts | select name, version, path
 }
+
+function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stratum1.ps1 $name | code - }
 
 tm (Split-Path $PSCommandPath -Leaf)
