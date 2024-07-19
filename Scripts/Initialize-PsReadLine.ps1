@@ -77,7 +77,9 @@ if( $PSVersionTable.PSVersion -ge 7.2 )
 if( (Get-Module psreadline).Version -ge 2.1 )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
-    Set-PSReadLineOption -PredictionSource History
+    # Errors are ignored since in polyglot notebooks the output is redirected and this command fails
+    try { Set-PSReadLineOption -PredictionSource History }
+    catch { }
 }
 
 # Since PS 5.1 console beeps on backspace while on empty prompt
