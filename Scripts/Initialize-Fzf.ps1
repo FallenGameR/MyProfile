@@ -46,7 +46,8 @@ if( $fzfVersion -ge ([version] "0.42.0") )
 $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
 if( Get-Command fd -ea Ignore )
 {
-    $env:FZF_DEFAULT_COMMAND = 'fd --type f --color always'
+    # That hides sln files in alt+o
+    #$env:FZF_DEFAULT_COMMAND = 'fd --type f --color always'
 }
 
 # Shortcuts
