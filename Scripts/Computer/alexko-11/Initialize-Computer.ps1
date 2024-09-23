@@ -49,7 +49,14 @@ $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
 $env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
-    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml" # ;" +
+    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml;" +
+    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigArchiveServiceMain/files/SecretConfigBleu.json;" +
+    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigQueryServiceMain/files/SecretConfigBleu.json;" +
+    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/ControlPlaneGraph.xml;" +
+    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DataPlaneGraph.xml;" +
+    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DeviceMetadata.xml;" +
+    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/PhysicalNetworkGraph.xml"
+
 # Update-GitLineEndingsMitigation
 
 $env:FZF_QUICK_PATHS =
