@@ -13,7 +13,6 @@ gsudo
 httpie
 hyperfine
 mp3tag
-netcat
 openhardwaremonitor
 ripgrep
 steam
