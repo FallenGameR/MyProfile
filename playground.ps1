@@ -21,4 +21,9 @@ function dcm
     & "C:\tools\dcm\Dcm.Explorer.exe"
 }
 
+function ignore( $path )
+{
+    git update-index --assume-unchanged $path
+}
+
 tm (Split-Path $PSCommandPath -Leaf)
