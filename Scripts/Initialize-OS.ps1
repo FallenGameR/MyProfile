@@ -8,6 +8,7 @@ if( -not $env:PSModulePath.Contains($modules) )
 # Default command arguments
 $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Out-GridView:OutputMode"] = "Single"
+$PSDefaultParameterValues["Open-GitExtensions:NewEnvironment"] = $true
 $PSDefaultParameterValues["man:Detailed"] = $true
 
 # Aliases
