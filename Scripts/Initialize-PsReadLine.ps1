@@ -64,7 +64,7 @@ switch( Get-Platform )
 }
 
 # Fancy formatting was added only in 7.2
-if( $PSVersionTable.PSVersion -ge 7.2 )
+if( ($PSVersionTable.PSVersion -ge 7.2) -and (-not (Test-Constrained)) )
 {
     # https://devblogs.microsoft.com/powershell/general-availability-of-powershell-7-2/
     $PSStyle.Formatting.TableHeader = $PSStyle.Bold + $PSStyle.Italic + $PSStyle.Foreground.Cyan

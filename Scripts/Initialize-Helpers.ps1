@@ -217,11 +217,7 @@ function SCRIPT:Register-Shortcut
         $Description
     )
 
-    if( Test-Constrained )
-    {
-        Write-Warning "Skipping registration of $key - $description, we are in a constrained language mode"
-        return
-    }
+    if( Test-Constrained ) { return }
 
     Set-PSReadlineKeyHandler `
         -Key $Key `
