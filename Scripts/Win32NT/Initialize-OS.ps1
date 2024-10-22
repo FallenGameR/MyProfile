@@ -3,6 +3,9 @@ function open { & "c:\tools\totalcmd\TOTALCMD64.EXE" ($pwd) }
 
 # Path setup
 $addToPath =
+    #"c:\tools\miniconda3\",
+    #"c:\tools\miniconda3\Scripts\",
+    #"c:\tools\miniconda3\Library\bin\",
     "C:\Program Files\Git\usr\bin\",        # GNU tools
     "C:\Program Files\Python311\Scripts\",  # For httpie when python was installed from the main web site
     "C:\Program Files\Beyond Compare 4\",
