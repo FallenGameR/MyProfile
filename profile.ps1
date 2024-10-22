@@ -27,3 +27,5 @@ $global:Profile = $PSCommandPath
 #    (& "c:\tools\miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | ?{$_} | Invoke-Expression
 #}
 #endregion
+
+$env:Path = "$env:Path;C:\tools\drop"
