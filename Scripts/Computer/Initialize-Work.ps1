@@ -14,21 +14,21 @@ $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 
 # Line endings mitigation
-$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
-    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml;" +
-    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigArchiveServiceMain/files/SecretConfigBleu.json;" +
-    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigQueryServiceMain/files/SecretConfigBleu.json;" +
-    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/ControlPlaneGraph.xml;" +
-    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DataPlaneGraph.xml;" +
-    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DeviceMetadata.xml;" +
-    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/PhysicalNetworkGraph.xml"
+#$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
+#    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml;" +
+#    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigArchiveServiceMain/files/SecretConfigBleu.json;" +
+#    "src/Services/NeMo/NetMgr/ConfigPolicyVerifier/ConfigQueryServiceMain/files/SecretConfigBleu.json;" +
+#    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/ControlPlaneGraph.xml;" +
+#    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DataPlaneGraph.xml;" +
+#    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/DeviceMetadata.xml;" +
+#    "src/Services/NeMo/NetMgr/Test/ComponentTest/NDM.Test.Common/Files/TestGraphs/PortChannelPort_DefaultMtu_CheckMtuValue/PhysicalNetworkGraph.xml"
 # Update-GitLineEndingsMitigation
+# Nowadays 'git reset --hard' and 'git checkout --force' seem to work instead
 
 # FZF quick paths
 $env:FZF_QUICK_PATHS =
     "$env:mv\src\Client\NTP\;" +
-    "$env:mv\src\Client\NTP\scripts\s1-tools\;" +
-    "$env:mv\src\Client\NTP\scripts\modules\DriScripts\;" +
+    "$env:docs\Products\Autopilot\;"
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 # Reload DriScripts module
