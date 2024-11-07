@@ -51,8 +51,100 @@ function reload( [switch] $Official )
 # Stratum1 tools
 function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stratum1.ps1 $name | code - }
 
+# Settings sync
+function Sync-Settings
+{
+    # Sync-Settings ADO PC Powershell
+    # Sync-Settings ADO PC
+    # Sync-Settings PC ADO
+
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("ADO", "PC")]
+        [string] $From,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("ADO", "PC")]
+        [string] $To,
+
+        [Parameter(Mandatory=$false)]
+        [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell")]
+        [string[]] $Settings
+    )
+
+    # Sanity check
+    if( $From -eq $To )
+    {
+        throw "From and To should be different"
+    }
+
+    # By default sync all settings
+    if( -not $Settings )
+    {
+        $Settings = @("Terminal", "GitConfig", "VSCode", "Powershell")
+    }
+
+    # Roots
+    $adoRoot = "C:\src\investigations\"
+
+    # Process each setting
+    switch( $Settings ) {
+        "Terminal" {
+            $wtRoot = Get-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal*
+            $params = switch( $From, $To ) {
+                "ADO" { "$adoRoot\Work\SAW\Settings\wt-config.json" }
+                "PC"  { "$wtRoot\LocalState\settings.json" }
+            }
+            copy @params -Force
+        }
+        "GitConfig" {
+            $params = switch( $From, $To ) {
+                "ADO" { "$adoRoot\Work\SAW\Settings\.gitconfig" }
+                "PC"  { "$env:USERPROFILE\.gitconfig" }
+            }
+            copy @params -Force
+        }
+        "VSCode"
+        {
+            $params = switch( $From, $To ) {
+                "ADO" { "$adoRoot\Work\SAW\Settings\vscode-config.json" }
+                "PC"  { "$env:APPDATA\Code\User\settings.json" }
+            }
+            copy @params -Force
+        }
+        "Powershell"
+        {
+            $docsRoot = Split-Path (Split-Path $profile)
+
+            function Copy-Folder( $src, $dst )
+            {
+                ls $src -Recurse | where FullName -notmatch "\b(Modules|Bin|Completed|clixml)\b" | foreach {
+                    $dstPath = $psitem.FullName -replace [regex]::Escape($src), [regex]::Escape($dst)
+                    if ($psitem.PSIsContainer) {
+                        New-Item -ItemType Directory -Path $dstPath -Force | Out-Null
+                    } else {
+                        Copy-Item $psitem.FullName $dstPath -Force
+                    }
+                }
+            }
+
+            $params = switch( $From, $To ) {
+                "ADO" { "$adoRoot\Work\SAW\Profile\Powershell" }
+                "PC"  { "$docsRoot\Powershell" }
+            }
+            Copy-Folder @params
+
+            $params = switch( $From, $To ) {
+                "ADO" { "$adoRoot\Work\SAW\Profile\WindowsPowershell" }
+                "PC"  { "$docsRoot\WindowsPowershell" }
+            }
+            Copy-Folder @params
+        }
+    }
+}
+
 #$env:PSModulePath = "C:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
-#Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
 
 tm (Split-Path $PSCommandPath -Leaf)
 
