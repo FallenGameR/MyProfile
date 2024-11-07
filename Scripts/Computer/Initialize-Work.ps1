@@ -28,7 +28,7 @@ $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 # FZF quick paths
 $env:FZF_QUICK_PATHS =
     "$env:mv\src\Client\NTP\;" +
-    "$env:docs\Products\Autopilot\;"
+    "$env:docs\Products\Autopilot\;" +
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 # Reload DriScripts module
