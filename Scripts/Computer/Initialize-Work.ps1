@@ -9,10 +9,9 @@ $env:Path += ";C:\tools\oneAccess"
 $env:Path += ";C:\tools\sd"
 
 # Modules availability
-$env:PSModulePath = "$env:mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+$env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
-$env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 
 # Line endings mitigation
 $env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
@@ -54,3 +53,6 @@ function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stra
 
 #$env:PSModulePath = "C:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
 #Set-DsSetting -CockpitQueryFolder "c:\tools\DriScripts\CockpitQuery\"
+
+tm (Split-Path $PSCommandPath -Leaf)
+
