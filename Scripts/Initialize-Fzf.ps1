@@ -3,11 +3,10 @@ $fzfOptions = @(
     "--layout=reverse",             # Grow list down, not upwards
     "--tabstop=4",                  # Standard tab size
     "--multi",                      # Multi select possible
-    "--bind",                       # Shortcuts:
-    "alt-t:toggle-all",             # Alt+t toggles selection
+    "--wrap",                       # Wrap multiline entries
+    "--bind", "alt-t:toggle-all",   # Alt+t toggles selection
     "--cycle",                      # Cycle the list
     "--ansi",                       # Use Powershell colors
-    "--no-mouse",                   # We need terminal mouse behavior, not custom one
     "--tiebreak='length,index'",    # Priorities to resolve ties (index comes last always)
     "--color=bg:#0C0C0C",           # Background (current line) = Black
     "--color=bg+:#0C0C0C",          # Background (current line) = Black
@@ -17,6 +16,7 @@ $fzfOptions = @(
     "--color=preview-bg:#0C0C0C",   # Preview window background = Black
     "--color=prompt:#CCCCCC"        # Prompt = Gray
 
+    #"--no-mouse",                   # We need terminal mouse behavior, not custom one
     # Argument help
     #"--height 60%"                 # Leave some space intact - breaks cyrillic typing, bug created
     #"--color=bg:#RRGGBB",          # Background
