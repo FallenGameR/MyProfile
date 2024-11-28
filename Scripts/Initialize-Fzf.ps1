@@ -6,6 +6,7 @@ $fzfOptions = @(
     "--wrap",                       # Wrap multiline entries
     "--bind", "alt-t:toggle-all",   # Alt+t toggles selection
     "--bind", "alt-w:toggle-wrap",  # Alt+t toggles wrap
+    "--bind", "alt-q:backward-kill-word",  # Alt+q kills word
     "--cycle",                      # Cycle the list
     "--ansi",                       # Use Powershell colors
     "--tiebreak='length,index'",    # Priorities to resolve ties (index comes last always)
