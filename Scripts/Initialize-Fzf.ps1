@@ -1,3 +1,4 @@
+<#
 # Default FZF options
 $fzfOptions = @(
     "--layout=reverse",             # Grow list down, not upwards
@@ -7,7 +8,7 @@ $fzfOptions = @(
     "--bind", "alt-t:toggle-all",   # Alt+t toggles selection
     "--bind", "alt-w:toggle-wrap",  # Alt+t toggles wrap
     "--bind", "alt-q:backward-kill-word",  # Alt+q kills word
-                                    # Can't bind ctrl+arrows, but shift-left is backward-word
+    # Can't bind ctrl+arrows, but shift-left is backward-word
     "--cycle",                      # Cycle the list
     "--ansi",                       # Use Powershell colors
     "--tiebreak='length,index'",    # Priorities to resolve ties (index comes last always)
@@ -38,22 +39,36 @@ $fzfOptions = @(
     #"--color=preview-fg:#RRGGBB",  # Preview window text
     #"--color=prompt:#RRGGBB",      # Prompt
     #"--color=spinner:#RRGGBB",     # Streaming input indicator
-)
+    )
 
-$fzfVersion = [version]((fzf --version) -split " " | select -f 1)
-if( $fzfVersion -ge ([version] "0.42.0") )
-{
-    $fzfOptions += "--info=right"   # Show found element count on the right(0.42)
-}
+    $fzfVersion = [version]((fzf --version) -split " " | select -f 1)
+    if( $fzfVersion -ge ([version] "0.42.0") )
+    {
+        $fzfOptions += "--info=right"   # Show found element count on the right(0.42)
+    }
 
-$env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
-if( Get-Command fd -ea Ignore )
-{
-    # -I needed to show up sln files on Alt+o
-    $env:FZF_DEFAULT_COMMAND = 'fd -I --type f --color always'
-}
+    $env:FZF_DEFAULT_OPTS = $fzfOptions -join " "
+    if( Get-Command fd -ea Ignore )
+    {
+        # -I needed to show up sln files on Alt+o
+        $env:FZF_DEFAULT_COMMAND = 'fd -I --type f --color always'
+    }
 
-# Shortcuts
+    # Shortcuts
+    Register-Shortcut "Alt+h" "hf" "History search"
+    Register-Shortcut "Alt+o" "startf" "Open file"
+    Register-Shortcut "Alt+r" "rgf" "Ripgrep search"
+    Register-Shortcut "Alt+k" "killf" "Kill process"
+    Register-Shortcut "Alt+f" "codef" "Code to open file or directory"
+    Register-Shortcut "Alt+v" "codef" "Code to open file or directory (shortcut from Vim"
+    Register-Shortcut "Alt+d" "cdf" "Change directory"
+    Register-Shortcut "Alt+u" "pushf" "Go up fuzzy"
+    Register-Shortcut "Alt+s" "Select-GitBranch" "Switch to a git branch"
+    Register-Shortcut "Alt+p" "Send-GitBranch" "Pull request for a git branch"
+    Register-Shortcut "Alt+l" "Clear-GitBranch" "Clear a completed pull request for a git branch"
+
+    #>
+
 Register-Shortcut "Alt+h" "hf" "History search"
 Register-Shortcut "Alt+o" "startf" "Open file"
 Register-Shortcut "Alt+r" "rgf" "Ripgrep search"

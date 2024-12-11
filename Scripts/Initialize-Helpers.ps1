@@ -1,4 +1,4 @@
-$SCRIPT:enableTiming = $false
+$SCRIPT:enableTiming = $true
 $SCRIPT:verbose = $false
 
 if( $ExecutionContext.SessionState.LanguageMode -ne "Constrained" )
