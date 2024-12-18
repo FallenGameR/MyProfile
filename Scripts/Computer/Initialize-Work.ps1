@@ -70,7 +70,9 @@ function Sync-Settings
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell")]
-        [string[]] $Settings
+        [string[]] $Settings,
+
+        [string] $AdoRoot = "C:\src\investigations\"
     )
 
     # Sanity check
@@ -84,9 +86,6 @@ function Sync-Settings
     {
         $Settings = @("Terminal", "GitConfig", "VSCode", "Powershell")
     }
-
-    # Roots
-    $adoRoot = "C:\src\investigations\"
 
     # Process each setting
     switch( $Settings ) {
