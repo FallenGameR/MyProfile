@@ -55,6 +55,7 @@ switch( Get-Platform )
     {
         Register-Shortcut "Alt+c" "gite commit" "Git commit dialog"
         Register-Shortcut "Alt+b" "gite" "Git commit browser"
+        Register-Shortcut "Alt+a" "Start-AiShell" "Open AI Shell"
     }
     "Unix"
     {

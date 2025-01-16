@@ -2,6 +2,7 @@ bat
 beyondcompare
 bottom
 dnspy
+delta
 dust
 fd
 firacode
