@@ -52,11 +52,13 @@ function reload( [switch] $Official )
 function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stratum1.ps1 $name | code - }
 
 # Settings sync
+
 function Sync-Settings
 {
     # Sync-Settings ADO PC Powershell
     # Sync-Settings ADO PC
     # Sync-Settings PC ADO
+    # Sync-Settings ADO PC -AdoRoot V:\src\ntp\investigations
 
     param
     (
@@ -72,7 +74,7 @@ function Sync-Settings
         [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell")]
         [string[]] $Settings,
 
-        [string] $AdoRoot = "C:\src\investigations\"
+        [string] $AdoRoot = "C:\src\investigations"
     )
 
     # Sanity check
@@ -80,6 +82,8 @@ function Sync-Settings
     {
         throw "From and To should be different"
     }
+
+    $AdoRoot = $AdoRoot.TrimEnd("\")
 
     # By default sync all settings
     if( -not $Settings )
@@ -119,11 +123,16 @@ function Sync-Settings
             function Copy-Folder( $src, $dst )
             {
                 ls $src -Recurse | where FullName -notmatch "\b(Modules|Bin|Completed|clixml)\b" | foreach {
-                    $dstPath = $psitem.FullName -replace [regex]::Escape($src), [regex]::Escape($dst)
+                    $dstPath = $psitem.FullName `
+                        -replace [regex]::Escape($src), [regex]::Escape($dst) `
+                        -replace "\\+", "\" `
+                        -replace "\\ ", " " `
+                        -replace "\\\.", "."
+
                     if ($psitem.PSIsContainer) {
                         New-Item -ItemType Directory -Path $dstPath -Force | Out-Null
                     } else {
-                        Copy-Item $psitem.FullName $dstPath -Force
+                        Copy-Item $psitem.FullName $dstPath -Force -Verbose
                     }
                 }
             }
