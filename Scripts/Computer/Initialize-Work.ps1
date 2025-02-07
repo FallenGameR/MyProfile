@@ -52,7 +52,6 @@ function reload( [switch] $Official )
 function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stratum1.ps1 $name | code - }
 
 # Settings sync
-
 function Sync-Settings
 {
     # Sync-Settings ADO PC Powershell
