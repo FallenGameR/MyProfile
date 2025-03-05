@@ -32,13 +32,22 @@ $env:FZF_QUICK_PATHS =
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 # Reload DriScripts module
-function reload( [switch] $Official )
+function reload( [string] $Path, [switch] $FromTools )
 {
+    if( $Path -and $FromTools )
+    {
+        throw "Either -Path or -FromTools can be specified"
+    }
+
     Get-Module DriScripts | Remove-Module
 
-    if( $Official )
+    if( $FromTools )
     {
         Import-Module C:\tools\DriScripts\DriScripts\DriScripts.psd1 -Force
+    }
+    elseif( $Path )
+    {
+        Import-Module $Path -Force
     }
     else
     {
