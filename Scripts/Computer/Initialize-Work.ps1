@@ -137,12 +137,12 @@ function Sync-Settings
 
             function Copy-Folder( $src, $dst )
             {
-                ls $src -Recurse | where FullName -notmatch "\b(Modules|Bin|Completed|clixml)\b" | foreach {
+                ls $src -Recurse | where FullName -notmatch "\b(Modules|Bin|Completed|clixml|Help)\b" | foreach {
                     $dstPath = $psitem.FullName `
                         -replace [regex]::Escape($src), [regex]::Escape($dst) `
                         -replace "\\+", "\" `
                         -replace "\\ ", " " `
-                        -replace "\\\.", "."
+                        -replace "\\\.", "\."
 
                     if ($psitem.PSIsContainer) {
                         New-Item -ItemType Directory -Path $dstPath -Force | Out-Null
