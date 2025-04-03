@@ -82,7 +82,9 @@ function Sync-Settings
         [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell")]
         [string[]] $Settings,
 
-        [string] $AdoRoot = "C:\src\investigations"
+        [string] $AdoRoot = "C:\src\investigations",
+
+        [switch] $IsSaw = ($env:USERDOMAIN -eq "AME")
     )
 
     # Sanity check
@@ -92,6 +94,11 @@ function Sync-Settings
     }
 
     $AdoRoot = $AdoRoot.TrimEnd("\")
+
+    if( $IsSaw )
+    {
+        $sawSuffix = "-saw"
+    }
 
     # By default sync all settings
     if( -not $Settings )
@@ -104,7 +111,7 @@ function Sync-Settings
         "Terminal" {
             $wtRoot = Get-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal*
             $params = switch( $From, $To ) {
-                "ADO" { "$adoRoot\Work\SAW\Settings\wt-config.json" }
+                "ADO" { "$adoRoot\Work\SAW\Settings\wt-config$sawSuffix.json" }
                 "PC"  { "$wtRoot\LocalState\settings.json" }
             }
             copy @params -Force
