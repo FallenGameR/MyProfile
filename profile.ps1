@@ -29,3 +29,5 @@ $global:Profile = $PSCommandPath
 #endregion
 
 $env:Path = "$env:Path;C:\tools\dsmsClient\DsmsClient"
+
+$env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
