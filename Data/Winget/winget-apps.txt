@@ -4,3 +4,4 @@ Rustlang.Rustup
 Microsoft.AIShell
 ajeetdsouza.zoxide
 Starship.Starship
+gokcehan.lf
