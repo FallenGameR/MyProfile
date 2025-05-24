@@ -2,3 +2,5 @@ chafa
 fzf
 Rustlang.Rustup
 Microsoft.AIShell
+ajeetdsouza.zoxide
+Starship.Starship

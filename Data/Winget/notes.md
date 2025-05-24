@@ -7,4 +7,3 @@ winget configure C:\Users\alexk\Documents\Powershell\Data\configure-ranma.winget
 
 winget search remark
 winget show -q reMarkable.reMarkableCompanionApp
-
