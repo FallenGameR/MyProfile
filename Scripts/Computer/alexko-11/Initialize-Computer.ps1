@@ -21,6 +21,10 @@ Complete-Once install-bandwhich {
     sds "https://nmap.org/npcap/dist/npcap-sdk-1.05.zip" "https://npcap.com/dist/npcap-sdk-1.05.zip" build.rs
     cargo build -r
     cargo install --offline --path .
+
+    # cargo install bandwhich
+    # winget install npcap
+    # $env:path += ";c:\Windows\System32\Npcap\"
 }
 
 Complete-Once install-sds {
@@ -30,6 +34,8 @@ Complete-Once install-sds {
     cd sd
 
     cargo build -r
+
+    # cargo install -f --git https://github.com/chmln/sd.git
 }
 
 Complete-Once junction-one-drive-ms {

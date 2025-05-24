@@ -1,3 +1,4 @@
 chafa
 fzf
 Rustlang.Rustup
+Microsoft.AIShell
