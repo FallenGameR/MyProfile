@@ -17,3 +17,5 @@ C:\Users\alexk\AppData\Local\lf\lfrc
 set previewer C:\\Users\\alexk\\Documents\\Powershell\\Data\\Winget\\preview.bat
 set sixel
 ```
+
+C:\Users\alexk\.config\starship.toml
