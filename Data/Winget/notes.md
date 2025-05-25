@@ -19,3 +19,4 @@ set sixel
 ```
 
 C:\Users\alexk\.config\starship.toml
+
