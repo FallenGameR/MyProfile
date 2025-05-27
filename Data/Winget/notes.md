@@ -19,4 +19,12 @@ set sixel
 ```
 
 C:\Users\alexk\.config\starship.toml
+`Stow` that creates symlinks for whole folders on Linux
 
+```ps1
+# New dependencies
+winget settings
+winget install starship zoxide
+
+copy C:\Users\alexko.REDMOND\AppData\Local\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json C:\Users\alexko\Documents\Powershell\winget.settings.json
+```
