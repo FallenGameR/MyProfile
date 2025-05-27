@@ -9,6 +9,7 @@
    "experimentalFeatures": {
        "configureExport": true,
        "dsc3": true,
+       "fonts": true,
    },
 
    "visual": {
