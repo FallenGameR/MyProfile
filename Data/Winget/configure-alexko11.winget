@@ -1,586 +1,608 @@
-# Created using winget configure export 1.10.390
-# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
-properties:
-  configurationVersion: 0.2
-  resources:
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_AutoHotkey.AutoHotkey
-    directives:
-      description: "Install AutoHotkey.AutoHotkey"
-    settings:
-      id: "AutoHotkey.AutoHotkey"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_ScooterSoftware.BeyondCompare.4
-    directives:
-      description: "Install ScooterSoftware.BeyondCompare.4"
-    settings:
-      id: "ScooterSoftware.BeyondCompare.4"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_CPUID.CPU-Z
-    directives:
-      description: "Install CPUID.CPU-Z"
-    settings:
-      id: "CPUID.CPU-Z"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_CrystalDewWorld.CrystalDiskMark
-    directives:
-      description: "Install CrystalDewWorld.CrystalDiskMark"
-    settings:
-      id: "CrystalDewWorld.CrystalDiskMark"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_GIMP.GIMP.3
-    directives:
-      description: "Install GIMP.GIMP.3"
-    settings:
-      id: "GIMP.GIMP.3"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Git.Git
-    directives:
-      description: "Install Git.Git"
-    settings:
-      id: "Git.Git"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_REALiX.HWiNFO
-    directives:
-      description: "Install REALiX.HWiNFO"
-    settings:
-      id: "REALiX.HWiNFO"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VSTOR
-    directives:
-      description: "Install Microsoft.VSTOR"
-    settings:
-      id: "Microsoft.VSTOR"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Anaconda.Miniconda3
-    directives:
-      description: "Install Anaconda.Miniconda3"
-    settings:
-      id: "Anaconda.Miniconda3"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_FlorianHeidenreich.Mp3tag
-    directives:
-      description: "Install FlorianHeidenreich.Mp3tag"
-    settings:
-      id: "FlorianHeidenreich.Mp3tag"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.Office
-    directives:
-      description: "Install Microsoft.Office"
-    settings:
-      id: "Microsoft.Office"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.OneDrive
-    directives:
-      description: "Install Microsoft.OneDrive"
-    settings:
-      id: "Microsoft.OneDrive"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Ghisler.TotalCommander
-    directives:
-      description: "Install Ghisler.TotalCommander"
-    settings:
-      id: "Ghisler.TotalCommander"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_JAMSoftware.TreeSize
-    directives:
-      description: "Install JAMSoftware.TreeSize"
-    settings:
-      id: "JAMSoftware.TreeSize"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Wacom.WacomTabletDriver
-    directives:
-      description: "Install Wacom.WacomTabletDriver"
-    settings:
-      id: "Wacom.WacomTabletDriver"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_WinMerge.WinMerge
-    directives:
-      description: "Install WinMerge.WinMerge"
-    settings:
-      id: "WinMerge.WinMerge"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_GoLang.Go
-    directives:
-      description: "Install GoLang.Go"
-    settings:
-      id: "GoLang.Go"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.msodbcsql.17
-    directives:
-      description: "Install Microsoft.msodbcsql.17"
-    settings:
-      id: "Microsoft.msodbcsql.17"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.RemoteDesktopClient
-    directives:
-      description: "Install Microsoft.RemoteDesktopClient"
-    settings:
-      id: "Microsoft.RemoteDesktopClient"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Google.Chrome
-    directives:
-      description: "Install Google.Chrome"
-    settings:
-      id: "Google.Chrome"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.SQLServer.2012.NativeClient
-    directives:
-      description: "Install Microsoft.SQLServer.2012.NativeClient"
-    settings:
-      id: "Microsoft.SQLServer.2012.NativeClient"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.CLRTypesSQLServer.2019
-    directives:
-      description: "Install Microsoft.CLRTypesSQLServer.2019"
-    settings:
-      id: "Microsoft.CLRTypesSQLServer.2019"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_GitExtensionsTeam.GitExtensions
-    directives:
-      description: "Install GitExtensionsTeam.GitExtensions"
-    settings:
-      id: "GitExtensionsTeam.GitExtensions"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_lencx.ChatGPT
-    directives:
-      description: "Install lencx.ChatGPT"
-    settings:
-      id: "lencx.ChatGPT"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_GrafanaLabs.Grafana.Enterprise
-    directives:
-      description: "Install GrafanaLabs.Grafana.Enterprise"
-    settings:
-      id: "GrafanaLabs.Grafana.Enterprise"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Starship.Starship
-    directives:
-      description: "Install Starship.Starship"
-    settings:
-      id: "Starship.Starship"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.WebDeploy
-    directives:
-      description: "Install Microsoft.WebDeploy"
-    settings:
-      id: "Microsoft.WebDeploy"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.AzureCLI
-    directives:
-      description: "Install Microsoft.AzureCLI"
-    settings:
-      id: "Microsoft.AzureCLI"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.OpenJDK.11
-    directives:
-      description: "Install Microsoft.OpenJDK.11"
-    settings:
-      id: "Microsoft.OpenJDK.11"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VisualStudio.2022.Enterprise
-    directives:
-      description: "Install Microsoft.VisualStudio.2022.Enterprise"
-    settings:
-      id: "Microsoft.VisualStudio.2022.Enterprise"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VisualStudio.2019.Enterprise
-    directives:
-      description: "Install Microsoft.VisualStudio.2019.Enterprise"
-    settings:
-      id: "Microsoft.VisualStudio.2019.Enterprise"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_KDE.KDiff3
-    directives:
-      description: "Install KDE.KDiff3"
-    settings:
-      id: "KDE.KDiff3"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_DominikReichl.KeePass
-    directives:
-      description: "Install DominikReichl.KeePass"
-    settings:
-      id: "DominikReichl.KeePass"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.Azure.StorageEmulator
-    directives:
-      description: "Install Microsoft.Azure.StorageEmulator"
-    settings:
-      id: "Microsoft.Azure.StorageEmulator"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.Edge
-    directives:
-      description: "Install Microsoft.Edge"
-    settings:
-      id: "Microsoft.Edge"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Insecure.Nmap
-    directives:
-      description: "Install Insecure.Nmap"
-    settings:
-      id: "Insecure.Nmap"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Valve.Steam
-    directives:
-      description: "Install Valve.Steam"
-    settings:
-      id: "Valve.Steam"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Winamp.Winamp
-    directives:
-      description: "Install Winamp.Winamp"
-    settings:
-      id: "Winamp.Winamp"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_WiresharkFoundation.Wireshark
-    directives:
-      description: "Install WiresharkFoundation.Wireshark"
-    settings:
-      id: "WiresharkFoundation.Wireshark"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.Framework.DeveloperPack.4.6
-    directives:
-      description: "Install Microsoft.DotNet.Framework.DeveloperPack.4.6"
-    settings:
-      id: "Microsoft.DotNet.Framework.DeveloperPack.4.6"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2013.x64
-    directives:
-      description: "Install Microsoft.VCRedist.2013.x64"
-    settings:
-      id: "Microsoft.VCRedist.2013.x64"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.DesktopRuntime.6
-    directives:
-      description: "Install Microsoft.DotNet.DesktopRuntime.6"
-    settings:
-      id: "Microsoft.DotNet.DesktopRuntime.6"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.SDK.6
-    directives:
-      description: "Install Microsoft.DotNet.SDK.6"
-    settings:
-      id: "Microsoft.DotNet.SDK.6"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.Runtime.6
-    directives:
-      description: "Install Microsoft.DotNet.Runtime.6"
-    settings:
-      id: "Microsoft.DotNet.Runtime.6"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2015+.x86
-    directives:
-      description: "Install Microsoft.VCRedist.2015+.x86"
-    settings:
-      id: "Microsoft.VCRedist.2015+.x86"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.WindowsSDK.10.0.19041
-    directives:
-      description: "Install Microsoft.WindowsSDK.10.0.19041"
-    settings:
-      id: "Microsoft.WindowsSDK.10.0.19041"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.AspNetCore.6
-    directives:
-      description: "Install Microsoft.DotNet.AspNetCore.6"
-    settings:
-      id: "Microsoft.DotNet.AspNetCore.6"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.DesktopRuntime.3_1
-    directives:
-      description: "Install Microsoft.DotNet.DesktopRuntime.3_1"
-    settings:
-      id: "Microsoft.DotNet.DesktopRuntime.3_1"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.PowerBI
-    directives:
-      description: "Install Microsoft.PowerBI"
-    settings:
-      id: "Microsoft.PowerBI"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_LINQPad.LINQPad.5
-    directives:
-      description: "Install LINQPad.LINQPad.5"
-    settings:
-      id: "LINQPad.LINQPad.5"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.GlobalSecureAccessClient
-    directives:
-      description: "Install Microsoft.GlobalSecureAccessClient"
-    settings:
-      id: "Microsoft.GlobalSecureAccessClient"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Python.Launcher
-    directives:
-      description: "Install Python.Launcher"
-    settings:
-      id: "Python.Launcher"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2015+.x64
-    directives:
-      description: "Install Microsoft.VCRedist.2015+.x64"
-    settings:
-      id: "Microsoft.VCRedist.2015+.x64"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.PowerShell
-    directives:
-      description: "Install Microsoft.PowerShell"
-    settings:
-      id: "Microsoft.PowerShell"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2012.x86
-    directives:
-      description: "Install Microsoft.VCRedist.2012.x86"
-    settings:
-      id: "Microsoft.VCRedist.2012.x86"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_GNU.MidnightCommander
-    directives:
-      description: "Install GNU.MidnightCommander"
-    settings:
-      id: "GNU.MidnightCommander"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.RemoteHelp
-    directives:
-      description: "Install Microsoft.RemoteHelp"
-    settings:
-      id: "Microsoft.RemoteHelp"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2012.x64
-    directives:
-      description: "Install Microsoft.VCRedist.2012.x64"
-    settings:
-      id: "Microsoft.VCRedist.2012.x64"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.AspNetCore.3_1
-    directives:
-      description: "Install Microsoft.DotNet.AspNetCore.3_1"
-    settings:
-      id: "Microsoft.DotNet.AspNetCore.3_1"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCRedist.2013.x86
-    directives:
-      description: "Install Microsoft.VCRedist.2013.x86"
-    settings:
-      id: "Microsoft.VCRedist.2013.x86"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.DesktopRuntime.8
-    directives:
-      description: "Install Microsoft.DotNet.DesktopRuntime.8"
-    settings:
-      id: "Microsoft.DotNet.DesktopRuntime.8"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.DotNet.SDK.3_1
-    directives:
-      description: "Install Microsoft.DotNet.SDK.3_1"
-    settings:
-      id: "Microsoft.DotNet.SDK.3_1"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_KirillOsenkov.MSBuildStructuredLogViewer
-    directives:
-      description: "Install KirillOsenkov.MSBuildStructuredLogViewer"
-    settings:
-      id: "KirillOsenkov.MSBuildStructuredLogViewer"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.Edit
-    directives:
-      description: "Install Microsoft.Edit"
-    settings:
-      id: "Microsoft.Edit"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Postman.Postman
-    directives:
-      description: "Install Postman.Postman"
-    settings:
-      id: "Postman.Postman"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Rustlang.Rustup
-    directives:
-      description: "Install Rustlang.Rustup"
-    settings:
-      id: "Rustlang.Rustup"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_ajeetdsouza.zoxide
-    directives:
-      description: "Install ajeetdsouza.zoxide"
-    settings:
-      id: "ajeetdsouza.zoxide"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Balena.Etcher
-    directives:
-      description: "Install Balena.Etcher"
-    settings:
-      id: "Balena.Etcher"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_reMarkable.reMarkableCompanionApp
-    directives:
-      description: "Install reMarkable.reMarkableCompanionApp"
-    settings:
-      id: "reMarkable.reMarkableCompanionApp"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Python.Python.3.11
-    directives:
-      description: "Install Python.Python.3.11"
-    settings:
-      id: "Python.Python.3.11"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Telegram.TelegramDesktop
-    directives:
-      description: "Install Telegram.TelegramDesktop"
-    settings:
-      id: "Telegram.TelegramDesktop"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VisualStudioCode
-    directives:
-      description: "Install Microsoft.VisualStudioCode"
-    settings:
-      id: "Microsoft.VisualStudioCode"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_OffSec.KaliLinux
-    directives:
-      description: "Install OffSec.KaliLinux"
-    settings:
-      id: "OffSec.KaliLinux"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.Teams
-    directives:
-      description: "Install Microsoft.Teams"
-    settings:
-      id: "Microsoft.Teams"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.AppInstaller
-    directives:
-      description: "Install Microsoft.AppInstaller"
-    settings:
-      id: "Microsoft.AppInstaller"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.UI.Xaml.2.7
-    directives:
-      description: "Install Microsoft.UI.Xaml.2.7"
-    settings:
-      id: "Microsoft.UI.Xaml.2.7"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.UI.Xaml.2.8
-    directives:
-      description: "Install Microsoft.UI.Xaml.2.8"
-    settings:
-      id: "Microsoft.UI.Xaml.2.8"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.VCLibs.Desktop.14
-    directives:
-      description: "Install Microsoft.VCLibs.Desktop.14"
-    settings:
-      id: "Microsoft.VCLibs.Desktop.14"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.WinDbg
-    directives:
-      description: "Install Microsoft.WinDbg"
-    settings:
-      id: "Microsoft.WinDbg"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.WindowsTerminal
-    directives:
-      description: "Install Microsoft.WindowsTerminal"
-    settings:
-      id: "Microsoft.WindowsTerminal"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Microsoft.WindowsApp
-    directives:
-      description: "Install Microsoft.WindowsApp"
-    settings:
-      id: "Microsoft.WindowsApp"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: winget_Debian.Debian
-    directives:
-      description: "Install Debian.Debian"
-    settings:
-      id: "Debian.Debian"
-      source: "winget"
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    id: msstore_XP89DCGQ3K6VLD
-    directives:
-      description: "Install XP89DCGQ3K6VLD"
-    settings:
-      id: "XP89DCGQ3K6VLD"
-      source: "msstore"
+# Created using winget configure export 1.11.320-preview
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.3
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/2023/08/config/document.json
+metadata:
+  winget:
+    processor:
+      identifier: "dscv3"
+resources:
+- name: Microsoft.WinGet/UserSettingsFile-0
+  type: Microsoft.WinGet/UserSettingsFile
+  properties:
+    settings:
+      experimentalFeatures:
+        fonts: true
+        configureExport: true
+        dsc3: true
+      visual:
+        progressBar: "sixel"
+        enableSixels: true
+      $schema: "https://aka.ms/winget-settings.schema.json"
+- name: winget_AutoHotkey.AutoHotkey
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install AutoHotkey.AutoHotkey"
+  properties:
+    id: "AutoHotkey.AutoHotkey"
+    source: "winget"
+- name: winget_ScooterSoftware.BeyondCompare.4
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install ScooterSoftware.BeyondCompare.4"
+  properties:
+    id: "ScooterSoftware.BeyondCompare.4"
+    source: "winget"
+- name: winget_CPUID.CPU-Z
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install CPUID.CPU-Z"
+  properties:
+    id: "CPUID.CPU-Z"
+    source: "winget"
+- name: winget_CrystalDewWorld.CrystalDiskMark
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install CrystalDewWorld.CrystalDiskMark"
+  properties:
+    id: "CrystalDewWorld.CrystalDiskMark"
+    source: "winget"
+- name: winget_GIMP.GIMP.3
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install GIMP.GIMP.3"
+  properties:
+    id: "GIMP.GIMP.3"
+    source: "winget"
+- name: winget_Git.Git
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Git.Git"
+  properties:
+    id: "Git.Git"
+    source: "winget"
+- name: winget_REALiX.HWiNFO
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install REALiX.HWiNFO"
+  properties:
+    id: "REALiX.HWiNFO"
+    source: "winget"
+- name: winget_Microsoft.VSTOR
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VSTOR"
+  properties:
+    id: "Microsoft.VSTOR"
+    source: "winget"
+- name: winget_Anaconda.Miniconda3
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Anaconda.Miniconda3"
+  properties:
+    id: "Anaconda.Miniconda3"
+    source: "winget"
+- name: winget_FlorianHeidenreich.Mp3tag
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install FlorianHeidenreich.Mp3tag"
+  properties:
+    id: "FlorianHeidenreich.Mp3tag"
+    source: "winget"
+- name: winget_Microsoft.Office
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.Office"
+  properties:
+    id: "Microsoft.Office"
+    source: "winget"
+- name: winget_Microsoft.OneDrive
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.OneDrive"
+  properties:
+    id: "Microsoft.OneDrive"
+    source: "winget"
+- name: winget_Ghisler.TotalCommander
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Ghisler.TotalCommander"
+  properties:
+    id: "Ghisler.TotalCommander"
+    source: "winget"
+- name: winget_JAMSoftware.TreeSize
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install JAMSoftware.TreeSize"
+  properties:
+    id: "JAMSoftware.TreeSize"
+    source: "winget"
+- name: winget_Wacom.WacomTabletDriver
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Wacom.WacomTabletDriver"
+  properties:
+    id: "Wacom.WacomTabletDriver"
+    source: "winget"
+- name: winget_WinMerge.WinMerge
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install WinMerge.WinMerge"
+  properties:
+    id: "WinMerge.WinMerge"
+    source: "winget"
+- name: winget_GoLang.Go
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install GoLang.Go"
+  properties:
+    id: "GoLang.Go"
+    source: "winget"
+- name: winget_Microsoft.msodbcsql.17
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.msodbcsql.17"
+  properties:
+    id: "Microsoft.msodbcsql.17"
+    source: "winget"
+- name: winget_Microsoft.RemoteDesktopClient
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.RemoteDesktopClient"
+  properties:
+    id: "Microsoft.RemoteDesktopClient"
+    source: "winget"
+- name: winget_Google.Chrome
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Google.Chrome"
+  properties:
+    id: "Google.Chrome"
+    source: "winget"
+- name: winget_Microsoft.SQLServer.2012.NativeClient
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.SQLServer.2012.NativeClient"
+  properties:
+    id: "Microsoft.SQLServer.2012.NativeClient"
+    source: "winget"
+- name: winget_Microsoft.CLRTypesSQLServer.2019
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.CLRTypesSQLServer.2019"
+  properties:
+    id: "Microsoft.CLRTypesSQLServer.2019"
+    source: "winget"
+- name: winget_GitExtensionsTeam.GitExtensions
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install GitExtensionsTeam.GitExtensions"
+  properties:
+    id: "GitExtensionsTeam.GitExtensions"
+    source: "winget"
+- name: winget_lencx.ChatGPT
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install lencx.ChatGPT"
+  properties:
+    id: "lencx.ChatGPT"
+    source: "winget"
+- name: winget_GrafanaLabs.Grafana.Enterprise
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install GrafanaLabs.Grafana.Enterprise"
+  properties:
+    id: "GrafanaLabs.Grafana.Enterprise"
+    source: "winget"
+- name: winget_Starship.Starship
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Starship.Starship"
+  properties:
+    id: "Starship.Starship"
+    source: "winget"
+- name: winget_Microsoft.WebDeploy
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.WebDeploy"
+  properties:
+    id: "Microsoft.WebDeploy"
+    source: "winget"
+- name: winget_Microsoft.AzureCLI
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.AzureCLI"
+  properties:
+    id: "Microsoft.AzureCLI"
+    source: "winget"
+- name: winget_Microsoft.OpenJDK.11
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.OpenJDK.11"
+  properties:
+    id: "Microsoft.OpenJDK.11"
+    source: "winget"
+- name: winget_Microsoft.VisualStudio.2022.Enterprise
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VisualStudio.2022.Enterprise"
+  properties:
+    id: "Microsoft.VisualStudio.2022.Enterprise"
+    source: "winget"
+- name: winget_Microsoft.VisualStudio.2019.Enterprise
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VisualStudio.2019.Enterprise"
+  properties:
+    id: "Microsoft.VisualStudio.2019.Enterprise"
+    source: "winget"
+- name: winget_KDE.KDiff3
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install KDE.KDiff3"
+  properties:
+    id: "KDE.KDiff3"
+    source: "winget"
+- name: winget_DominikReichl.KeePass
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install DominikReichl.KeePass"
+  properties:
+    id: "DominikReichl.KeePass"
+    source: "winget"
+- name: winget_Microsoft.Azure.StorageEmulator
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.Azure.StorageEmulator"
+  properties:
+    id: "Microsoft.Azure.StorageEmulator"
+    source: "winget"
+- name: winget_Microsoft.Edge
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.Edge"
+  properties:
+    id: "Microsoft.Edge"
+    source: "winget"
+- name: winget_Insecure.Nmap
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Insecure.Nmap"
+  properties:
+    id: "Insecure.Nmap"
+    source: "winget"
+- name: winget_Valve.Steam
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Valve.Steam"
+  properties:
+    id: "Valve.Steam"
+    source: "winget"
+- name: winget_Winamp.Winamp
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Winamp.Winamp"
+  properties:
+    id: "Winamp.Winamp"
+    source: "winget"
+- name: winget_WiresharkFoundation.Wireshark
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install WiresharkFoundation.Wireshark"
+  properties:
+    id: "WiresharkFoundation.Wireshark"
+    source: "winget"
+- name: winget_Microsoft.DotNet.Framework.DeveloperPack.4.6
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.Framework.DeveloperPack.4.6"
+  properties:
+    id: "Microsoft.DotNet.Framework.DeveloperPack.4.6"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2013.x64
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2013.x64"
+  properties:
+    id: "Microsoft.VCRedist.2013.x64"
+    source: "winget"
+- name: winget_Microsoft.DotNet.DesktopRuntime.6
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.DesktopRuntime.6"
+  properties:
+    id: "Microsoft.DotNet.DesktopRuntime.6"
+    source: "winget"
+- name: winget_Microsoft.DotNet.SDK.6
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.SDK.6"
+  properties:
+    id: "Microsoft.DotNet.SDK.6"
+    source: "winget"
+- name: winget_Microsoft.DotNet.Runtime.6
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.Runtime.6"
+  properties:
+    id: "Microsoft.DotNet.Runtime.6"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2015+.x86
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2015+.x86"
+  properties:
+    id: "Microsoft.VCRedist.2015+.x86"
+    source: "winget"
+- name: winget_Microsoft.WindowsSDK.10.0.19041
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.WindowsSDK.10.0.19041"
+  properties:
+    id: "Microsoft.WindowsSDK.10.0.19041"
+    source: "winget"
+- name: winget_Microsoft.DotNet.AspNetCore.6
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.AspNetCore.6"
+  properties:
+    id: "Microsoft.DotNet.AspNetCore.6"
+    source: "winget"
+- name: winget_Microsoft.DotNet.DesktopRuntime.3_1
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.DesktopRuntime.3_1"
+  properties:
+    id: "Microsoft.DotNet.DesktopRuntime.3_1"
+    source: "winget"
+- name: winget_Microsoft.PowerBI
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.PowerBI"
+  properties:
+    id: "Microsoft.PowerBI"
+    source: "winget"
+- name: winget_LINQPad.LINQPad.5
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install LINQPad.LINQPad.5"
+  properties:
+    id: "LINQPad.LINQPad.5"
+    source: "winget"
+- name: winget_Microsoft.GlobalSecureAccessClient
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.GlobalSecureAccessClient"
+  properties:
+    id: "Microsoft.GlobalSecureAccessClient"
+    source: "winget"
+- name: winget_Python.Launcher
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Python.Launcher"
+  properties:
+    id: "Python.Launcher"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2015+.x64
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2015+.x64"
+  properties:
+    id: "Microsoft.VCRedist.2015+.x64"
+    source: "winget"
+- name: winget_Microsoft.PowerShell
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.PowerShell"
+  properties:
+    id: "Microsoft.PowerShell"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2012.x86
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2012.x86"
+  properties:
+    id: "Microsoft.VCRedist.2012.x86"
+    source: "winget"
+- name: winget_GNU.MidnightCommander
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install GNU.MidnightCommander"
+  properties:
+    id: "GNU.MidnightCommander"
+    source: "winget"
+- name: winget_Microsoft.RemoteHelp
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.RemoteHelp"
+  properties:
+    id: "Microsoft.RemoteHelp"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2012.x64
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2012.x64"
+  properties:
+    id: "Microsoft.VCRedist.2012.x64"
+    source: "winget"
+- name: winget_Microsoft.DotNet.AspNetCore.3_1
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.AspNetCore.3_1"
+  properties:
+    id: "Microsoft.DotNet.AspNetCore.3_1"
+    source: "winget"
+- name: winget_Microsoft.VCRedist.2013.x86
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCRedist.2013.x86"
+  properties:
+    id: "Microsoft.VCRedist.2013.x86"
+    source: "winget"
+- name: winget_Microsoft.DotNet.DesktopRuntime.8
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.DesktopRuntime.8"
+  properties:
+    id: "Microsoft.DotNet.DesktopRuntime.8"
+    source: "winget"
+- name: winget_Microsoft.DotNet.SDK.3_1
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DotNet.SDK.3_1"
+  properties:
+    id: "Microsoft.DotNet.SDK.3_1"
+    source: "winget"
+- name: winget_KirillOsenkov.MSBuildStructuredLogViewer
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install KirillOsenkov.MSBuildStructuredLogViewer"
+  properties:
+    id: "KirillOsenkov.MSBuildStructuredLogViewer"
+    source: "winget"
+- name: winget_Microsoft.Edit
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.Edit"
+  properties:
+    id: "Microsoft.Edit"
+    source: "winget"
+- name: winget_Postman.Postman
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Postman.Postman"
+  properties:
+    id: "Postman.Postman"
+    source: "winget"
+- name: winget_Rustlang.Rustup
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Rustlang.Rustup"
+  properties:
+    id: "Rustlang.Rustup"
+    source: "winget"
+- name: winget_ajeetdsouza.zoxide
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install ajeetdsouza.zoxide"
+  properties:
+    id: "ajeetdsouza.zoxide"
+    source: "winget"
+- name: winget_Balena.Etcher
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Balena.Etcher"
+  properties:
+    id: "Balena.Etcher"
+    source: "winget"
+- name: winget_reMarkable.reMarkableCompanionApp
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install reMarkable.reMarkableCompanionApp"
+  properties:
+    id: "reMarkable.reMarkableCompanionApp"
+    source: "winget"
+- name: winget_Python.Python.3.11
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Python.Python.3.11"
+  properties:
+    id: "Python.Python.3.11"
+    source: "winget"
+- name: winget_Telegram.TelegramDesktop
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Telegram.TelegramDesktop"
+  properties:
+    id: "Telegram.TelegramDesktop"
+    source: "winget"
+- name: winget_Microsoft.VisualStudioCode
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VisualStudioCode"
+  properties:
+    id: "Microsoft.VisualStudioCode"
+    source: "winget"
+- name: winget_OffSec.KaliLinux
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install OffSec.KaliLinux"
+  properties:
+    id: "OffSec.KaliLinux"
+    source: "winget"
+- name: winget_Microsoft.Teams
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.Teams"
+  properties:
+    id: "Microsoft.Teams"
+    source: "winget"
+- name: winget_Microsoft.DSC.Preview
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.DSC.Preview"
+  properties:
+    id: "Microsoft.DSC.Preview"
+    source: "winget"
+- name: winget_Microsoft.AppInstaller
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.AppInstaller"
+  properties:
+    id: "Microsoft.AppInstaller"
+    source: "winget"
+- name: winget_Microsoft.UI.Xaml.2.7
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.UI.Xaml.2.7"
+  properties:
+    id: "Microsoft.UI.Xaml.2.7"
+    source: "winget"
+- name: winget_Microsoft.UI.Xaml.2.8
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.UI.Xaml.2.8"
+  properties:
+    id: "Microsoft.UI.Xaml.2.8"
+    source: "winget"
+- name: winget_Microsoft.VCLibs.Desktop.14
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.VCLibs.Desktop.14"
+  properties:
+    id: "Microsoft.VCLibs.Desktop.14"
+    source: "winget"
+- name: winget_Microsoft.WinDbg
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.WinDbg"
+  properties:
+    id: "Microsoft.WinDbg"
+    source: "winget"
+- name: winget_Microsoft.WindowsTerminal
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.WindowsTerminal"
+  properties:
+    id: "Microsoft.WindowsTerminal"
+    source: "winget"
+- name: winget_Microsoft.WindowsApp
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Microsoft.WindowsApp"
+  properties:
+    id: "Microsoft.WindowsApp"
+    source: "winget"
+- name: winget_Debian.Debian
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install Debian.Debian"
+  properties:
+    id: "Debian.Debian"
+    source: "winget"
+- name: msstore_XP89DCGQ3K6VLD
+  type: Microsoft.WinGet/Package
+  metadata:
+    description: "Install XP89DCGQ3K6VLD"
+  properties:
+    id: "XP89DCGQ3K6VLD"
+    source: "msstore"
