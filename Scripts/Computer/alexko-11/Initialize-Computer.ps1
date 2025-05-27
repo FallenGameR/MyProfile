@@ -46,8 +46,10 @@ Complete-Once junction-one-drive-ms {
 # Use starship for prompt
 if( Get-Command starship -ea Ignore )
 {
-    #$env:STARSHIP_CONFIG = "$PSScriptRoot\starship.toml"
-    #Invoke-Expression (&starship init powershell)
+    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\..\..\Config\starship\starship.toml"
+    gi env:STARSHIP_CONFIG
+    Get-PSCallStack | ft -auto
+    Invoke-Expression (&starship init powershell)
 }
 
 #
