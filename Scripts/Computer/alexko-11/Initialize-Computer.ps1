@@ -43,4 +43,20 @@ Complete-Once junction-one-drive-ms {
     Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
 }
 
+# Use starship for prompt
+if( Get-Command starship -ea Ignore )
+{
+    #$env:STARSHIP_CONFIG = "$PSScriptRoot\starship.toml"
+    Invoke-Expression (&starship init powershell)
+}
+
+#
+if( Get-Command zoxide -ea Ignore )
+{
+    #$env:ZOXIDE_DATA_DIR = "C:\Users\$env:USERNAME\.zoxide"
+    #$env:ZOXIDE_CACHE_DIR = "C:\Users\$env:USERNAME\.zoxide\cache"
+    #$env:ZOXIDE_CONFIG_DIR = "C:\Users\$env:USERNAME\.zoxide\config"
+    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+}
+
 tm (Split-Path $PSCommandPath -Leaf)
