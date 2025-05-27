@@ -46,19 +46,19 @@ Complete-Once junction-one-drive-ms {
 # Use starship for prompt
 if( Get-Command starship -ea Ignore )
 {
-    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\..\..\Config\starship\starship.toml"
-    gi env:STARSHIP_CONFIG
-    Get-PSCallStack | ft -auto
-    Invoke-Expression (&starship init powershell)
+    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\..\..\Tools\starship\starship.toml"
+    $env:STARSHIP_CACHE = "$PSScriptRoot\..\..\..\Tools\starship\.cache\"
+    $env:STARSHIP_LOG = "trace starship timings"
+    #Invoke-Expression (&starship init powershell)
 }
 
-#
+# Use zoxide for directory navigation
 if( Get-Command zoxide -ea Ignore )
 {
-    #$env:ZOXIDE_DATA_DIR = "C:\Users\$env:USERNAME\.zoxide"
-    #$env:ZOXIDE_CACHE_DIR = "C:\Users\$env:USERNAME\.zoxide\cache"
-    #$env:ZOXIDE_CONFIG_DIR = "C:\Users\$env:USERNAME\.zoxide\config"
-    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+    $env:ZOXIDE_DATA_DIR = "$PSScriptRoot\..\..\..\Tools\zoxide\data"
+    $env:ZOXIDE_CACHE_DIR = "$PSScriptRoot\..\..\..\Tools\zoxide\cache"
+    $env:ZOXIDE_CONFIG_DIR = "$PSScriptRoot\..\..\..\Tools\zoxide\config"
+    #Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
 
 tm (Split-Path $PSCommandPath -Leaf)
