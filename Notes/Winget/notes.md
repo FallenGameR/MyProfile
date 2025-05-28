@@ -17,6 +17,7 @@ set sixel
 
 C:\Users\alexk\.config\starship.toml
 `Stow` that creates symlinks for whole folders on Linux
+https://www.chezmoi.io/install/#__tabbed_4_3
 
 ```ps1
 # New dependencies
