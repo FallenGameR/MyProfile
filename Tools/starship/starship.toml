@@ -116,13 +116,14 @@ repo_root_style = 'dimmed yellow'
 
 # The system hostname
 [hostname]
-ssh_only = false
+disabled = false
+ssh_only = true
 format = '[$ssh_symbol$hostname]($style) '
 style = 'green'
-disabled = false
 
 # Simplify output of dotnet version
 [dotnet]
+disabled = true
 style = 'cyan'
 version_format = '${major}'
 
