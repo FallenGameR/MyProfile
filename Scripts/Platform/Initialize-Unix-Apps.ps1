@@ -43,7 +43,7 @@ Complete-Once install-bottom {
 }
 
 Complete-Once setup-bottom {
-    Copy-Item $PSScriptRoot\..\..\bottom.toml ~/.config/bottom/bottom.toml
+    Copy-Item $PSScriptRoot\..\..\Tools\bottom\bottom.toml ~/.config/bottom/bottom.toml
 }
 
 Complete-Once install-rust {

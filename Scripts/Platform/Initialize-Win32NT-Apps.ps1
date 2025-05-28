@@ -79,7 +79,7 @@ Complete-Once setup-bottom {
     {
         mkdir $env:APPDATA\bottom -ea Stop | Out-Null
     }
-    Copy-Item $PSScriptRoot\..\..\bottom.toml $env:APPDATA\bottom\bottom.toml
+    Copy-Item $PSScriptRoot\..\..\Tools\bottom\bottom.toml $env:APPDATA\bottom\bottom.toml
 }
 
 Complete-Once setup-fd {
