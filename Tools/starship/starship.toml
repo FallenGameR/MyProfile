@@ -8,7 +8,6 @@ add_newline = true
 
 # What modules to use and in what order
 format = """
-$username\
 $localip\
 $shlvl\
 $singularity\
@@ -23,6 +22,8 @@ $git_state\
 $git_metrics\
 $git_status\
 $hg_branch\
+$status\
+$username\
 $fill\
 $hostname\
 $pijul_channel\
@@ -95,7 +96,6 @@ $line_break\
 $jobs\
 $battery\
 $time\
-$status\
 $os\
 $container\
 $netns\
@@ -105,7 +105,7 @@ $character"""
 # Whether the last command was successful or not
 [character]
 success_symbol = '[»](gray)'
-error_symbol = '[✗](gray)'
+error_symbol = '[»](gray)'
 
 # Path to your current directory
 [directory]
@@ -131,6 +131,7 @@ version_format = '${major}'
 variable = 'ChangedPSModulePath'
 style = 'purple'
 
+# Right align less common modules
 [fill]
 symbol = ' '
 
@@ -149,3 +150,15 @@ disabled = true
 disabled = false
 threshold = 80
 format = 'with [${ram_pct} RAM]($style) '
+
+# Show last exit code
+[status]
+disabled = false
+style = 'dimmed red'
+format = 'code [$common_meaning$signal_name $status]($style) '
+
+# Show when the console is using administrator privileges
+[username]
+style_root = '36'
+format = 'as [$user]($style) '
+disabled = false
