@@ -113,8 +113,8 @@ read_only = '🔒'
 
 # Active branch of the repo in your current directory
 [git_branch]
-style = 'gray'
-format = '[$symbol$branch(:$remote_branch)]($style) '
+style = 'cyan'
+format = 'in [$symbol$branch(:$remote_branch)]($style) '
 ignore_branches = ['master', 'main']
 
 # The system hostname
@@ -125,6 +125,16 @@ style = 'green'
 trim_at = '.companyname.com'
 disabled = false
 
+# Simplify output of dotnet version
+[dotnet]
+style = 'blue'
+version_format = '${major}'
+
+[env_var]
+variable = 'ChangedPSModulePath'
+style = 'purple'
+
 # Very slow on large repos
 [git_status]
 disabled = true
+
