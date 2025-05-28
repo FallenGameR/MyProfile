@@ -23,6 +23,7 @@ $git_state\
 $git_metrics\
 $git_status\
 $hg_branch\
+$fill\
 $hostname\
 $pijul_channel\
 $docker_context\
@@ -109,7 +110,29 @@ error_symbol = '[✗](gray)'
 # Path to your current directory
 [directory]
 style = 'yellow'
-read_only = '🔒'
+truncation_length = 0
+truncate_to_repo = false
+repo_root_style = 'dimmed yellow'
+
+# The system hostname
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol$hostname]($style) '
+style = 'green'
+disabled = false
+
+# Simplify output of dotnet version
+[dotnet]
+style = 'cyan'
+version_format = '${major}'
+
+# Track changes to the PSModulePath
+[env_var]
+variable = 'ChangedPSModulePath'
+style = 'purple'
+
+[fill]
+symbol = ' '
 
 # Active branch of the repo in your current directory
 [git_branch]
@@ -117,24 +140,12 @@ style = 'cyan'
 format = 'in [$symbol$branch(:$remote_branch)]($style) '
 ignore_branches = ['master', 'main']
 
-# The system hostname
-[hostname]
-ssh_only = false
-format = 'at [$ssh_symbol$hostname]($style) '
-style = 'green'
-trim_at = '.companyname.com'
-disabled = false
-
-# Simplify output of dotnet version
-[dotnet]
-style = 'blue'
-version_format = '${major}'
-
-[env_var]
-variable = 'ChangedPSModulePath'
-style = 'purple'
-
 # Very slow on large repos
 [git_status]
 disabled = true
 
+# Display when almost all memory got used
+[memory_usage]
+disabled = false
+threshold = 80
+format = 'with [${ram_pct} RAM]($style) '
