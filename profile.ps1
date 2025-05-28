@@ -1,4 +1,4 @@
-﻿# Profile for any PowerShell host on Windows
+﻿# Profile for any PowerShell host on WindowsInitialize-Apps.ps1
 
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
@@ -12,8 +12,8 @@ $global:Profile = $PSCommandPath
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-OS.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Apps.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/$(Get-Platform)/Initialize-OS.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/$(Get-Platform)/Initialize-Apps.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/$(Get-Platform)/Initialize-OS.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/$(Get-Platform)/Initialize-Apps.ps1"
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
