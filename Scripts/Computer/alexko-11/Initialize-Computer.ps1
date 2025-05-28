@@ -47,9 +47,9 @@ Complete-Once junction-one-drive-ms {
 if( Get-Command starship -ea Ignore )
 {
     $env:STARSHIP_CONFIG = "$PSScriptRoot\..\..\..\Tools\starship\starship.toml"
-    $env:STARSHIP_CACHE = "$PSScriptRoot\..\..\..\Tools\starship\.cache\"
-    $env:STARSHIP_LOG = "trace starship timings"
-    #Invoke-Expression (&starship init powershell)
+    $env:STARSHIP_CACHE = "$PSScriptRoot\..\..\..\Tools\starship\logs" # does not seem to work
+    #$env:STARSHIP_LOG = "trace"
+    Invoke-Expression (&starship init powershell)
 }
 
 # Use zoxide for directory navigation
