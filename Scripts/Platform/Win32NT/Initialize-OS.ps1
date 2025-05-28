@@ -12,7 +12,7 @@ $addToPath =
     "C:\Program Files (x86)\WinDirStat\",
     "C:\Program Files (x86)\LINQPad5\",
     "C:\Program Files (x86)\Winamp\",
-    #"C:\tools\chafa",                       # console picture viewer
+    "C:\tools\chafa",                       # console picture viewer
     "C:\tools\sd",                          # sds replacer
     "C:\tools\docfx",
     "C:\tools\tagger"
