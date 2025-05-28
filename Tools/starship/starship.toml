@@ -6,6 +6,125 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
+# What modules to use and in what order
+format = """
+$username\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$hostname\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$gleam\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$nats\
+$direnv\
+$env_var\
+$mise\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$os\
+$container\
+$netns\
+$shell\
+$character"""
+
+# Whether the last command was successful or not
+[character]
+success_symbol = '[»](gray)'
+error_symbol = '[✗](gray)'
+
+# Path to your current directory
+[directory]
+style = 'yellow'
+read_only = '🔒'
+
+# Active branch of the repo in your current directory
+[git_branch]
+style = 'gray'
+format = '[$symbol$branch(:$remote_branch)]($style) '
+ignore_branches = ['master', 'main']
+
+# The system hostname
+[hostname]
+ssh_only = false
+format = 'at [$ssh_symbol$hostname]($style) '
+style = 'green'
+trim_at = '.companyname.com'
+disabled = false
+
 # Very slow on large repos
 [git_status]
 disabled = true
