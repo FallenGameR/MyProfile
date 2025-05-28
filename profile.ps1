@@ -19,7 +19,7 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Fzf.ps1"
 
-. Import-AsDotSource "$PSScriptRoot/Scripts/Computer/$SCRIPT:hostName/Initialize-Computer.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Computer/Initialize-$SCRIPT:hostName.ps1"
 . Import-AsDotSource "$PSScriptRoot/playground.ps1"
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
 
