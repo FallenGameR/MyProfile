@@ -12,8 +12,8 @@ $global:Profile = $PSCommandPath
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-OS.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Apps.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/$(Get-Platform)/Initialize-OS.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/$(Get-Platform)/Initialize-Apps.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/Initialize-$(Get-Platform)-OS.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Platform/Initialize-$(Get-Platform)-Apps.ps1"
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
