@@ -110,6 +110,7 @@ error_symbol = '[»](gray)'
 # Path to your current directory
 [directory]
 style = 'yellow'
+read_only = ' 🔒'
 truncation_length = 0
 truncate_to_repo = false
 repo_root_style = 'dimmed yellow'
@@ -145,6 +146,17 @@ ignore_branches = ['master', 'main']
 # Very slow on large repos
 [git_status]
 disabled = true
+
+# Current package version for Rust projects
+[package]
+format = '[$symbol$version]($style) '
+version_format = '${major}.${minor}.${patch}'
+
+# Rust version
+[rust]
+disabled = false
+format = 'via [$symbol($version )($toolchain )]($style)'
+version_format = '${major}.${minor}'
 
 # Display when almost all memory got used
 [memory_usage]

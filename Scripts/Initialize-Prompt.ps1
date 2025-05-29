@@ -2,6 +2,32 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
 param()
 
+# Use starship for prompt
+if( Get-Command starship -ea Ignore )
+{
+    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
+    $env:STARSHIP_CACHE = "$PSScriptRoot\..\Tools\starship\logs"
+    #$env:STARSHIP_LOG = "trace"
+
+    function Invoke-Starship-PreCommand
+    {
+        if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
+        {
+            $env:ChangedPSModulePath = "PSModulePath changed"
+        }
+        else
+        {
+            $env:ChangedPSModulePath = $null
+        }
+        $env:PreviousPSModulePath = $env:PSModulePath
+
+        #$host.ui.RawUI.WindowTitle = "$env:USERNAME@$env:COMPUTERNAME`: $pwd `a"
+    }
+
+    Invoke-Expression (&starship init powershell)
+    return
+}
+
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
 
