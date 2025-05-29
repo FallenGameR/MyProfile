@@ -175,3 +175,9 @@ format = 'code [$common_meaning$signal_name $status]($style) '
 style_root = '36'
 format = 'as [$user]($style) '
 disabled = false
+
+# Custom commands are very slow (seem to use powershell) and buggy (inconsistent and hard to redirect)
+#[custom.directory_separator_not_git]
+#command = "echo 'hi'"
+#format = "[](fg:#3B76F0)$output"
+#when = "1"
