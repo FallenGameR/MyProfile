@@ -2,3 +2,8 @@
 ratio = [1, 4, 4]
 sort_by = "extension"
 sort_sensitive = false
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+]

@@ -5,3 +5,4 @@ Microsoft.AIShell
 ajeetdsouza.zoxide
 Starship.Starship
 yazi
+charmbracelet.glow
