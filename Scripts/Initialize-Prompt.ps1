@@ -1,4 +1,4 @@
-# Command history tracking
+# Preserve last command in log file
 $SCRIPT:lastCommandId = -1
 $SCRIPT:historyFolder = switch( Get-Platform )
 {
@@ -13,7 +13,6 @@ if( -not (Test-Path $historyFolder) )
     mkdir $historyFolder -ea Ignore | Out-Null
 }
 
-# Preserve last command in log file
 function SCRIPT:Update-CommandHistory
 {
     $lastCommand = Get-History -Count 1
@@ -31,66 +30,7 @@ function SCRIPT:Update-CommandHistory
     }
 }
 
-# Use starship for prompt if available
-if( Get-Command starship -ea Ignore )
-{
-    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
-    $env:STARSHIP_CACHE = "$PSScriptRoot\..\Tools\starship\logs"
-    #$env:STARSHIP_LOG = "trace"
-
-    function Invoke-Starship-PreCommand
-    {
-        # Track PSModulePath changes
-        if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
-        {
-            $env:ChangedPSModulePath = "PSModulePath changed"
-        }
-        else
-        {
-            $env:ChangedPSModulePath = $null
-        }
-        $env:PreviousPSModulePath = $env:PSModulePath
-
-        # Keep track of the command history
-        Update-CommandHistory
-
-        #$host.ui.RawUI.WindowTitle = "$env:USERNAME@$env:COMPUTERNAME`: $pwd `a"
-    }
-
-    Invoke-Expression (&starship init powershell)
-    return
-}
-
-# Elevated test
-$SCRIPT:isElevated = Test-Elevated
-
-# https://duffney.io/usingansiescapesequencespowershell/
-function SCRIPT:e
-{
-    # Compatibility with PS5 that doesn't handle ANSI
-    if( $PSVersionTable.PSVersion.Major -gt 5 )
-    {
-        "`e[" + ($args -join ";") + "m"
-    }
-}
-
-# https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
-$SCRIPT:pathColor = e 0 33
-$SCRIPT:gitRootColor = e 0 33 # e 38 5 58 # 100 # 214 # 172 # 208 # e 4 33
-$SCRIPT:hostColor = e 0 32
-$SCRIPT:clearColor = e 0
-$SCRIPT:elevatedColor = e 0 36
-
-$SCRIPT:cachedForPath = $null
-$SCRIPT:pathParts = $null
-$SCRIPT:promptPath = $null
-$SCRIPT:titlePath = $null
-
-$SCRIPT:prompt_state = [ordered] @{
-    ps_module_path_changes = 0
-    preserved_ps_module_path = $env:PSModulePath
-}
-
+# Window titles that are cached
 # If user redefines $cache we have a problem
 # For some reason prompt is not private
 $SCRIPT:cache = @{}
@@ -147,30 +87,6 @@ function SCRIPT:Update-UserAliasInPath( $path )
     }
 }
 
-function SCRIPT:Get-PromptPathAnsi
-{
-    $cached = Get-CachedResult "Get-PromptPath"
-    if( $cached ) { return $cached }
-
-    $pwdParts, $gitParts = Get-RepoPath
-    if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
-
-    $path = @($pwdParts + $gitParts) -join [io.path]::DirectorySeparatorChar
-    $path = $pathColor + $path + $hostColor + " [$hostName] "
-
-    if( $SCRIPT:isElevated )
-    {
-        $path += $elevatedColor + " ELEVATED"
-    }
-
-    $path += $clearColor
-    $path = Update-UserAliasInPath $path
-    $path += [environment]::NewLine
-    $path += [char] 187 + " "
-
-    Update-CachedResult "Get-PromptPath" $path
-}
-
 function SCRIPT:Get-TitlePath
 {
     function annotate( $result )
@@ -200,6 +116,91 @@ function SCRIPT:Get-TitlePath
     $title = $title -replace ".+\\data\\Autopilot\\NtpReferenceClock\\Firmware", "Firmware"
 
     annotate (Update-CachedResult "Get-TitlePath" $title)
+}
+
+# Use starship for prompt if available
+if( Get-Command starship -ea Ignore )
+{
+    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
+    $env:STARSHIP_CACHE = "$PSScriptRoot\..\Tools\starship\logs"
+    #$env:STARSHIP_LOG = "trace"
+
+    function Invoke-Starship-PreCommand
+    {
+        # Track PSModulePath changes
+        if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
+        {
+            $env:ChangedPSModulePath = "PSModulePath changed"
+        }
+        else
+        {
+            $env:ChangedPSModulePath = $null
+        }
+        $env:PreviousPSModulePath = $env:PSModulePath
+
+        # Keep track of the command history
+        Update-CommandHistory
+
+        # Update the window title
+        if( Test-Full ) { $host.UI.RawUI.WindowTitle = Get-TitlePath }
+    }
+
+    Invoke-Expression (&starship init powershell)
+    return
+}
+
+# Elevated test
+$SCRIPT:isElevated = Test-Elevated
+
+# https://duffney.io/usingansiescapesequencespowershell/
+function SCRIPT:e
+{
+    # Compatibility with PS5 that doesn't handle ANSI
+    if( $PSVersionTable.PSVersion.Major -gt 5 )
+    {
+        "`e[" + ($args -join ";") + "m"
+    }
+}
+
+# https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+$SCRIPT:pathColor = e 0 33
+$SCRIPT:gitRootColor = e 0 33 # e 38 5 58 # 100 # 214 # 172 # 208 # e 4 33
+$SCRIPT:hostColor = e 0 32
+$SCRIPT:clearColor = e 0
+$SCRIPT:elevatedColor = e 0 36
+
+$SCRIPT:cachedForPath = $null
+$SCRIPT:pathParts = $null
+$SCRIPT:promptPath = $null
+$SCRIPT:titlePath = $null
+
+$SCRIPT:prompt_state = [ordered] @{
+    ps_module_path_changes = 0
+    preserved_ps_module_path = $env:PSModulePath
+}
+
+function SCRIPT:Get-PromptPathAnsi
+{
+    $cached = Get-CachedResult "Get-PromptPath"
+    if( $cached ) { return $cached }
+
+    $pwdParts, $gitParts = Get-RepoPath
+    if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
+
+    $path = @($pwdParts + $gitParts) -join [io.path]::DirectorySeparatorChar
+    $path = $pathColor + $path + $hostColor + " [$hostName] "
+
+    if( $SCRIPT:isElevated )
+    {
+        $path += $elevatedColor + " ELEVATED"
+    }
+
+    $path += $clearColor
+    $path = Update-UserAliasInPath $path
+    $path += [environment]::NewLine
+    $path += [char] 187 + " "
+
+    Update-CachedResult "Get-PromptPath" $path
 }
 
 function SCRIPT:Get-PromptPath
