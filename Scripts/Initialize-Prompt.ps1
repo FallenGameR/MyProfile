@@ -1,8 +1,37 @@
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
-param()
+# Command history tracking
+$SCRIPT:lastCommandId = -1
+$SCRIPT:historyFolder = switch( Get-Platform )
+{
+    "Win32NT" { "c:\automation\history\" }
+    "Unix" { "~\.pwsh_history\" }
+    default { "pwsh_history" }
+}
+$SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz"))
 
-# Use starship for prompt
+if( -not (Test-Path $historyFolder) )
+{
+    mkdir $historyFolder -ea Ignore | Out-Null
+}
+
+# Preserve last command in log file
+function SCRIPT:Update-CommandHistory
+{
+    $lastCommand = Get-History -Count 1
+    if( -not $lastCommand )
+    {
+        $SCRIPT:lastCommandId = -1
+        return
+    }
+
+    if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
+    {
+        $SCRIPT:lastCommandId = $lastCommand.Id
+        $lineNormalized = $lastCommand.CommandLine -replace "`r?`n", [environment]::NewLine
+        Add-Content $historyFile $lineNormalized
+    }
+}
+
+# Use starship for prompt if available
 if( Get-Command starship -ea Ignore )
 {
     $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
@@ -11,6 +40,7 @@ if( Get-Command starship -ea Ignore )
 
     function Invoke-Starship-PreCommand
     {
+        # Track PSModulePath changes
         if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
         {
             $env:ChangedPSModulePath = "PSModulePath changed"
@@ -21,6 +51,9 @@ if( Get-Command starship -ea Ignore )
         }
         $env:PreviousPSModulePath = $env:PSModulePath
 
+        # Keep track of the command history
+        Update-CommandHistory
+
         #$host.ui.RawUI.WindowTitle = "$env:USERNAME@$env:COMPUTERNAME`: $pwd `a"
     }
 
@@ -30,22 +63,6 @@ if( Get-Command starship -ea Ignore )
 
 # Elevated test
 $SCRIPT:isElevated = Test-Elevated
-
-# History folder and file
-$SCRIPT:historyFolder = switch( Get-Platform )
-{
-    "Win32NT" { "c:\automation\history\" }
-    "Unix" { "~\.pwsh_history\" }
-    default { "pwsh_history" }
-}
-
-if( -not (Test-Path $historyFolder) )
-{
-    mkdir $historyFolder -ea Ignore | Out-Null
-}
-
-$SCRIPT:historyFile = Join-Path $historyFolder ("{0}--$pid.ps1" -f [DateTime]::Now.ToString("yyyy.MM.dd--HH.mm.ss--UTCz"))
-$SCRIPT:lastCommandId = -1
 
 # https://duffney.io/usingansiescapesequencespowershell/
 function SCRIPT:e
@@ -152,26 +169,6 @@ function SCRIPT:Get-PromptPathAnsi
     $path += [char] 187 + " "
 
     Update-CachedResult "Get-PromptPath" $path
-}
-
-function SCRIPT:Update-CommandHistory
-{
-    # Preserve last command in log file
-    $lastCommand = Get-History -Count 1
-    if( $lastCommand )
-    {
-        if( $lastCommand.Id -ne $SCRIPT:lastCommandId )
-        {
-            $SCRIPT:lastCommandId = $lastCommand.Id
-            $lineNormalized = $lastCommand.CommandLine -replace "`r?`n", [environment]::NewLine
-            Add-Content $historyFile $lineNormalized
-        }
-    }
-    else
-    {
-        $SCRIPT:lastCommandId = -1
-        Add-Content $historyFile "# No history at this point of time"
-    }
 }
 
 function SCRIPT:Get-TitlePath
