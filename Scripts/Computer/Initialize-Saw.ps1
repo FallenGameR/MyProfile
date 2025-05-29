@@ -2,6 +2,7 @@
 $env:Path += ";C:\Program Files\Ripgrep\"
 $env:Path += ";C:\Program Files\Drop\lib\net45\"
 $env:Path += ";C:\Program Files\SSTool\"
+$env:Path += ";C:\tools\dsmsClient\DsmsClient"
 
 # DriScripts plus FzfBindings init
 function ds

@@ -146,6 +146,18 @@ if( Get-Command starship -ea Ignore )
     }
 
     Invoke-Expression (&starship init powershell)
+}
+
+# Use zoxide for directory navigation - can be installed only after starship
+if( Get-Command zoxide -ea Ignore )
+{
+    $env:_ZO_DATA_DIR = "$PSScriptRoot\..\Tools\zoxide\data"
+    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+}
+
+# No further initialization is needed if starship is used
+if( Get-Command starship -ea Ignore )
+{
     return
 }
 
@@ -168,39 +180,9 @@ $SCRIPT:gitRootColor = e 0 33 # e 38 5 58 # 100 # 214 # 172 # 208 # e 4 33
 $SCRIPT:hostColor = e 0 32
 $SCRIPT:clearColor = e 0
 $SCRIPT:elevatedColor = e 0 36
-
-$SCRIPT:cachedForPath = $null
-$SCRIPT:pathParts = $null
-$SCRIPT:promptPath = $null
-$SCRIPT:titlePath = $null
-
 $SCRIPT:prompt_state = [ordered] @{
     ps_module_path_changes = 0
     preserved_ps_module_path = $env:PSModulePath
-}
-
-function SCRIPT:Get-PromptPathAnsi
-{
-    $cached = Get-CachedResult "Get-PromptPath"
-    if( $cached ) { return $cached }
-
-    $pwdParts, $gitParts = Get-RepoPath
-    if( $gitParts ) { $gitParts[0] = $gitRootColor + $gitParts[0] + $pathColor }
-
-    $path = @($pwdParts + $gitParts) -join [io.path]::DirectorySeparatorChar
-    $path = $pathColor + $path + $hostColor + " [$hostName] "
-
-    if( $SCRIPT:isElevated )
-    {
-        $path += $elevatedColor + " ELEVATED"
-    }
-
-    $path += $clearColor
-    $path = Update-UserAliasInPath $path
-    $path += [environment]::NewLine
-    $path += [char] 187 + " "
-
-    Update-CachedResult "Get-PromptPath" $path
 }
 
 function SCRIPT:Get-PromptPath

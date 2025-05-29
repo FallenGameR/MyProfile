@@ -17,7 +17,6 @@ $global:Profile = $PSCommandPath
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Fzf.ps1"
 
 . Import-AsDotSource "$PSScriptRoot/Scripts/Computer/Initialize-$SCRIPT:hostName.ps1"
 . Import-AsDotSource "$PSScriptRoot/playground.ps1"
@@ -29,7 +28,5 @@ $global:Profile = $PSCommandPath
 #    (& "c:\tools\miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | ?{$_} | Invoke-Expression
 #}
 #endregion
-
-$env:Path = "$env:Path;C:\tools\dsmsClient\DsmsClient"
 
 $env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"

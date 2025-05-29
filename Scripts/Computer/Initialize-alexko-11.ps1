@@ -43,13 +43,4 @@ Complete-Once junction-one-drive-ms {
     Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
 }
 
-# Use zoxide for directory navigation
-if( Get-Command zoxide -ea Ignore )
-{
-    $env:ZOXIDE_DATA_DIR = "$PSScriptRoot\..\..\Tools\zoxide\data"
-    $env:ZOXIDE_CACHE_DIR = "$PSScriptRoot\..\..\Tools\zoxide\cache"
-    $env:ZOXIDE_CONFIG_DIR = "$PSScriptRoot\..\..\Tools\zoxide\config"
-    #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-}
-
 tm (Split-Path $PSCommandPath -Leaf)
