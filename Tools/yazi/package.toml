@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "c0ad8a3"
+hash = "b16b6e08085a3dfec72335415e4c83ed"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "c0ad8a3"
+hash = "a65dc998e4742a4f6561623e6154e1b9"
+
+[flavor]
+deps = []
