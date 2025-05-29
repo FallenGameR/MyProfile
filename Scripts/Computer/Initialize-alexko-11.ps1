@@ -27,6 +27,10 @@ Complete-Once install-bandwhich {
     # $env:path += ";c:\Windows\System32\Npcap\"
 }
 
+Complete-Once install-mdcat {
+    cargo install mdcat
+}
+
 Complete-Once install-sds {
     mkdir c:\tools\rust\
     cd c:\tools\rust\
