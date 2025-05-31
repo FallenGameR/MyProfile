@@ -5,6 +5,11 @@ Complete-Once install-apps -elevated {
     choco install -s=chocolatey @apps -y --no-progress
 }
 
+Complete-Once install-winget  {
+    $apps = cat "$PSScriptRoot/../../Data/winget-apps.txt"
+    $apps | foreach{ winget install $psitem }
+}
+
 Complete-Once setup-conhost-ansi -elevated {
     Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
 }
