@@ -13,6 +13,10 @@ Complete-Once install-as-tree {
     cargo install -f --git https://github.com/jez/as-tree
 }
 
+Complete-Once setup-winget {
+    copy $PsScriptRoot\..\Tools\Winget\winget-settings.json $env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json
+}
+
 Complete-Once setup-git {
     git config --global user.name "Aleksandr Kostikov"
     git config --global user.email "Alex.Kostikov@gmail.com"
