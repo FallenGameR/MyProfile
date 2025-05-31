@@ -6,7 +6,7 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "PfGold"            "c:\src\golds\pf\"
 }
 
-. $PSScriptRoot\..\Initialize-Work.ps1
+. $PSScriptRoot\Initialize-Work.ps1
 
 Complete-Once junction-one-drive-ms {
     New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
