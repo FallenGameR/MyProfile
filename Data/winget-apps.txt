@@ -1,8 +1,8 @@
-chafa
-fzf
-Rustlang.Rustup
-Microsoft.AIShell
 ajeetdsouza.zoxide
-Starship.Starship
-yazi
 charmbracelet.glow
+hpjansson.Chafa
+junegunn.fzf
+Microsoft.AIShell
+Rustlang.Rustup
+Starship.Starship
+sxyazi.yazi
