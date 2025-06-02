@@ -5,9 +5,12 @@ Complete-Once install-apps -elevated {
     choco install -s=chocolatey @apps -y --no-progress
 }
 
-Complete-Once install-winget  {
-    $apps = cat "$PSScriptRoot/../../Data/winget-apps.txt"
-    $apps | foreach{ winget install $psitem }
+Complete-Once install-winget {
+    foreach( $app in cat "$PSScriptRoot/../../Data/winget-apps.txt" )
+    {
+        Write-Host "Installing $app via winget"
+        winget install $psitem --silent
+    }
 }
 
 Complete-Once setup-conhost-ansi -elevated {
