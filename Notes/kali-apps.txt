@@ -1,5 +1,0 @@
-kali-linux-default
-kali-win-kex
-zsh
-zsh-autosuggestions
-zsh-syntax-highlighting
