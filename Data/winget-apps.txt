@@ -22,5 +22,6 @@ sharkdp.fd
 sharkdp.hyperfine
 Starship.Starship
 sxyazi.yazi
+twpayne.chezmoi
 Valve.Steam
 WinDirStat.WinDirStat
