@@ -155,7 +155,6 @@ version_format = '${major}.${minor}.${patch}'
 # Rust version
 [rust]
 disabled = false
-format = '[$symbol($version )($toolchain )]($style)'
 version_format = '${major}.${minor}'
 
 # Display when almost all memory got used
