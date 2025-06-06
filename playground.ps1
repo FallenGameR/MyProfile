@@ -1,19 +1,13 @@
-# New: dust, btm, tldr, tokei, bandwhich, sds
-# Unix: exa, sd
-
-# Git:
-# git (add|checkout) -p
-
 function capp( $url, [switch] $Music )
 {
-    if( $music )
+    $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+    if( (-not $url) -or $Music )
     {
-        & "C:\Program Files\Google\Chrome\Application\chrome.exe" "--app=https://music.youtube.com"
+        $url = "https://music.youtube.com"
     }
-    else
-    {
-        & "C:\Program Files\Google\Chrome\Application\chrome.exe" "--app=$url"
-    }
+
+    & $chrome "--app=$url"
 }
 
 function dcm
