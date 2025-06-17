@@ -140,7 +140,7 @@ symbol = ' '
 # Active branch of the repo in your current directory
 [git_branch]
 style = 'cyan'
-format = 'in [$symbol$branch(:$remote_branch)]($style) '
+format = 'in [$symbol$branch( -> $remote_branch)]($style) '
 ignore_branches = ['master', 'main']
 
 # Very slow on large repos
