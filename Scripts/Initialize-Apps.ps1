@@ -1,12 +1,10 @@
 
 Complete-Once install-PSToolset {
-    cd $PsScriptRoot/../Modules
-    git clone https://github.com/microsoft/PSToolset.git
+    git clone https://github.com/microsoft/PSToolset.git $PsScriptRoot/../Modules/PSToolset
 }
 
 Complete-Once install-FzfBindings {
-    cd $PsScriptRoot/../Modules
-    git clone https://github.com/FallenGameR/FzfBindings.git
+    git clone https://github.com/FallenGameR/FzfBindings.git $PsScriptRoot/../Modules/FzfBindings
 }
 
 Complete-Once install-as-tree {
