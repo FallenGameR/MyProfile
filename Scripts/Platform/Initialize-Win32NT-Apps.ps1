@@ -1,26 +1,16 @@
 # Elevated setup
 
 Complete-Once install-apps -elevated {
-    $apps = cat "$PSScriptRoot/../../Data/windows-apps.txt"
+    $apps = cat "$PSScriptRoot\..\..\Data\windows-apps.txt"
     choco install -s=chocolatey @apps -y --no-progress
 }
 
-Complete-Once install-winget {
-    foreach( $app in cat "$PSScriptRoot/../../Data/winget-apps.txt" )
-    {
-        Write-Host "Installing $app via winget"
-        winget install $psitem --silent
-    }
-}
-
-Complete-Once setup-conhost-ansi -elevated {
+Complete-Once setup-conhost -elevated {
+    # Enable ANSI escape sequences in classic console
     Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
-}
 
-Complete-Once junction-system -elevated {
-    New-Junction "c:\Program Files" "c:\Program Files (x86)\_x64_"
-    New-Junction "c:\Program Files (x86)" "c:\programs"
-    New-Junction $home "c:\home"
+    cd "$PsScriptRoot\..\..\Bin\ColorTool\"
+    .\ColorTool.exe -b -q campbell | Out-Null
 }
 
 Complete-Once hide-folders -elevated {
@@ -40,7 +30,7 @@ Complete-Once hide-folders -elevated {
         "$home\Saved Games",
         "$home\Searches",
         "$home\Videos"
-    $noisyFolders | where{gi $psitem -ea ignore} | Set-Visible $false
+    $noisyFolders | where{ gi $psitem -ea ignore } | Set-Visible $false
 }
 
 Complete-Once install-wsl -elevated {
@@ -52,48 +42,30 @@ Complete-Once install-wsl -elevated {
 }
 
 Complete-Once setup-trackball -elevated {
-    # May need this fix as well: [console]::InputEncoding = [console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
     & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
 }
 
 # Non elevated setup
 
-Complete-Once setup-windows-powershell-profile {
-    $shouldBeDocumentsFolder = Split-Path (Split-Path $profile)
-    $windowsPowershellFolder = Join-Path $shouldBeDocumentsFolder WindowsPowerShell
-    mkdir $windowsPowershellFolder -ea Ignore | Out-Null
-    ". $profile" | Add-Content "$windowsPowershellFolder\profile.ps1"
+Complete-Once setup-winget {
+    copy "$PsScriptRoot\..\Tools\Winget\winget-settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json"
 }
 
-Complete-Once junction-tools {
-    if( -not (Test-Path "c:\tools") )
-    {
-        mkdir "c:\tools" -ea Stop | Out-Null
-    }
-
-    foreach( $tool in ls $env:OneDriveConsumer\Apps\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-    {
-        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
-    }
-
-    foreach( $tool in ls $env:OneDriveCommercial\tools -Directory -ea Ignore | where Name -notmatch "^_" )
-    {
-        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+Complete-Once install-winget {
+    Get-Content "$PSScriptRoot\..\..\Data\winget-apps.txt" | foreach{
+        "`n# Installing $_ via winget`n"
+        winget install $_ --silent | where{ $psitem -notmatch 'Γû[Æê]|^\s+[-\\|/]\s+$' }
     }
 }
 
 Complete-Once setup-bottom {
-    if( -not (Test-Path $env:APPDATA\bottom) )
-    {
-        mkdir $env:APPDATA\bottom -ea Stop | Out-Null
-    }
-    Copy-Item $PSScriptRoot\..\..\Tools\bottom\bottom.toml $env:APPDATA\bottom\bottom.toml
+    mkdir $env:APPDATA\bottom -ea Ignore | Out-Null
+    Copy-Item "$PSScriptRoot\..\..\Tools\bottom\bottom.toml" "$env:APPDATA\bottom\bottom.toml"
 }
 
 Complete-Once setup-fd {
-    $path = $env:APPDATA
-    mkdir "$path\fd" -ea Ignore | Out-Null
-    cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > $path/fd/ignore
+    mkdir "$env:APPDATA\fd" -ea Ignore | Out-Null
+    cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > "$env:APPDATA\fd\ignore"
 }
 
 Complete-Once setup-tldr {
@@ -101,21 +73,41 @@ Complete-Once setup-tldr {
 }
 
 Complete-Once setup-powershell-classic {
+    if( $PSVersionTable.PSEdition -ne "Core" )
+    {
+        throw "This function must be envoked only from PowerShell Core"
+    }
+
     $classic = "$env:USERPROFILE\Documents\WindowsPowershell"
     $modern = "$env:USERPROFILE\Documents\Powershell"
-    mkdir $classic | Out-Null
-    ". $modern\profile.ps1" > "$classic\Microsoft.PowerShell_profile.ps1"
 
-    cd $classic
-    New-Item -Type Junction -Name Modules -Value "$modern\Modules"
+    mkdir $classic -ea Ignore | Out-Null
+    ". $profile" | Add-Content "$classic\profile.ps1"
+
+    New-Item -Type Junction -Name "$classic\Modules" -Value "$modern\Modules"
 }
 
-Complete-Once setup-conhost {
-    cd "$PsScriptRoot\..\..\Bin\ColorTool\"
-    .\ColorTool.exe -b -q campbell | Out-Null
+Complete-Once setup-junctions {
+    New-Item -Type Junction -Name "c:\Program Files (x86)\_x64_" -Value "c:\Program Files"
+    New-Item -Type Junction -Name "c:\programs" -Value "c:\Program Files (x86)"
+    New-Item -Type Junction -Name "c:\home" -Value $home
 }
 
-Complete-Once env-common {
+Complete-Once setup-tools {
+    mkdir "c:\tools" -ea Ignore | Out-Null
+
+    foreach( $tool in ls "$env:OneDriveConsumer\Apps\tools" -Directory -ea Ignore | where Name -notmatch "^_" )
+    {
+        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+    }
+
+    foreach( $tool in ls "$env:OneDriveCommercial\tools" -Directory -ea Ignore | where Name -notmatch "^_" )
+    {
+        New-Junction $tool.FullName "c:\tools\$($tool.Name)"
+    }
+}
+
+Complete-Once setup-env {
     Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
     if( -not (Test-Path $homeSimplified -ea Ignore) )
