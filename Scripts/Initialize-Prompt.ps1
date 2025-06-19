@@ -16,7 +16,7 @@ function y
 $SCRIPT:lastCommandId = -1
 $SCRIPT:historyFolder = switch( Get-Platform )
 {
-    "Win32NT" { "c:\automation\history\" }
+    "Win" { "c:\automation\history\" }
     "Unix" { "~\.pwsh_history\" }
     default { "pwsh_history" }
 }

@@ -17,21 +17,23 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Get-Platform
 {
-    if( $PSVersionTable.Platform )
+    $platform = if( $PSVersionTable.Platform )
     {
         $PSVersionTable.Platform
     }
     else
     {
-        "Win32NT"
+        "Win"
     }
+
+    $platform -replace "Win32NT", "Win"
 }
 
 function SCRIPT:Get-HostName
 {
     switch( Get-Platform )
     {
-        "Win32NT" { $Env:ComputerName }
+        "Win" { $Env:ComputerName }
         "Unix" { hostname }
         default { "UNKNOWN" }
     }
@@ -39,7 +41,7 @@ function SCRIPT:Get-HostName
 
 function SCRIPT:Test-Windows
 {
-    $IsWindows -or ((Get-Platform) -eq "Win32NT")
+    $IsWindows -or ((Get-Platform) -eq "Win")
 }
 
 function SCRIPT:Test-Unix
@@ -163,7 +165,7 @@ function SCRIPT:Test-Elevated
 {
     switch( Get-Platform )
     {
-        "Win32NT"
+        "Win"
         {
             if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
             {
