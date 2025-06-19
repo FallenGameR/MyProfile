@@ -10,8 +10,7 @@ $global:Profile = $PSCommandPath
 
 # Import-AsDotSource causes all $SCRIPT variables to be global
 
-. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Env.ps1"
-. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Apps.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Computer.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Platform/Initialize-$(Get-Platform)-Env.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Platform/Initialize-$(Get-Platform)-Apps.ps1"
 
