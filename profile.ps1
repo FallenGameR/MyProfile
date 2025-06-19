@@ -6,7 +6,7 @@ param()
 
 $global:Profile = $PSCommandPath
 
-. $PSScriptRoot/Scripts/Initialize-Helpers.ps1
+. $PSScriptRoot/Scripts/Utils.ps1
 
 # Import-AsDotSource causes all $SCRIPT variables to be global
 
@@ -21,12 +21,5 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Scripts/Computer/Initialize-$SCRIPT:hostName.ps1"
 . Import-AsDotSource "$PSScriptRoot/playground.ps1"
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
-
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-#If (Test-Path "c:\tools\miniconda3\Scripts\conda.exe") {
-#    (& "c:\tools\miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | ?{$_} | Invoke-Expression
-#}
-#endregion
 
 $env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
