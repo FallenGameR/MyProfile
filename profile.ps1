@@ -15,7 +15,7 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-PsReadLine.ps1" (-not (Test-ProcessRedirected (Get-Process -Id $pid)))
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Prompt.ps1"
 . Import-AsDotSource "$PSScriptRoot/Scripts/Computer/$SCRIPT:hostName.ps1"
-. Import-AsDotSource "$PSScriptRoot/playground.ps1"
+. Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Functions.ps1.ps1"
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
 
 $env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"

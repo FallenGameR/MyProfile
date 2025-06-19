@@ -10,11 +10,6 @@ function capp( $url, [switch] $Music )
     & $chrome "--app=$url"
 }
 
-function dcm
-{
-    & "C:\tools\dcm\Dcm.Explorer.exe"
-}
-
 function ignore( $path )
 {
     git update-index --assume-unchanged $path
