@@ -6,6 +6,6 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "PfGold"            "c:\src\golds\pf\"
 }
 
-. $PSScriptRoot\Initialize-Work.ps1
+. $PSScriptRoot\..\Initialize-Work.ps1
 
 tm (Split-Path $PSCommandPath -Leaf)

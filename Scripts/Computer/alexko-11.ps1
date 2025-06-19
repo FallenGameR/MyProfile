@@ -6,7 +6,7 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "PfGold"            "v:\src\golds\pf\"
 }
 
-. $PSScriptRoot\Initialize-Work.ps1
+. $PSScriptRoot\..\Initialize-Work.ps1
 
 Complete-Once install-bandwhich {
     mkdir c:\tools\rust\
