@@ -67,13 +67,6 @@ Complete-Once setup-winget {
     copy "$PsScriptRoot\..\Tools\Winget\winget-settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json"
 }
 
-Complete-Once install-winget {
-    Get-Content "$PSScriptRoot\..\..\Data\winget-apps.txt" | foreach{
-        "`n# Installing $_ via winget`n"
-        winget install $_ --silent | where{ $psitem -notmatch 'Γû[Æê]|^\s+[-\\|/]\s+$' }
-    }
-}
-
 Complete-Once setup-bottom {
     mkdir $env:APPDATA\bottom -ea Ignore | Out-Null
     Copy-Item "$PSScriptRoot\..\..\Tools\bottom\bottom.toml" "$env:APPDATA\bottom\bottom.toml"

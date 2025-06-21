@@ -1,3 +1,0 @@
-firacode
-geforce-game-ready-driver
-openhardwaremonitor

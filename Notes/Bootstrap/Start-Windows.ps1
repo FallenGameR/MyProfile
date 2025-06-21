@@ -1,21 +1,16 @@
-#Requires -RunAsAdministrator
+# Get the repo
+winget install Git.Git
+git clone https://github.com/FallenGameR/MyProfile.git "$home/Documents/Powershell"
 
-# Install chocolatey, winget as of now doesn't have all the packages
+# Install apps, winget
+cd "$home/Documents/Powershell"
+Get-Content "Data\winget-apps.txt" | foreach{ winget install $psitem --accept-package-agreements }
+
+# Install apps, choco has still two apps missing from winget
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-# For bootstrap we need just git, rust, powershell core and this module
-choco install -s=chocolatey git powershell-core -y
-
-# Select 1 then after compiler install 1 for default installation
-wget https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe -OutFile .\Downloads\rustup-init.exe
-.\Downloads\rustup-init.exe
-
-# First profile invocation will take some time, start in elevated
-$destination = "$home/Documents/Powershell"
-git clone https://github.com/FallenGameR/MyProfile.git $destination
+gsudo choco install -s=chocolatey firacode geforce-game-ready-driver -y
 
 # Notes
-"To speed things up make sure defender ignores folders like C:\src"
-"C:\ProgramData\chocolatey\lib may be another candidate"
+"If defender is slow maybe exclude C:\src from scanning"
