@@ -5,5 +5,5 @@ sort_sensitive = false
 
 [plugin]
 prepend_previewers = [
-  { name = "*.md", run = "mdcat" },
+  { name = "*.md", run = "glow" },
 ]
