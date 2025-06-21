@@ -78,10 +78,10 @@ function SCRIPT:Import-AsInvoke($path, $condition = $true)
 function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
 {
     # Skip if one time setup was already done
-    $flag = "$SCRIPT:oneTimeFolder/$name"
+    $flag = "$SCRIPT:oneTimeFolder/$name.log"
     if( Test-Path $flag )
     {
-        Remove-Item "$flag.err" -ea Ignore
+        Remove-Item "_ERROR_$flag.err" -ea Ignore
         return
     }
 
@@ -92,12 +92,6 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
         {
             Write-Warning "Skipping $name because it requires elevation"
             return
-
-            #if( -not (Get-Command sudo -ea Ignore) )
-            #{
-            #    Write-Warning "Skipping $name because it requires elevation we are not elevated and sudo is missing"
-            #    return
-            #}
         }
     }
 
@@ -113,10 +107,10 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     {
         if( Test-Path $flag -ea Ignore )
         {
-            Rename-Item $flag "$flag.err"
+            Rename-Item $flag "_ERROR_$flag.err"
         }
 
-        $psitem | Tee-Object "$flag.err" -Append
+        $psitem | Tee-Object "_ERROR_$flag.err" -Append
         Write-Warning "Failed $name because: $psitem"
     }
 
