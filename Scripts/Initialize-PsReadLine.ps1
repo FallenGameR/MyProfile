@@ -62,7 +62,7 @@ Register-Shortcut "Alt+l" "Clear-GitBranch" "Clear a completed pull request for 
 
 switch( Get-Platform )
 {
-    "Win32NT"
+    "Win"
     {
         Register-Shortcut "Alt+c" "gite commit" "Git commit dialog"
         Register-Shortcut "Alt+b" "gite" "Git commit browser"
@@ -204,8 +204,8 @@ Set-PSReadlineKeyHandler `
     {
         switch( $PSVersionTable.Platform )
         {
-            ""        { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
-            "Win32NT" { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
+            ""      { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
+            "Win"   { [Microsoft.Powershell.PSConsoleReadLine]::Cut() }
             "Unix"
             {
                 [Microsoft.Powershell.PSConsoleReadLine]::GetBufferState([ref] $string, [ref] $cursor)
@@ -223,10 +223,10 @@ Set-PSReadlineKeyHandler `
     {
         switch( $PSVersionTable.Platform )
         {
-            ""          { $string | clip }
-            "Win32NT"   { $string | clip }
-            "Unix"      { $string | xsel --input -b }
-            default     { return }
+            ""      { $string | clip }
+            "Win"   { $string | clip }
+            "Unix"  { $string | xsel --input -b }
+            default { return }
         }
         [Microsoft.Powershell.PSConsoleReadLine]::RevertLine()
         return

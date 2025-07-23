@@ -17,21 +17,23 @@ function SCRIPT:tm($info = "=>")
 
 function SCRIPT:Get-Platform
 {
-    if( $PSVersionTable.Platform )
+    $platform = if( $PSVersionTable.Platform )
     {
         $PSVersionTable.Platform
     }
     else
     {
-        "Win32NT"
+        "Win"
     }
+
+    $platform -replace "Win32NT", "Win"
 }
 
 function SCRIPT:Get-HostName
 {
     switch( Get-Platform )
     {
-        "Win32NT" { $Env:ComputerName }
+        "Win" { $Env:ComputerName }
         "Unix" { hostname }
         default { "UNKNOWN" }
     }
@@ -39,7 +41,7 @@ function SCRIPT:Get-HostName
 
 function SCRIPT:Test-Windows
 {
-    $IsWindows -or ((Get-Platform) -eq "Win32NT")
+    $IsWindows -or ((Get-Platform) -eq "Win")
 }
 
 function SCRIPT:Test-Unix
@@ -76,10 +78,10 @@ function SCRIPT:Import-AsInvoke($path, $condition = $true)
 function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
 {
     # Skip if one time setup was already done
-    $flag = "$SCRIPT:oneTimeFolder/$name"
+    $flag = "$SCRIPT:oneTimeFolder/$name.log"
     if( Test-Path $flag )
     {
-        Remove-Item "$flag.err" -ea Ignore
+        Remove-Item "_ERROR_$flag.err" -ea Ignore
         return
     }
 
@@ -90,12 +92,6 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
         {
             Write-Warning "Skipping $name because it requires elevation"
             return
-
-            #if( -not (Get-Command sudo -ea Ignore) )
-            #{
-            #    Write-Warning "Skipping $name because it requires elevation we are not elevated and sudo is missing"
-            #    return
-            #}
         }
     }
 
@@ -111,10 +107,10 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     {
         if( Test-Path $flag -ea Ignore )
         {
-            Rename-Item $flag "$flag.err"
+            Rename-Item $flag "_ERROR_$flag.err"
         }
 
-        $psitem | Tee-Object "$flag.err" -Append
+        $psitem | Tee-Object "_ERROR_$flag.err" -Append
         Write-Warning "Failed $name because: $psitem"
     }
 
@@ -163,7 +159,7 @@ function SCRIPT:Test-Elevated
 {
     switch( Get-Platform )
     {
-        "Win32NT"
+        "Win"
         {
             if( $ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" )
             {

@@ -16,7 +16,7 @@ function y
 $SCRIPT:lastCommandId = -1
 $SCRIPT:historyFolder = switch( Get-Platform )
 {
-    "Win32NT" { "c:\automation\history\" }
+    "Win" { "c:\automation\history\" }
     "Unix" { "~\.pwsh_history\" }
     default { "pwsh_history" }
 }
@@ -151,6 +151,15 @@ if( Get-Command starship -ea Ignore )
             $env:ChangedPSModulePath = $null
         }
         $env:PreviousPSModulePath = $env:PSModulePath
+
+        # Fix console mode if the FzfBindings is hot-loaded
+        if( Get-Module FzfBindings -ea Ignore )
+        {
+            # fzf seems to have a background thread that can mess up
+            # the console mode even after the main thread is killed and
+            # the console get control from the fzf back
+            Repair-ConsoleMode
+        }
 
         # Keep track of the command history
         Update-CommandHistory

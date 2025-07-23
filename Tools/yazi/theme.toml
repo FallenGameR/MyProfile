@@ -1,2 +1,20 @@
 [flavor]
 dark = "vscode-dark-plus"
+
+#[status]
+#sep_left = { open = "", close = "" }
+#sep_right = { open = "", close = "" }
+
+# https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/theme-dark.toml
+[icon]
+#dirs  = []
+#files = []
+#exts  = []
+#conds = []
+
+# Win+; to find emojis
+prepend_conds = [
+  { if = "hidden & dir",  text = "👻" },  # Hidden directories
+  { if = "dir",           text = "📂" },  # Directories
+  { if = "!(dir | link)", text = "📄" },  # Normal files (not directories or symlinks)
+]

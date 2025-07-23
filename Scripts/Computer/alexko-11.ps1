@@ -6,7 +6,7 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "PfGold"            "v:\src\golds\pf\"
 }
 
-. $PSScriptRoot\Initialize-Work.ps1
+. $PSScriptRoot\..\Initialize-Work.ps1
 
 Complete-Once install-bandwhich {
     mkdir c:\tools\rust\
@@ -25,10 +25,6 @@ Complete-Once install-bandwhich {
     # cargo install bandwhich
     # winget install npcap
     # $env:path += ";c:\Windows\System32\Npcap\"
-}
-
-Complete-Once install-mdcat {
-    cargo install mdcat
 }
 
 Complete-Once install-sds {

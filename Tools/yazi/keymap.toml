@@ -4,21 +4,21 @@ run  = "close"
 desc = "Cancel input"
 
 [[mgr.prepend_keymap]]
-on   = "P"
+on   = "<S-Right>"
 run  = "plugin toggle-pane min-preview"
 desc = "Show or hide the preview pane"
 
 [[mgr.prepend_keymap]]
-on   = "p"
+on   = "<S-Left>"
 run  = "plugin toggle-pane max-preview"
 desc = "Maximize or restore the preview pane"
 
 [[mgr.prepend_keymap]]
 on   = "<S-Down>"
-run  = "seek 5"
+run  = "seek 10"
 desc = "Scroll preview down"
 
 [[mgr.prepend_keymap]]
 on   = "<S-Up>"
-run  = "seek -5"
+run  = "seek -10"
 desc = "Scroll preview up"
