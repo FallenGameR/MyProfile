@@ -172,6 +172,7 @@ if( Get-Command starship -ea Ignore )
 }
 
 # Use zoxide for directory navigation - can be installed only after starship
+# https://github.com/ajeetdsouza/zoxide
 if( Get-Command zoxide -ea Ignore )
 {
     $env:_ZO_DATA_DIR = "$PSScriptRoot\..\Tools\zoxide\data"
