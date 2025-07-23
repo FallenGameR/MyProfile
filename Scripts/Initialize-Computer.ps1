@@ -3,11 +3,13 @@ $PSDefaultParameterValues["Get-Command:All"] = $true
 $PSDefaultParameterValues["Out-GridView:OutputMode"] = "Single"
 $PSDefaultParameterValues["Open-GitExtensions:NewEnvironment"] = $true
 $PSDefaultParameterValues["man:Detailed"] = $true
+$PSDefaultParameterValues["cdf:NoIgnore"] = $true
 
 # Powershell aliases
 Set-Alias m Measure-Object
 Set-Alias ls Get-ChildItem -Option AllScope
 Set-Alias grid Out-GridView
+Set-Alias man Get-Help
 
 # Environment variables with settings for common tools
 
