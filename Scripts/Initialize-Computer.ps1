@@ -9,7 +9,7 @@ $PSDefaultParameterValues["cdf:NoIgnore"] = $true
 Set-Alias m Measure-Object
 Set-Alias ls Get-ChildItem -Option AllScope
 Set-Alias grid Out-GridView
-Set-Alias man Get-Help
+Set-Alias man Get-Help -Force # Remove-Item Alias:man may be needed, observe for now
 
 # Environment variables with settings for common tools
 
