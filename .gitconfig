@@ -24,7 +24,6 @@
     file-modified-label = ▶️ MOD
     file-removed-label = - DEL
     file-renamed-label = REN
-    #file-transformation = s:src/smth|other_path::gi
 [interactive]
     diffFilter = delta --color-only
 [add.interactive]
