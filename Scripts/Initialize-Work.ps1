@@ -31,6 +31,9 @@ $env:FZF_QUICK_PATHS =
     "$env:docs\Products\Autopilot\Autopilot\;" +
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
+# VS Code PowerShell integration
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+
 # Reload DriScripts module
 function reload( [string] $Path, [switch] $FromTools )
 {
