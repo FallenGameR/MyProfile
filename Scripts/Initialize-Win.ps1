@@ -25,7 +25,7 @@ Complete-Once setup-conhost -elevated {
     # Enable ANSI escape sequences in classic console
     Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
 
-    cd "$PsScriptRoot\..\..\Bin\ColorTool\"
+    cd "$PsScriptRoot\..\Bin\ColorTool\"
     .\ColorTool.exe -b -q campbell | Out-Null
 }
 
