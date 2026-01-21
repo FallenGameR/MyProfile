@@ -52,6 +52,9 @@ if( Get-Command fd -ea Ignore )
     $env:FZF_DEFAULT_COMMAND = 'fd -I --type f --color always'
 }
 
+# VSCode shell integration
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+
 # Powershell module path - used to occastionally get broken
 #$modules = Join-Path (Split-Path $profile) Modules
 #if( -not $env:PSModulePath.Contains($modules) )

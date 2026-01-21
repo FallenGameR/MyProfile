@@ -18,6 +18,3 @@ $global:Profile = $PSCommandPath
 . Import-AsDotSource "$PSScriptRoot/Scripts/Initialize-Functions.ps1"
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
 
-$env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
-
-$env:Path = "$env:Path;C:\tools\cloudVault"

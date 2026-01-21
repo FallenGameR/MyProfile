@@ -7,11 +7,14 @@ $env:Path += ";C:\tools\lens"
 $env:Path += ";C:\tools\prorab"
 $env:Path += ";C:\tools\oneAccess"
 $env:Path += ";C:\tools\sd"
+$env:Path += ";C:\tools\cloudVault"
+$env:Path += ";C:\tools\dsmsClient"
 
 # Modules availability
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
+$env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
 
 # Line endings mitigation
 #$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
