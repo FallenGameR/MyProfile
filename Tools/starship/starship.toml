@@ -118,7 +118,7 @@ repo_root_style = 'dimmed yellow'
 # The system hostname
 [hostname]
 disabled = false
-ssh_only = true
+ssh_only = false
 format = '[$ssh_symbol$hostname]($style) '
 style = 'green'
 
