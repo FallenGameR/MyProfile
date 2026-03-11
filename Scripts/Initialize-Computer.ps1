@@ -53,7 +53,14 @@ if( Get-Command fd -ea Ignore )
 }
 
 # VSCode shell integration
-if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+if( $env:TERM_PROGRAM -eq "vscode" )
+{
+    $script = code --locate-shell-integration-path pwsh
+    if( $script )
+    {
+        . $script
+    }
+}
 
 # Powershell module path - used to occastionally get broken
 #$modules = Join-Path (Split-Path $profile) Modules
