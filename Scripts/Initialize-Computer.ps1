@@ -55,7 +55,7 @@ if( Get-Command fd -ea Ignore )
 # VSCode shell integration
 if( $env:TERM_PROGRAM -eq "vscode" )
 {
-    $script = code --locate-shell-integration-path pwsh
+    $script = code.cmd --locate-shell-integration-path pwsh
     if( $script )
     {
         . $script

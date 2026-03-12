@@ -37,7 +37,7 @@ $env:FZF_QUICK_PATHS =
 # VS Code PowerShell integration
 if( $env:TERM_PROGRAM -eq "vscode" )
 {
-    $script = code --locate-shell-integration-path pwsh
+    $script = code.cmd --locate-shell-integration-path pwsh
     if( $script )
     {
         . $script
