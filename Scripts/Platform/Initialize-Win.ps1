@@ -17,53 +17,6 @@ $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem 
 # Shortcut setup
 Register-Shortcut "Alt+y" "y" "yazi open"
 
-# Elevated setup
-
-Complete-Once install-apps -elevated {
-    $apps = cat "$PSScriptRoot\..\..\Data\windows-apps.txt"
-    choco install -s=chocolatey @apps -y --no-progress
-}
-
-Complete-Once setup-conhost -elevated {
-    # Enable ANSI escape sequences in classic console
-    Set-ItemProperty HKCU:\Console VirtualTerminalLevel -Type DWORD 1
-
-    cd "$PsScriptRoot\..\Bin\ColorTool\"
-    .\ColorTool.exe -b -q campbell | Out-Null
-}
-
-Complete-Once hide-folders -elevated {
-    $noisyFolders =
-        "c:\Intel",
-        "c:\PerfLogs",
-        "c:\Program Files",
-        "c:\Program Files (x86)",
-        "c:\Users",
-        "c:\Windows",
-        "c:\inetpub",
-        "$home\3D Objects",
-        "$home\Contacts",
-        "$home\Favorites",
-        "$home\Links",
-        "$home\Pictures",
-        "$home\Saved Games",
-        "$home\Searches",
-        "$home\Videos"
-    $noisyFolders | where{ gi $psitem -ea ignore } | Set-Visible $false
-}
-
-Complete-Once install-wsl -elevated {
-    # This command can forcefully reboot machine, don't execute if something else is running
-    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    wsl --set-default-version 2
-}
-
-Complete-Once setup-trackball -elevated {
-    & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
-}
-
 # Non elevated setup
 
 Complete-Once setup-winget {
@@ -78,10 +31,6 @@ Complete-Once setup-bottom {
 Complete-Once setup-fd {
     mkdir "$env:APPDATA\fd" -ea Ignore | Out-Null
     cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > "$env:APPDATA\fd\ignore"
-}
-
-Complete-Once setup-tldr {
-    tldr --update
 }
 
 Complete-Once setup-powershell-classic {
@@ -117,16 +66,6 @@ Complete-Once setup-tools {
     {
         New-Junction $tool.FullName "c:\tools\$($tool.Name)"
     }
-}
-
-Complete-Once setup-env {
-    Set-EnvironmentVariable "Startup" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
-    $homeSimplified = $env:USERPROFILE -replace "\.$($env:USERDOMAIN)$"
-    if( -not (Test-Path $homeSimplified -ea Ignore) )
-    {
-        $homeSimplified = $env:USERPROFILE
-    }
-    Set-EnvironmentVariable "Home" $homeSimplified
 }
 
 tm (Split-Path $PSCommandPath -Leaf)

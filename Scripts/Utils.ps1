@@ -29,6 +29,8 @@ function SCRIPT:Get-Platform
     $platform -replace "Win32NT", "Win"
 }
 
+
+
 function SCRIPT:Get-HostName
 {
     switch( Get-Platform )
@@ -36,6 +38,33 @@ function SCRIPT:Get-HostName
         "Win" { $Env:ComputerName }
         "Unix" { hostname }
         default { "UNKNOWN" }
+    }
+}
+
+function SCRIPT:Get-ComputerEnvironment
+{
+    $isWork = [bool] $env:USERDOMAIN
+    $isSaw = $env:USERDOMAIN.Length -eq 3
+    $location = if( -not $isWork )
+    {
+        "Home"
+    }
+    else
+    {
+        if( $isSaw )
+        {
+            "SAW"
+        }
+        else
+        {
+            "Devbox"
+        }
+    }
+
+    [ordered] @{
+        Platform = Get-Platform
+        Location = $location
+        Name = Get-HostName
     }
 }
 
@@ -79,9 +108,10 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
 {
     # Skip if one time setup was already done
     $flag = "$SCRIPT:oneTimeFolder/$name.log"
+    $errorFlag = "$SCRIPT:oneTimeFolder/_ERROR_$name.log"
     if( Test-Path $flag )
     {
-        Remove-Item "_ERROR_$flag.err" -ea Ignore
+        Remove-Item $errorFlag -ea Ignore
         return
     }
 
@@ -107,10 +137,10 @@ function SCRIPT:Complete-Once( $name, $script, [switch] $elevated )
     {
         if( Test-Path $flag -ea Ignore )
         {
-            Rename-Item $flag "_ERROR_$flag.err"
+            Rename-Item $flag $errorFlag
         }
 
-        $psitem | Tee-Object "_ERROR_$flag.err" -Append
+        $psitem | Tee-Object $errorFlag -Append
         Write-Warning "Failed $name because: $psitem"
     }
 

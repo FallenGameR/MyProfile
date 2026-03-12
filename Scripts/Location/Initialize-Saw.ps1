@@ -1,8 +1,23 @@
+. $PSScriptRoot\Initialize-Work.ps1
+
 # Tools availability
-$env:Path += ";C:\Program Files\Ripgrep\"
 $env:Path += ";C:\Program Files\Drop\lib\net45\"
 $env:Path += ";C:\Program Files\SSTool\"
 $env:Path += ";C:\tools\dsmsClient\DsmsClient"
+
+$env:path += ";C:\Program Files\bat"
+$env:path += ";C:\Program Files\chafa"
+$env:path += ";C:\Program Files\delta"
+$env:path += ";C:\Program Files\fd"
+$env:path += ";C:\Program Files\Ripgrep\"
+$env:path += ";C:\Program Files\Yazi"
+$env:path += ";C:\Program Files\glow"
+
+
+$env:FZF_DEFAULT_COMMAND = 'fd -I --type f --color always'
+
+# mkdir "$env:APPDATA\fd" -ea Ignore | Out-Null
+# "bin", "cache", "Help", "obj", "objd", "out", "target", "TestResults" > "$env:APPDATA\fd\ignore"
 
 # DriScripts plus FzfBindings init
 function ds

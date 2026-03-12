@@ -62,25 +62,6 @@ if( $env:TERM_PROGRAM -eq "vscode" )
     }
 }
 
-# Powershell module path - used to occastionally get broken
-#$modules = Join-Path (Split-Path $profile) Modules
-#if( -not $env:PSModulePath.Contains($modules) )
-#{
-#    $env:PSModulePath += [io.path]::PathSeparator + $modules
-#}
-
-Complete-Once install-PSToolset {
-    git clone https://github.com/microsoft/PSToolset.git $PsScriptRoot/../Modules/PSToolset
-}
-
-Complete-Once install-FzfBindings {
-    git clone https://github.com/FallenGameR/FzfBindings.git $PsScriptRoot/../Modules/FzfBindings
-}
-
-Complete-Once install-as-tree {
-    cargo install -f --git https://github.com/jez/as-tree
-}
-
 Complete-Once setup-git {
     git config --global user.name "Aleksandr Kostikov"
     git config --global user.email "Alex.Kostikov@gmail.com"
@@ -105,5 +86,12 @@ Complete-Once setup-git {
     git config --global alias.lg "log --graph --pretty=format:'%C(reset)%C(yellow)%h%C(reset) -%C(bold yellow)%d%C(reset) %s %C(green)(%cr) %C(cyan)<%an>%C(reset)' --abbrev-commit --date=relative -n 10"
     git config --global alias.gr "grep --break --heading --line-number -iIE"
 }
+
+# Powershell module path - used to occastionally get broken
+#$modules = Join-Path (Split-Path $profile) Modules
+#if( -not $env:PSModulePath.Contains($modules) )
+#{
+#    $env:PSModulePath += [io.path]::PathSeparator + $modules
+#}
 
 tm (Split-Path $PSCommandPath -Leaf)
