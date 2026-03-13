@@ -9,6 +9,7 @@ $env:Path += ";C:\tools\oneAccess"
 $env:Path += ";C:\tools\sd"
 $env:Path += ";C:\tools\cloudVault"
 $env:Path += ";C:\tools\dsmsClient"
+$env:Path += ";C:\.tools\.npm-global"
 
 # Modules availability
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
