@@ -33,6 +33,9 @@ Complete-Once install-bandwhich {
     # $env:path += ";c:\Windows\System32\Npcap\"
 }
 
+<#
+sed replacement
+
 Complete-Once install-sds {
     mkdir c:\tools\rust\
     cd c:\tools\rust\
@@ -43,6 +46,7 @@ Complete-Once install-sds {
 
     # cargo install -f --git https://github.com/chmln/sd.git
 }
+#>
 
 Complete-Once junction-one-drive-ms {
     New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
