@@ -15,11 +15,8 @@ $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem 
 # Use bat for man
 $env:MANPAGER = "sh -c 'col -bx | batcat -l man -p'"
 
-# Some commands here use sudo, but we can't demand that
-# whole script is run under root. We need identity of a current
-# user but root privileges here.
-
-# Spell-checker: disable
+# Some commands here use sudo, we need identity of a current
+# user but occasionally we need to use root privileges here.
 
 Complete-Once install-apps {
     $apps = cat "$PSScriptRoot/../../Data/unix-apps.txt"
@@ -111,22 +108,18 @@ TabbyTerminal
 #>
 
 <#
-
 In Linux the analog of Sysinternals Suite would be:
 
 ldd - get list of used shared libraries (.so|.dll)
 strace - see what syscalls an executable makes
 lsof - list of opened files and sockets per folder
-
 #>
 
 <#
-
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
 sudo apt update && sudo apt install glow
-
 
 https://rustup.rs
 rustup toolchain install nightly

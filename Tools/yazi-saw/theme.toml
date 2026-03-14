@@ -6,10 +6,17 @@ dark = "vscode-dark-plus"
 #sep_right = { open = "", close = "" }
 
 # https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/theme-dark.toml
+# Overrides were added to make it work on SAW that doesn't have the right font
 [icon]
-dirs  = []
-files = []
-exts  = []
+dirs  = [
+    { name = "*", text = " " },
+]
+files = [
+    { name = "*", text = " " },
+]
+exts  = [
+    { name = "*", text = " " },
+]
 #conds = []
 
 # Win+; to find emojis

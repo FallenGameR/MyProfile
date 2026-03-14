@@ -1,21 +1,20 @@
 # Tools availability
-$env:Path += ";C:\tools\FcShell"
-$env:Path += ";C:\tools\dcm.explorer"
-$env:Path += ";C:\tools\xts"
-$env:Path += ";C:\tools\drop"
-$env:Path += ";C:\tools\lens"
-$env:Path += ";C:\tools\prorab"
-$env:Path += ";C:\tools\oneAccess"
-$env:Path += ";C:\tools\sd"
 $env:Path += ";C:\tools\cloudVault"
+$env:Path += ";C:\tools\dcm.explorer"
+$env:Path += ";C:\tools\drop"
 $env:Path += ";C:\tools\dsmsClient"
-$env:Path += ";C:\.tools\.npm-global"
+$env:Path += ";C:\tools\FcShell"
+$env:Path += ";C:\tools\lens"
+$env:Path += ";C:\tools\oneAccess"
+$env:Path += ";C:\tools\prorab"
+$env:Path += ";C:\tools\sd"
+$env:Path += ";C:\tools\xts"
 
 # Modules availability
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
+$env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
-$env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
 
 # Line endings mitigation
 #$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
@@ -182,6 +181,11 @@ function Sync-Settings
 }
 
 #$env:PSModulePath = "C:\src\mv\src\Client\NTP\scripts\modules;$env:PSModulePath"
+
+Complete-Once setup-git-work {
+    git config --global user.name "Aleksandr Kostikov"
+    git config --global user.email "alexko@microsoft.com"
+}
 
 tm (Split-Path $PSCommandPath -Leaf)
 

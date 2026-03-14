@@ -1,9 +1,5 @@
 # Non elevated setup
 
-Complete-Once setup-tldr {
-    tldr --update
-}
-
 Complete-Once install-as-tree {
     cargo install -f --git https://github.com/jez/as-tree
 }
@@ -20,6 +16,36 @@ Complete-Once setup-env {
 
 Complete-Once setup-winget {
     copy "$PsScriptRoot\..\Tools\Winget\winget-settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json"
+}
+
+Complete-Once setup-git-home {
+    git config --global user.name "Aleksandr Kostikov"
+    git config --global user.email "alexko@microsoft.com"
+}
+
+Complete-Once setup-powershell-classic {
+    if( $PSVersionTable.PSEdition -ne "Core" )
+    {
+        throw "This function must be envoked only from PowerShell Core"
+    }
+
+    $classic = "$PsScriptRoot/../../../WindowsPowershell"
+    $modern = "$PsScriptRoot/../../../Powershell"
+
+    mkdir $classic -ea Ignore | Out-Null
+    ". $profile" | Add-Content "$classic\profile.ps1"
+
+    New-Item -Type Junction -Name "$classic\Modules" -Value "$modern\Modules"
+}
+
+Complete-Once setup-junctions {
+    New-Item -Type Junction -Name "c:\Program Files (x86)\_x64_" -Value "c:\Program Files"
+    New-Item -Type Junction -Name "c:\programs" -Value "c:\Program Files (x86)"
+    New-Item -Type Junction -Name "c:\home" -Value $home
+}
+
+Complete-Once setup-tldr {
+    tldr --update
 }
 
 # Elevated setup
