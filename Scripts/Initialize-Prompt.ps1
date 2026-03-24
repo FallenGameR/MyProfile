@@ -129,45 +129,6 @@ function SCRIPT:Get-TitlePath
     annotate (Update-CachedResult "Get-TitlePath" $title)
 }
 
-# Use starship for prompt if available
-if( Get-Command starship -ea Ignore )
-{
-    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
-    $env:STARSHIP_CACHE = "$PSScriptRoot\..\Tools\starship\logs"
-    #$env:STARSHIP_LOG = "trace"
-
-    function Invoke-Starship-PreCommand
-    {
-        # Track PSModulePath changes
-        if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
-        {
-            $env:ChangedPSModulePath = "PSModulePath changed"
-        }
-        else
-        {
-            $env:ChangedPSModulePath = $null
-        }
-        $env:PreviousPSModulePath = $env:PSModulePath
-
-        # Fix console mode if the FzfBindings is hot-loaded
-        if( Get-Module FzfBindings -ea Ignore )
-        {
-            # fzf seems to have a background thread that can mess up
-            # the console mode even after the main thread is killed and
-            # the console get control from the fzf back
-            Repair-ConsoleMode
-        }
-
-        # Keep track of the command history
-        Update-CommandHistory
-
-        # Update the window title
-        if( Test-Full ) { $host.UI.RawUI.WindowTitle = Get-TitlePath }
-    }
-
-    Invoke-Expression (&starship init powershell)
-}
-
 # Use zoxide for directory navigation - can be installed only after starship
 # https://github.com/ajeetdsouza/zoxide
 if( Get-Command zoxide -ea Ignore )
@@ -177,7 +138,7 @@ if( Get-Command zoxide -ea Ignore )
 }
 
 # No further initialization is needed if starship is used
-if( Get-Command starship -ea Ignore )
+if( $env:STARSHIP_CONFIG -and (Get-Command starship -ea Ignore) )
 {
     return
 }
