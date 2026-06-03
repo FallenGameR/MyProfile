@@ -45,8 +45,11 @@ Complete-Once install-sds {
 }
 
 Complete-Once junction-one-drive-ms {
-    New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
-    Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
+    if( $env:OneDriveCommercial )
+    {
+        New-Item -ItemType Junction -Name "D:\OneDrive.MS" -Target $env:OneDriveCommercial -ea Ignore
+        Set-EnvironmentVariable "OneDriveCommercial" "D:\OneDrive.MS"
+    }
 }
 
 # Elevated setup
