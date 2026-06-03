@@ -9,6 +9,7 @@ dnSpyEx.dnSpy
 FlorianHeidenreich.Mp3tag
 gerardog.gsudo
 GIMP.GIMP.3
+git.git
 Google.Chrome
 hpjansson.Chafa
 HTTPie.HTTPie
