@@ -14,14 +14,13 @@ Google.Chrome
 hpjansson.Chafa
 HTTPie.HTTPie
 junegunn.fzf
-Microsoft.AIShell
 Microsoft.Edit
 Microsoft.PowerShell
-Microsoft.PowerToys
-Microsoft.Sysinternals
-Microsoft.VisualStudio.2022.Enterprise
+Microsoft.Sysinternals.Suite
+Microsoft.VisualStudio.Enterprise
 Microsoft.VisualStudioCode
 Microsoft.WindowsTerminal
+Obsidian.Obsidian
 Rustlang.Rustup
 ScooterSoftware.BeyondCompare.4
 sharkdp.bat
