@@ -9,6 +9,7 @@ $env:Path += ";C:\tools\oneAccess"
 $env:Path += ";C:\tools\prorab"
 $env:Path += ";C:\tools\sd"
 $env:Path += ";C:\tools\xts"
+$env:Path += ";C:\Program Files\GitExtensions\"
 
 # Modules availability
 $env:PSModulePath = "$env:PSModulePath;C:\tools\DriScripts"
