@@ -19,18 +19,16 @@
         <TypeName>System.Management.Automation.PSModuleInfo</TypeName>
       </ViewSelectedBy>
       <TableControl>
+        <AutoSize />
         <TableHeaders>
           <TableColumnHeader>
             <Label>ModuleType</Label>
-            <Width>10</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Version</Label>
-            <Width>22</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Name</Label>
-            <Width>35</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>ExportedCommands</Label>
