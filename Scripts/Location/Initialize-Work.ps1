@@ -17,6 +17,9 @@ $env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 
+# Formatting overrides
+Update-FormatData -PrependPath "$PSScriptRoot/../../Data/ModuleInfo.format.ps1xml"
+
 # Line endings mitigation
 #$env:FZF_BINDINGS_GIT_LINE_ENDINGS_MITIGATION =
 #    "src/Services/rwf/bootstrap/ComponentBootstrap/Test/TestContent/Rdm/Decom/Inventory.xml;" +

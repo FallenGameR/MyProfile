@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Custom table view for module info objects.
+
+    The built-in PowerShell view for System.Management.Automation.PSModuleInfo
+    hard-codes the Version column to ~10 characters and always renders an
+    (often empty) PreRelease column. Long versions such as 2.20.20260624 get
+    truncated to "2.20.2026...".
+
+    This view is loaded via Update-FormatData -PrependPath so it wins over the
+    built-in one. It widens Version, folds any prerelease tag into the version
+    string, and drops the separate PreRelease column.
+-->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>ModuleInfoTableView-Wide</Name>
+      <ViewSelectedBy>
+        <TypeName>System.Management.Automation.PSModuleInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ModuleType</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Version</Label>
+            <Width>22</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>35</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ExportedCommands</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ModuleType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  $pre = $_.PrivateData.PSData.Prerelease
+                  if ($pre) { "$($_.Version)-$($pre.TrimStart('-'))" } else { "$($_.Version)" }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ExportedCommands</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
