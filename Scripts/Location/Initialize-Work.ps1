@@ -1,3 +1,6 @@
+# Powershell command arguments
+$PSDefaultParameterValues["Start-GenevaDeployment:Wait"] = $true
+
 # Tools availability
 $env:Path += ";C:\tools\cloudVault"
 $env:Path += ";C:\tools\dcm.explorer"
