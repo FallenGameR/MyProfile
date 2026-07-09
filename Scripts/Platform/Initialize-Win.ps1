@@ -29,7 +29,7 @@ Complete-Once setup-bottom {
 
 Complete-Once setup-fd {
     mkdir "$env:APPDATA\fd" -ea Ignore | Out-Null
-    cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" > "$env:APPDATA\fd\ignore"
+    cat "$PsScriptRoot/../../Modules/FzfBindings/Data/excluded_folders" | Set-Content "$env:APPDATA\fd\ignore"
 }
 
 Complete-Once setup-tools {

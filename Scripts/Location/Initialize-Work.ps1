@@ -9,6 +9,7 @@ $env:Path += ";C:\tools\oneAccess"
 $env:Path += ";C:\tools\prorab"
 $env:Path += ";C:\tools\sd"
 $env:Path += ";C:\tools\xts"
+$env:Path += ";C:\tools\safefly-automation"
 $env:Path += ";C:\Program Files\GitExtensions\"
 
 # Modules availability
