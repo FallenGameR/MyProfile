@@ -123,6 +123,11 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
 Set-PSReadlineKeyHandler -Chord "Shift+UpArrow" -Function SelectBackwardsLine
 Set-PSReadlineKeyHandler -Chord "Shift+DownArrow" -Function SelectLine
 
+# Windows Terminal remaps Shift+Enter to send ESC+CR so GitHub Copilot CLI inserts
+# a newline instead of submitting. PSReadLine sees ESC+CR as Alt+Enter, so mirror
+# the same behavior here to keep Shift+Enter = newline in interactive PowerShell.
+Set-PSReadlineKeyHandler -Chord "Alt+Enter" -Function AddLine
+
 # Doesn't work on Linux
 #Set-PSReadlineKeyHandler -Chord "Shift+Home" -Function SelectBackwardsLine
 #Set-PSReadlineKeyHandler -Chord "Shift+End" -Function SelectLine
