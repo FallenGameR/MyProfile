@@ -158,7 +158,7 @@ function Sync-Settings
 
             function Copy-Folder( $src, $dst )
             {
-                ls $src -Recurse | where FullName -notmatch "\b(Modules|Bin|Completed|clixml|Help)\b" | foreach {
+                ls $src -Recurse | where FullName -notmatch "\\\.git\b|\b(Modules|Bin|Completed|clixml|Help)\b" | foreach {
                     $dstPath = $psitem.FullName `
                         -replace [regex]::Escape($src), [regex]::Escape($dst) `
                         -replace "\\+", "\" `
