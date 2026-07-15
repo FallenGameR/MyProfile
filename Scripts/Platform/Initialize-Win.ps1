@@ -14,6 +14,9 @@ $addToPath =
     "C:\tools\tagger"
 $env:PATH += [io.path]::PathSeparator + (($addToPath | where{ Test-Path $psitem -ea Ignore }) -join [io.path]::PathSeparator)
 
+# Alias setup
+Set-Alias -Name btop -Value btop4win
+
 # Shortcut setup
 Register-Shortcut "Alt+y" "y" "yazi open"
 

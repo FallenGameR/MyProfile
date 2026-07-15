@@ -1,5 +1,6 @@
 ajeetdsouza.zoxide
 bootandy.dust
+btop4win
 BurntSushi.ripgrep.MSVC
 charmbracelet.glow
 Clement.bottom
