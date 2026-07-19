@@ -1,4 +1,5 @@
-# Starship now only works at home
+# Tools availability
+$env:Path += ";C:\tools\rcu\"
 
 # Use starship for prompt if available
 if( Get-Command starship -ea Ignore )
