@@ -1,3 +1,4 @@
+# SAW is pinned to a legacy Yazi version; do not migrate this flavor to the current schema.
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"

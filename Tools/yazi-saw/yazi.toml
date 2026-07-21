@@ -4,6 +4,7 @@ sort_by = "extension"
 sort_sensitive = false
 
 [plugin]
+# SAW is pinned to a legacy Yazi version; this matcher intentionally uses `name`.
 prepend_previewers = [
   { name = "*.md", run = "glow" },
 ]

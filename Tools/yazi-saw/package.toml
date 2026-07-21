@@ -13,5 +13,6 @@ use = "Reledia/glow"
 rev = "2da96e3"
 hash = "2540c4bcb855c39a413d6a0dcea07c06"
 
+# Keep this legacy flavor vendored; SAW cannot use the current Yazi package/schema.
 [flavor]
 deps = []
