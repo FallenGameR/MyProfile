@@ -6,6 +6,7 @@ dandavison.delta
 dnSpyEx.dnSpy
 FlorianHeidenreich.Mp3tag
 gerardog.gsudo
+GitHub.Copilot
 GIMP.GIMP.3
 git.git
 Google.Chrome
