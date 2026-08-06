@@ -1,0 +1,247 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions":
+    [
+        {
+            "command": "selectAll",
+            "id": "User.selectAll"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
+            "command":
+            {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command":
+            {
+                "action": "commandPalette"
+            },
+            "id": "User.commandPalette.D3F0B923"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
+            "command":
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.A6751878"
+        },
+        {
+            "command":
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
+        },
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "git branch --edit-description"
+            },
+            "id": "User.sendInput.854E2DBF",
+            "name": "Git Branch Description"
+        },
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "\u001b\r"
+            },
+            "id": "User.sendInput.8F63D3A9"
+        }
+    ],
+    "copyFormatting": "all",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings":
+    [
+        {
+            "id": null,
+            "keys": "ctrl+a"
+        },
+        {
+            "id": "User.commandPalette.D3F0B923",
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
+        {
+            "id": "Terminal.ClosePane",
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": "Terminal.ClosePane",
+            "keys": "ctrl+w"
+        },
+        {
+            "id": "User.selectAll",
+            "keys": "ctrl+shift+a"
+        },
+        {
+            "id": null,
+            "keys": "f11"
+        },
+        {
+            "id": "User.newTab.5DEADB41",
+            "keys": "ctrl+t"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "ctrl+p"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+f"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        }
+    ],
+    "launchMode": "default",
+    "newTabMenu":
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles":
+    {
+        "defaults":
+        {
+            "colorScheme": "Ottosson Snapshot",
+            "font":
+            {
+                "face": "FiraCode Nerd Font, Fira Code, Cascadia Code",
+                "size": 14
+            },
+            "padding": "1, 1, 1, 1",
+            "startingDirectory": null
+        },
+        "list":
+        [
+            {
+                "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -nologo",
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "padding": "10",
+                "source": "Windows.Terminal.PowershellCore",
+                "startingDirectory": null
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -nol",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "PowerShell Classic",
+                "startingDirectory": null
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "CMD",
+                "startingDirectory": null,
+                "useAcrylic": true
+            },
+            {
+                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+                "hidden": false,
+                "icon": "D:\\OneDrive\\Apps\\Settings\\Icons\\debian.png",
+                "name": "Debian",
+                "source": "Windows.Terminal.Wsl",
+                "startingDirectory": null
+            },
+            {
+                "guid": "{46ca431a-3a87-5fb3-83cd-11ececc031d2}",
+                "hidden": false,
+                "icon": "D:\\OneDrive\\Apps\\Settings\\Icons\\kali.png",
+                "name": "Kali",
+                "source": "Windows.Terminal.Wsl",
+                "startingDirectory": null
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure",
+                "startingDirectory": null
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
+            },
+            {
+                "guid": "{6ec65348-9b2d-5c14-824d-b8c2d6993bb4}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{2435b545-a7b2-5703-adb9-1d40f77c0700}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            }
+        ]
+    },
+    "schemes":
+    [
+        {
+            "background": "#000000",
+            "black": "#000000",
+            "blue": "#204DBE",
+            "brightBlack": "#808080",
+            "brightBlue": "#2F6AFF",
+            "brightCyan": "#00E1F0",
+            "brightGreen": "#58EA51",
+            "brightPurple": "#FC74FF",
+            "brightRed": "#FF3E30",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFC944",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#00A7B2",
+            "foreground": "#BEBEBE",
+            "green": "#3FAE3A",
+            "name": "Ottosson Snapshot",
+            "purple": "#BB54BE",
+            "red": "#BE2C21",
+            "selectionBackground": "#92A4FD",
+            "white": "#BEBEBE",
+            "yellow": "#BE9A4A"
+        }
+    ],
+    "theme": "dark",
+    "themes": [],
+    "useAcrylicInTabRow": false,
+    "warning.multiLinePaste": "never",
+    "windowingBehavior": "useAnyExisting",
+    "wordDelimiters": " ,;<>~!@#%^&*|+{}~\u2502/()"
+}
