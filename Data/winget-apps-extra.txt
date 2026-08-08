@@ -1,0 +1,3 @@
+HTTPie.HTTPie
+Microsoft.Edit
+Microsoft.VisualStudio.Enterprise

@@ -14,3 +14,8 @@ gsudo choco install -s=chocolatey firacode geforce-game-ready-driver -y
 
 # Notes
 "If defender is slow maybe exclude C:\src from scanning"
+
+# New
+mkdir $home\Documents\PowerShell\Modules\
+cd $home\Documents\PowerShell\Modules\
+git clone https://github.com/FallenGameR/FzfBindings.git
