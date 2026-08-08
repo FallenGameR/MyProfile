@@ -5,3 +5,8 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "investigations"    "v:\src\ntp\"
     Set-EnvironmentVariable "PfGold"            "v:\src\golds\pf\"
 }
+
+function gitex
+{
+    & V:\src\github\gitextensions\artifacts\Release\bin\GitExtensions\net10.0-windows\GitExtensions.exe
+}
