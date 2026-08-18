@@ -79,9 +79,10 @@ function reload( [string] $Path, [switch] $FromTools )
 }
 
 # Open LLM
-function llm
+function llm( $version = "1.0.80" )
 {
-    agency cp --no-auto-update --no-sandbox
+    agency copilot --prefer-version $version --no-sandbox
+    #agency copilot --no-auto-update --no-sandbox
 }
 
 # Stratum1 tools
