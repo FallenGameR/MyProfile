@@ -78,6 +78,12 @@ function reload( [string] $Path, [switch] $FromTools )
     Get-Module DriScripts | select name, version, path
 }
 
+# Open LLM
+function llm
+{
+    agency cp --no-auto-update --no-sandbox
+}
+
 # Stratum1 tools
 function s1( $name ) { & $env:mv\src\Client\NTP\scripts\s1-tools\Initialize-Stratum1.ps1 $name | code - }
 
