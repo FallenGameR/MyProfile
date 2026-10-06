@@ -5,3 +5,5 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "investigations"    "c:\src\ntp\investigations\"
     Set-EnvironmentVariable "PfGold"            "c:\src\golds\pf\"
 }
+
+$env:PSModulePath = "$env:PSModulePath;C:\src\mv\src\Client\NTP\scripts\modules\Clocks"
