@@ -121,7 +121,7 @@ repo_root_format = '[$path]($style)[$read_only]($read_only_style) '
 
 [env_var.repository]
 variable = 'StarshipRepositoryName'
-format = '[\[$env_value\]](yellow) '
+format = '[$env_value](yellow) | '
 
 # The system hostname
 [hostname]
