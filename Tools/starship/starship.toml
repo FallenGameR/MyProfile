@@ -4,7 +4,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Inserts a blank line between shell prompts
-add_newline = true
+add_newline = false
 
 # What modules to use and in what order
 format = """
@@ -12,6 +12,7 @@ $localip\
 $shlvl\
 $singularity\
 $kubernetes\
+${env_var.repository}\
 $directory\
 $vcsh\
 $fossil_branch\
@@ -111,15 +112,22 @@ error_symbol = '[»](gray)'
 [directory]
 style = 'yellow'
 read_only = ' 🔒'
-truncation_length = 0
-truncate_to_repo = false
+truncation_length = 3
+truncation_symbol = '…\'
+truncate_to_repo = true
 repo_root_style = 'dimmed yellow'
+# The pre-command hook supplies the main repository name instead of the worktree folder.
+repo_root_format = '[$path]($style)[$read_only]($read_only_style) '
+
+[env_var.repository]
+variable = 'StarshipRepositoryName'
+format = '[$env_value](yellow)'
 
 # The system hostname
 [hostname]
 disabled = false
 ssh_only = false
-format = '[$ssh_symbol$hostname]($style) '
+format = '[\[$ssh_symbol$hostname\]]($style) '
 style = 'green'
 
 # Simplify output of dotnet version
@@ -140,7 +148,7 @@ symbol = ' '
 # Active branch of the repo in your current directory
 [git_branch]
 style = 'cyan'
-format = 'in [$symbol$branch( -> $remote_branch)]($style) '
+format = 'on [$symbol$branch]($style) '
 ignore_branches = ['master', 'main']
 
 # Very slow on large repos
