@@ -61,35 +61,6 @@ function SCRIPT:Update-CachedResult( $functionName, $value )
     $value
 }
 
-function SCRIPT:Get-StarshipRepositoryInfo
-{
-    $exitCode = $LASTEXITCODE
-    try
-    {
-        $paths = @(git rev-parse --path-format=absolute --show-toplevel --git-common-dir --git-dir 2>$null)
-        if( ($LASTEXITCODE -ne 0) -or ($paths.Count -ne 3) ) { return }
-
-        $root, $commonDirectory, $gitDirectory = $paths
-        $repositoryName = if( (Split-Path $commonDirectory -Leaf) -eq ".git" )
-        {
-            Split-Path (Split-Path $commonDirectory -Parent) -Leaf
-        }
-        else
-        {
-            Split-Path $commonDirectory -Leaf
-        }
-
-        [pscustomobject] @{
-            Name = $repositoryName
-            IsWorktree = [IO.Path]::GetFullPath($gitDirectory) -ne [IO.Path]::GetFullPath($commonDirectory)
-        }
-    }
-    finally
-    {
-        $global:LASTEXITCODE = $exitCode
-    }
-}
-
 function SCRIPT:Get-RepoPath
 {
     $cacheKey = "Get-RepoPath - $env:INETROOT"
@@ -166,41 +137,9 @@ if( Get-Command zoxide -ea Ignore )
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
 
-# Use Starship where available; otherwise keep the PowerShell prompt.
-if( Get-Command starship -ea Ignore )
+# No further initialization is needed if starship is used
+if( $env:STARSHIP_CONFIG -and (Get-Command starship -ea Ignore) )
 {
-    $env:STARSHIP_CONFIG = "$PSScriptRoot\..\Tools\starship\starship.toml"
-    $env:STARSHIP_CACHE = "$PSScriptRoot\..\Tools\starship\logs"
-
-    function Invoke-Starship-PreCommand
-    {
-        $repositoryInfo = Get-StarshipRepositoryInfo
-        $env:StarshipRepositoryName = if( $repositoryInfo -and -not $repositoryInfo.IsWorktree ) { $repositoryInfo.Name }
-        else { $null }
-        $env:StarshipWorktreeRepositoryName = if( $repositoryInfo -and $repositoryInfo.IsWorktree ) { $repositoryInfo.Name }
-        else { $null }
-
-        if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
-        {
-            $env:ChangedPSModulePath = "PSModulePath changed"
-        }
-        else
-        {
-            $env:ChangedPSModulePath = $null
-        }
-        $env:PreviousPSModulePath = $env:PSModulePath
-
-        # Hot-loaded FzfBindings can leave the console mode changed.
-        if( Get-Module FzfBindings -ea Ignore )
-        {
-            Repair-ConsoleMode
-        }
-
-        Update-CommandHistory
-        if( Test-Full ) { $host.UI.RawUI.WindowTitle = Get-TitlePath }
-    }
-
-    Invoke-Expression (&starship init powershell)
     return
 }
 
