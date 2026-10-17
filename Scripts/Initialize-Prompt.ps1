@@ -61,25 +61,28 @@ function SCRIPT:Update-CachedResult( $functionName, $value )
     $value
 }
 
-function SCRIPT:Get-StarshipRepositoryName
+function SCRIPT:Get-StarshipRepositoryInfo
 {
     $exitCode = $LASTEXITCODE
     try
     {
-        $paths = @(git rev-parse --path-format=absolute --show-toplevel --git-common-dir 2>$null)
-        if( $LASTEXITCODE -ne 0 ) { return }
+        $paths = @(git rev-parse --path-format=absolute --show-toplevel --git-common-dir --git-dir 2>$null)
+        if( ($LASTEXITCODE -ne 0) -or ($paths.Count -ne 3) ) { return }
 
-        $root, $commonDirectory = $paths
-        # Linked worktrees use the main repository's shared Git directory.
-        if( Test-Path -LiteralPath (Join-Path $root ".git") -PathType Leaf )
+        $root, $commonDirectory, $gitDirectory = $paths
+        $repositoryName = if( (Split-Path $commonDirectory -Leaf) -eq ".git" )
         {
-            if( (Split-Path $commonDirectory -Leaf) -eq ".git" )
-            {
-                return Split-Path (Split-Path $commonDirectory -Parent) -Leaf
-            }
-            return Split-Path $commonDirectory -Leaf
+            Split-Path (Split-Path $commonDirectory -Parent) -Leaf
         }
-        Split-Path $root -Leaf
+        else
+        {
+            Split-Path $commonDirectory -Leaf
+        }
+
+        [pscustomobject] @{
+            Name = $repositoryName
+            IsWorktree = [IO.Path]::GetFullPath($gitDirectory) -ne [IO.Path]::GetFullPath($commonDirectory)
+        }
     }
     finally
     {
@@ -171,7 +174,11 @@ if( Get-Command starship -ea Ignore )
 
     function Invoke-Starship-PreCommand
     {
-        $env:StarshipRepositoryName = Get-StarshipRepositoryName
+        $repositoryInfo = Get-StarshipRepositoryInfo
+        $env:StarshipRepositoryName = if( $repositoryInfo -and -not $repositoryInfo.IsWorktree ) { $repositoryInfo.Name }
+        else { $null }
+        $env:StarshipWorktreeRepositoryName = if( $repositoryInfo -and $repositoryInfo.IsWorktree ) { $repositoryInfo.Name }
+        else { $null }
 
         if( $env:PreviousPSModulePath -and ($env:PreviousPSModulePath -ne $env:PSModulePath) )
         {
