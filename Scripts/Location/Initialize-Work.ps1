@@ -13,6 +13,7 @@ $env:Path += ";C:\tools\prorab"
 $env:Path += ";C:\tools\sd"
 $env:Path += ";C:\tools\xts"
 $env:Path += ";C:\tools\safefly-automation"
+$env:Path += ";C:\tools\mcli\Microsoft.GenevaMCli\2026.916.2147\tools\MCli"
 $env:Path += ";C:\Program Files\GitExtensions\"
 
 # Modules availability
