@@ -61,6 +61,54 @@ function SCRIPT:Update-CachedResult( $functionName, $value )
     $value
 }
 
+# Finds the git repo by walking up the folders, without starting git.exe
+# that can be slow in large repos (VFS, fsmonitor hooks)
+function SCRIPT:Get-GitRepository
+{
+    $folder = (Get-Location).ProviderPath
+    while( $folder )
+    {
+        $dotGit = Join-Path $folder ".git"
+        if( [IO.Directory]::Exists($dotGit) )
+        {
+            return [pscustomobject] @{ Root = $folder; GitDir = $dotGit }
+        }
+        if( [IO.File]::Exists($dotGit) )
+        {
+            # Worktrees and submodules have a .git file that points to the real git dir
+            $line = [IO.File]::ReadAllText($dotGit).Trim()
+            if( $line -match "^gitdir:\s*(.+)$" )
+            {
+                $gitDir = $matches[1] -replace "/", "\"
+                if( -not [IO.Path]::IsPathRooted($gitDir) ) { $gitDir = Join-Path $folder $gitDir }
+
+                # Linked worktree git dirs look like <repo>\.git\worktrees\<name>
+                $worktreeRepository = $null
+                if( $gitDir -match "^(.+?)(?:\\\.git)?\\worktrees\\[^\\]+\\?$" )
+                {
+                    $worktreeRepository = Split-Path $matches[1] -Leaf
+                }
+
+                return [pscustomobject] @{ Root = $folder; GitDir = $gitDir; WorktreeRepository = $worktreeRepository }
+            }
+        }
+        $folder = [IO.Path]::GetDirectoryName($folder)
+    }
+}
+
+function SCRIPT:Get-GitBranch
+{
+    $repo = Get-GitRepository
+    if( -not $repo ) { return }
+
+    $headFile = Join-Path $repo.GitDir "HEAD"
+    if( -not [IO.File]::Exists($headFile) ) { return }
+
+    $head = [IO.File]::ReadAllText($headFile).Trim()
+    if( $head -match "^ref:\s*refs/heads/(.+)$" ) { $matches[1] }
+    else { "HEAD" }
+}
+
 function SCRIPT:Get-RepoPath
 {
     $cacheKey = "Get-RepoPath - $env:INETROOT"
@@ -69,7 +117,7 @@ function SCRIPT:Get-RepoPath
 
     $pwdPath = (Get-Location).ProviderPath
     $pwdPathParts = @($pwdPath -split "\\|/")
-    $gitRoot = git rev-parse --show-toplevel 2>$null
+    $gitRoot = (Get-GitRepository).Root
     if( -not $gitRoot ) { $gitRoot = $env:INETROOT }
     $gitRootParts = @($gitRoot -split "\\|/")
 
@@ -169,21 +217,31 @@ $SCRIPT:prompt_state = [ordered] @{
 
 function SCRIPT:Get-PromptPath
 {
-    # Path part
-    $path = Update-UserAliasInPath ((Get-Location).ProviderPath)
-    Write-Host $path -ForegroundColor DarkYellow -NoNewline
-    Write-Host " " -NoNewline
+    # Path part, linked worktrees show repository name and the path inside it
+    $location = (Get-Location).ProviderPath
+    $repo = Get-GitRepository
+    if( $repo -and $repo.WorktreeRepository )
+    {
+        Write-Host "$($repo.WorktreeRepository) " -ForegroundColor DarkBlue -NoNewline
+        $relative = $location.Substring($repo.Root.Length).TrimStart("\", "/")
+        if( $relative )
+        {
+            Write-Host "$relative " -ForegroundColor DarkYellow -NoNewline
+        }
+    }
+    else
+    {
+        $path = Update-UserAliasInPath $location
+        Write-Host $path -ForegroundColor DarkYellow -NoNewline
+        Write-Host " " -NoNewline
+    }
 
-    # Git branch, ErrorActionPreference magic is needed to not populate $error when we are outside of git
-    $preservedExitCode = $LASTEXITCODE
-    $preserved, $ErrorActionPreference = $ErrorActionPreference, "Ignore"
-    $branch = git rev-parse --abbrev-ref HEAD
-    if( -not $LASTEXITCODE )
+    # Git branch
+    $branch = Get-GitBranch
+    if( $branch )
     {
         Write-Host "$branch " -ForegroundColor DarkGray -NoNewline
     }
-    $ErrorActionPreference = $preserved
-    Set-Variable LASTEXITCODE -Scope Global -Force -Value $preservedExitCode
 
     # Host name
     Write-Host "[$hostName] " -ForegroundColor DarkGreen -NoNewline
