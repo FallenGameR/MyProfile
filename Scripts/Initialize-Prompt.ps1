@@ -81,7 +81,15 @@ function SCRIPT:Get-GitRepository
             {
                 $gitDir = $matches[1] -replace "/", "\"
                 if( -not [IO.Path]::IsPathRooted($gitDir) ) { $gitDir = Join-Path $folder $gitDir }
-                return [pscustomobject] @{ Root = $folder; GitDir = $gitDir }
+
+                # Linked worktree git dirs look like <repo>\.git\worktrees\<name>
+                $worktreeRepository = $null
+                if( $gitDir -match "^(.+?)(?:\\\.git)?\\worktrees\\[^\\]+\\?$" )
+                {
+                    $worktreeRepository = Split-Path $matches[1] -Leaf
+                }
+
+                return [pscustomobject] @{ Root = $folder; GitDir = $gitDir; WorktreeRepository = $worktreeRepository }
             }
         }
         $folder = [IO.Path]::GetDirectoryName($folder)
@@ -209,10 +217,24 @@ $SCRIPT:prompt_state = [ordered] @{
 
 function SCRIPT:Get-PromptPath
 {
-    # Path part
-    $path = Update-UserAliasInPath ((Get-Location).ProviderPath)
-    Write-Host $path -ForegroundColor DarkYellow -NoNewline
-    Write-Host " " -NoNewline
+    # Path part, linked worktrees show repository name and the path inside it
+    $location = (Get-Location).ProviderPath
+    $repo = Get-GitRepository
+    if( $repo -and $repo.WorktreeRepository )
+    {
+        Write-Host "$($repo.WorktreeRepository) " -ForegroundColor DarkBlue -NoNewline
+        $relative = $location.Substring($repo.Root.Length).TrimStart("\", "/")
+        if( $relative )
+        {
+            Write-Host "$relative " -ForegroundColor DarkYellow -NoNewline
+        }
+    }
+    else
+    {
+        $path = Update-UserAliasInPath $location
+        Write-Host $path -ForegroundColor DarkYellow -NoNewline
+        Write-Host " " -NoNewline
+    }
 
     # Git branch
     $branch = Get-GitBranch
