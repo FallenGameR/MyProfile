@@ -7,4 +7,3 @@ Complete-Once env-computer {
 }
 
 $env:PSModulePath = "$env:PSModulePath;C:\src\mv\src\Client\NTP\scripts\modules\Clocks"
-$env:PSModulePath = "$env:PSModulePath;C:\src\Azure-Time-Geneva\src\scripts\"

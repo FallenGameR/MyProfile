@@ -22,6 +22,10 @@ $env:PSModulePath = "C:\tools\apShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\JitShell;$env:PSModulePath"
 $env:PSModulePath = "C:\tools\TipNodeServiceAME;$env:PSModulePath"
 
+# Repos are cloned under the same src folder as mv, the drive differs between machines
+$srcRoot = if( $env:mv ) { Split-Path $env:mv } else { "C:\src" }
+$env:PSModulePath = "$env:PSModulePath;$srcRoot\Azure-Time-Geneva\src\scripts\"
+
 # Formatting overrides
 Update-FormatData -PrependPath "$PSScriptRoot/../../Data/ModuleInfo.format.ps1xml"
 
