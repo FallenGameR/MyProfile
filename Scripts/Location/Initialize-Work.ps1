@@ -44,7 +44,8 @@ $env:FZF_QUICK_PATHS =
     "$env:PfGold\data\Autopilot\NtpReferenceClock\Firmware\"
 
 # VS Code PowerShell integration
-if( $env:TERM_PROGRAM -eq "vscode" )
+# Copilot app terminals also report TERM_PROGRAM=vscode without VS Code being on PATH
+if( ($env:TERM_PROGRAM -eq "vscode") -and (Get-Command code.cmd -ea Ignore) )
 {
     $script = code.cmd --locate-shell-integration-path pwsh
     if( $script )
