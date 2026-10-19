@@ -27,3 +27,5 @@ $computer = Get-ComputerEnvironment
 
 # Playgrdoun
 . Import-AsDotSource "$env:OneDriveCommercial/Projects/ProtectedPlayground.ps1" (Test-Windows)
+
+$env:Path = "$env:Path;C:\tools\mcli\Microsoft.GenevaMCli\2026.916.2147\tools\MCli"

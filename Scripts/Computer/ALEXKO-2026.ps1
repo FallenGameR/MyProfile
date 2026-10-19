@@ -6,6 +6,8 @@ Complete-Once env-computer {
     Set-EnvironmentVariable "PfGold"            "v:\src\golds\pf\"
 }
 
+$env:PSModulePath = "$env:PSModulePath;v:\src\Azure-Time-Geneva\src\scripts\"
+
 function gitex
 {
     & V:\src\github\gitextensions\artifacts\Release\bin\GitExtensions\net10.0-windows\GitExtensions.exe
