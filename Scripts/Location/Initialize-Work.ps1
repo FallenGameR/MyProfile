@@ -113,7 +113,7 @@ function Sync-Settings
         [string] $To,
 
         [Parameter(Mandatory=$false)]
-        [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell")]
+        [ValidateSet("Terminal", "GitConfig", "VSCode", "Powershell", "Copilot")]
         [string[]] $Settings,
 
         [string] $AdoRoot = "C:\src\investigations",
@@ -137,7 +137,7 @@ function Sync-Settings
     # By default sync all settings
     if( -not $Settings )
     {
-        $Settings = @("Terminal", "GitConfig", "VSCode", "Powershell")
+        $Settings = @("Terminal", "GitConfig", "VSCode", "Powershell", "Copilot")
     }
 
     # Process each setting
@@ -197,6 +197,36 @@ function Sync-Settings
                 "PC"  { "$docsRoot\WindowsPowershell" }
             }
             Copy-Folder @params
+        }
+        "Copilot"
+        {
+            # Personal Copilot instructions may hold sensitive info, so they travel only via the private ADO repo
+            $items = "copilot-instructions.md", "skills", "extensions"
+
+            foreach( $item in $items )
+            {
+                $src, $dst = switch( $From, $To ) {
+                    "ADO" { "$adoRoot\Work\SAW\Settings\copilot\$item" }
+                    "PC"  { "$env:USERPROFILE\.copilot\$item" }
+                }
+
+                if( -not (Test-Path $src) ) { continue }
+
+                if( (Get-Item $src).PSIsContainer )
+                {
+                    # Extension artifacts are per-machine runtime state, not configuration
+                    Get-ChildItem $src -Recurse -File | where FullName -notmatch "\\artifacts\\" | foreach {
+                        $dstPath = Join-Path $dst $psitem.FullName.Substring($src.Length)
+                        New-Item -ItemType Directory -Path (Split-Path $dstPath) -Force | Out-Null
+                        Copy-Item $psitem.FullName $dstPath -Force -Verbose
+                    }
+                }
+                else
+                {
+                    New-Item -ItemType Directory -Path (Split-Path $dst) -Force | Out-Null
+                    Copy-Item $src $dst -Force -Verbose
+                }
+            }
         }
     }
 }
