@@ -2,5 +2,6 @@
 /FcShellHistory.clixml
 /Modules/*
 /Data/Completed/*
+/Data/SystemCache/*
 /Help/*
 SAW-*.ps1

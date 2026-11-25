@@ -1,5 +1,19 @@
 . $PSScriptRoot\Initialize-Work.ps1
 
+# Run the "Empty system working set" task now and show what it freed, see Tools\rammap
+function Clear-SystemCache
+{
+    $taskName = "Empty system working set"
+    if( -not (Get-ScheduledTask -TaskName $taskName -ea Ignore) )
+    {
+        throw "Task '$taskName' is not registered yet: open an elevated pwsh once so setup-clear-system-cache runs"
+    }
+
+    Start-ScheduledTask -TaskName $taskName
+    do { Start-Sleep -Milliseconds 500 } while( (Get-ScheduledTask -TaskName $taskName).State -eq "Running" )
+    Import-Csv "$PSScriptRoot\..\..\Data\SystemCache\clear-log.csv" | select -Last 1
+}
+
 Complete-Once setup-tldr {
     tldr --update
 }
@@ -97,4 +111,20 @@ Complete-Once install-wsl -elevated {
 
 Complete-Once setup-trackball -elevated {
     & "$env:OneDriveConsumer\Apps\Hardware\Deft Pro Trackball\mouse_driver_ma5111000.exe"
+}
+
+Complete-Once setup-clear-system-cache -elevated {
+    # Every 2 hours empty the system working set that Defender and indexing bloat, see the script
+    $script = Resolve-Path "$PSScriptRoot\..\..\Tools\rammap\Clear-SystemCache.ps1"
+    # The Store pwsh lives in a versioned folder, its execution alias survives updates
+    $pwsh = "$env:LOCALAPPDATA\Microsoft\WindowsApps\pwsh.exe"
+    if( -not (Test-Path $pwsh) ) { $pwsh = (Get-Process -Id $PID).Path }
+
+    # conhost --headless never creates a console window, -WindowStyle Hidden still flashes one
+    $action = New-ScheduledTaskAction -Execute "$env:windir\System32\conhost.exe" -Argument "--headless `"$pwsh`" -NoProfile -NonInteractive -File `"$script`""
+    $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Hours 2)
+    $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Highest
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 5)
+    Register-ScheduledTask -TaskName "Empty system working set" -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force |
+        select TaskName, State
 }
